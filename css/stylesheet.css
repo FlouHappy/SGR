@@ -151,7 +151,7 @@ footer {
 
 #side {
   height: 740px;
-  width: 12.4%;
+  width: 15.4%;
   border: 1px solid white;
   background-color: tomato;
 }
@@ -159,8 +159,8 @@ footer {
 #container {
   float: right;
   height: 740px;
-  width: 87.2%;
-  
+  width: 84.2%;
+
 }
 
 #footer {
@@ -175,4 +175,5 @@ footer {
   margin-top: 200px;
   height: 270px;
   width: 100%;
+  border: 3px solid black;
 }

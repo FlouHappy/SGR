@@ -68,7 +68,7 @@ Authors:  Franck Happy
 /***Style pour barre de gauche***/
 #side {
   height: 740px;
-  width: 15.4%;
+  width: 16.4%;
   border: 1px solid white;
   background-color: tomato;
 }
@@ -86,7 +86,7 @@ Authors:  Franck Happy
 #container {
   float: right;
   height: 740px;
-  width: 84.2%;
+  width: 83.2%;
 
 }
 

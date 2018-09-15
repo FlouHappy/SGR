@@ -5,8 +5,8 @@ Authors:  Franck Happy
 #page {
   height: 100%;
   width: 100%;
-  background-color: lightgray;
 }
+
 /*--------------Debut Template------------------*/
 /***Style pour Head***/
 .row:after {
@@ -75,10 +75,11 @@ Authors:  Franck Happy
 /***** Pour Calendrier **/
 #calendar {/*le reste est dans la librairie dyCalendar*/
   padding-top: 0px;
+  padding-left: 7px;
   margin-top: 200px;
   height: 270px;
   width: 100%;
-  border: 3px solid black;
+  
 }
 /**** Fin Pour Calendrier **/
 /***Fin Style pour barre de gauche***/
@@ -87,6 +88,7 @@ Authors:  Franck Happy
   float: right;
   height: 740px;
   width: 83.2%;
+background-image: url("img/logo.jpg");
 
 }
 

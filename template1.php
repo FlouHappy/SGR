@@ -14,7 +14,7 @@
         <a href="https://uqo.ca" title="Site officiel UQO.ca">UQO</a>
       </div>
       <div id="head2">
-        <h1 class="head2" ><a href="site.php">SGR</a></h1>
-        <h5 class="head21"><a href="site.php">Systeme de Gestion des Resolutions</a></h5>
+        <h1 class="head2" ><a href="Main.php">SGR</a></h1>
+        <h5 class="head21"><a href="Main.php">Systeme de Gestion des Resolutions</a></h5>
       </div>
     </div>

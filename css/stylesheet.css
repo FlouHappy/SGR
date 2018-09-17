@@ -69,17 +69,16 @@ Authors:  Franck Happy
 #side {
   height: 740px;
   width: 16.4%;
-  border: 1px solid white;
   background-color: tomato;
 }
 /***** Pour Calendrier **/
 #calendar {/*le reste est dans la librairie dyCalendar*/
   padding-top: 0px;
   padding-left: 7px;
-  margin-top: 200px;
+  margin-top: 0px;
   height: 270px;
   width: 100%;
-  
+
 }
 /**** Fin Pour Calendrier **/
 /***Fin Style pour barre de gauche***/
@@ -87,8 +86,9 @@ Authors:  Franck Happy
 #container {
   float: right;
   height: 740px;
-  width: 83.2%;
-background-image: url("img/logo.jpg");
+  width: 83.5%;
+  background-color: blue;
+
 
 }
 

@@ -19,7 +19,8 @@
       </div>
     </div>
     <div id="container">
-      Je n'ai rien mis iciiiiiiiiiiiiiiiiiiiiiiii
+    <?php echo (password_hash("admin", PASSWORD_BCRYPT)); ?>
+        
     </div>
     <div id="side">
       <!-- *******Debut Calendrier**********-->
@@ -61,7 +62,7 @@
 </nav>
 
 <div id="content_area">
-<?php echo $content; ?>
+
 </div>
 
 <div id="sidebar">

@@ -10,9 +10,35 @@ class ComposerStaticInit7bc63f1aceb01e58d74babed2a4012f3
         'e40631d46120a9c38ea139981f8dab26' => __DIR__ . '/..' . '/ircmaxell/password-compat/lib/password.php',
     );
 
+    public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'SGR\\view\\' => 9,
+            'SGR\\model\\' => 10,
+            'SGR\\controller\\' => 15,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'SGR\\view\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/view',
+        ),
+        'SGR\\model\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/model',
+        ),
+        'SGR\\controller\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/controller',
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7bc63f1aceb01e58d74babed2a4012f3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7bc63f1aceb01e58d74babed2a4012f3::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }

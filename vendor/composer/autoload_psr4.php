@@ -6,4 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'SGR\\view\\' => array($baseDir . '/view'),
+    'SGR\\model\\' => array($baseDir . '/model'),
+    'SGR\\controller\\' => array($baseDir . '/controller'),
 );

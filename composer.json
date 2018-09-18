@@ -1,4 +1,19 @@
 {
+    "name": "FlouHappy/SGR",
+  "authors": [
+    {
+      "name": "Colly/Gervais",
+      "email": "collf03@uqo.ca"
+    }
+  ],
+    "autoload": {
+    "psr-4": {
+      "SGR\\controller\\": "controller/",
+      "SGR\\view\\": "view/",
+      "SGR\\model\\": "model/"
+    }
+  },
+
   "require": {
         "ircmaxell/password-compat":"1.0.4"
   }

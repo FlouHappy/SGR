@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3aac6d5a2cbb0c5478b062cce8ec4521",
+    "content-hash": "7ddcf5a98a370461c08924b307fe9475",
     "packages": [
         {
             "name": "ircmaxell/password-compat",

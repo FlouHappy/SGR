@@ -1,3 +1,5 @@
+</div>
+
 <div id="side">
   <!-- *******Debut Calendrier**********-->
   <div id="calendar">

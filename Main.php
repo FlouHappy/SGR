@@ -6,9 +6,9 @@
 
 
 
-<div id="container">
+
   C'est ici qu'on va ajouter les differents formulaires
-</div>
+
 
 
 

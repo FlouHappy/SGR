@@ -18,3 +18,5 @@
         <h5 class="head21"><a href="Main.php">Systeme de Gestion des Resolutions</a></h5>
       </div>
     </div>
+
+<div id="container">

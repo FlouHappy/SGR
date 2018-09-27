@@ -18,7 +18,6 @@ class Connexion {
                 $this->vue->afficherAccueilConnexionAgent();
             }
         } else {
-            $this->vue->afficherBarreConnexion();
         }
     }
 

@@ -1,20 +1,22 @@
 <?php
-namespace SGR\view;
-  /*
-  * To change this license header, choose License Headers in Project Properties.
-  * To change this template file, choose Tools | Templates
-  * and open the template in the editor.
-  */
 
-  class VuePublique {
+namespace SGR\view;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+class VuePublique {
 
     function __construct() {
-
+        
     }
 
     public function afficherAccueil() {
 
-      echo('
+        echo('
       <div id="input-groupe">
 
         <a href="index.php?action=soumettreReso">
@@ -31,87 +33,138 @@ namespace SGR\view;
       </div>');
     }
 
+    public function afficherPreFormulaireRésolution($nbCour, $nbProgramme) {
 
-    public function afficherFormulaireRésolution(){
+        echo ('
 
-      echo ('
-
-      <form class="formpub" method="POST">
+      <form action="index.php?action=FormulaireReso" class="formPreForm" method="POST">
         <div class="input-groupe">
-        <h2> Enregistrer une resoution</h2>
-          <label for="typeresolution">Type de resolutions :</label>
-          <select id="typeresolution" name="Type de resolutions">
-            <option value="adpore">Aministration, Politique, Reglement</option>
-            <option value="contin">Contingentement</option>
-            <option value="creacour">Creation de cours</option>
-            <option value="entente">Entente(Reseau, Extension, etc.)</option>
-            <option value="evaprog">Evaluation de programme</option>
-            <option value="fermprog">Fermeture de programme</option>
-            <option value="habidir">Habilitation a la direction/codirection</option>
-            <option value="modifcondad">Modification aux conditions d'."'".'admission</option>
-            <option value="modifcour">Modification de cours</option>
-            <option value="modifprog">Modification de programme</option>
-            <option value="ouverad">Ouverture des Admissions</option>
-            <option value="susad">Suspension des Admissions</option>
+        <h2> Renseignement Résolution</h2>
+          <label for="projet">Projet deja existant:</label>
+          <input type="radio" name="projet" value="oui" required> Oui<br>
+          <input type="radio" name="projet" value="non"> Non<br><br>
+          <a href="popUp.php"  target=_blank>Voir liste projet existant</a>
+        </div>
+
+        <div class="cour">
+          <label for="cour">Combien de cours sont concernés par la résolution: </label>
+          <select id="cour" name="cour">
+            <option value="none">Inderteminé</option>');
+        for ($i = 1; $i <= $nbCour; $i++) {
+            echo('<option value="' . $i . '">' . $i . '</option>');
+        }
+
+
+        echo('
+            <option value="all">tout</option>
           </select>
         </div>
 
-        <div class="input-groupe">
-          <label for="instance">Instances :</label>
-          <select id="instance" name="Instances">
-            <option value="ca">CA</option>
-            <option value="ce">CE</option>
-            <option value="sce">SCE</option>
+         <div class="programme">
+          <label for="programme">Combien de programmes sont concernés par la résolution: </label>
+          <select id="programme" name="programme">
+            <option value="none">Inderteminé</option>');
+        for ($i = 1; $i <= $nbProgramme; $i++) {
+            echo('<option value="' . $i . '">' . $i . '</option>');
+        }
+
+
+        echo('
+            <option value="all">tout</option>
           </select>
         </div>
 
-        <div class="input-groupe" style="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-          <label for="datereso">Date resolution:</label>
-          <div id="datepicker" class="input-group date" data-date-format="dd/mm/yyyy">
-            <input type="text" name="form-control" placeholder="dd/mm/yyyy">
-            <span class="input-group-addon"><i class="glyphiconcglyphicon-calendar"></i></span>
-        </div>
-          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
-  	      <script >
-  	       $(function () {
-  	          $("#datepicker").datepicker({
-                format: "dd/mm/yyyy",
-  	            autoclose: true,
-  	            todayHighlight: true,
-  		          showOtherMonths: true,
-  		          selectOtherMonths: true,
-  		          autoclose: true,
-  		          changeMonth: true,
-  		          changeYear: true,
-                orientation: "button"
-  	          });
-  	        });
-  	       </script>
-        </div>
+      <input type="submit" value="Valider">
 
-        <div class="input-groupe">
-          <label for="lname">Last Name :</label>
-          <input type="text" id="lname" name="lastname" placeholder="Your last name..">
-        </div>
-
-      <input type="submit" value="Creer">
-
-      </form>
-      </div>');
-
-      /**echo('<form action="index.php?action=validationFormuReso" method="POST">
-      <div> Sujet:
-      <textarea name="sujet" cols="50" rows="10" >Saisissez ici le sujet de la résolution..</textarea></br>
-      </div>
-      <div>
-      Vos attendus:
-      <textarea name="Attendu" cols="50" rows="10" value="Texte_par_défaut">Saisissez ici les attendus de la résolution..</textarea><br>
-      </div>
-      <p><input type="submit"  name="connexion" value="Connexion" /></p>
       </form>');
-      **/
     }
 
+    public function afficherFormulaireProjet() {
+        echo('<h1> Renseignement du projet :</h1><br>
+                <label for="description">Description du projet :</label><br>
+                <textarea name="description" rows="10" cols="50" required form="formReso"></textarea>
+                <br><br>
+          <label for="etat">Etat du projet:</label>
+          <input type="radio" name="etat" value="ouvert" required> Ouvert 
+          <input type="radio" name="etat" value="fermé"> Fermé
+          <input type="radio" name="etat" value="attente"> En attente <br><br><br>
+          
+           <label for="noteProjet">Note supplémentaire concernant le projet (facultatif):</label>
+           <br>
+                <textarea name="noteProjet" rows="10" cols="50"  form="formReso"></textarea>
+                <br><br>
+           <label for="nlien">Lien vers le dossier du projet (facultatif):</label>     
+    <input type="text" i required placeholder="lien vers le dossier du projet" name="lien" >
+    <br>
+                <br>');
+    }
+
+    public function afficherFormulaireResolution($cour, $prog, $ugp, $projet) {
 
 
-  }
+        echo('<h1> Renseignement sur la résolution :</h1><br>
+             <div class="num">
+                <label for="num">Numéro Résolution: </label>
+        <input type="text" id="num" required  name="num" ><br><br>
+        </div> 
+         <div class="sujet">
+        <label for="sujet">Sujet de la résolution:</label>
+           <br>
+                <textarea name="sujet" rows="10" cols="50" required form="formReso"></textarea>
+                <br><br>
+               </div> 
+               
+          <div class="ugp">     
+        <label for="ugp">UGP : </label>
+         <select id="ugp" name="ugp">');
+        foreach ($ugp as $value) {
+            echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
+        }
+        echo('</select> </div> ');
+
+        if ($_POST["projet"] == "oui") {
+            echo('<label for="projet">Projet : </label>
+         <select id="projet" name="projet">');
+            foreach ($projet as $value) {
+                echo('<option value="' . $value->getNum() . '">' . $value->getNum() . ': ' . $value->getDescription() . '</option>');
+            }
+            echo('</select> </div> ');
+        }
+
+        if (($_POST['cour'] != "none") && ($_POST['cour'] != "all" )) {
+            for ($i = 1; $i <= $_POST['cour']; $i++) {
+                echo('
+                 <div class="cour">
+                <label for="cour">Cours concernés par la résolution: </label>
+                <select id="cour' . $i . '" name="cour' . $i . '">');
+                foreach ($cour as $value) {
+                    echo('<option value="' . $value->getSigle() . '">' . $value->getSigle() . ': ' . $value->getNom() . '</option>');
+                }
+                echo('</select> 
+                   </div> ');
+            }
+        }
+
+        if (($_POST['programme'] != "none") && ($_POST['programme'] != "all" )) {
+            for ($i = 1; $i <= $_POST['programme']; $i++) {
+                echo('
+                 <div class="programme">
+                <label for="programme">Programmes concernés par la résolution: </label>
+                <select id="programme' . $i . '" name="programme' . $i . '">');
+                foreach ($prog as $value) {
+                    echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
+                }
+                echo('</select> 
+                   </div> ');
+            }
+        }
+
+        echo('<label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label>
+           <br>
+                <textarea name="noteReso" rows="10" cols="50"  form="formReso"></textarea>
+                <br><br>
+                
+             <input type="submit" name="valider" value="Créer"></form> ');
+    }
+
+}

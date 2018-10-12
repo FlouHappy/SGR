@@ -14,6 +14,7 @@ class  ConnexionBDD
     function __construct()
     {
         $this->con = mysqli_connect("localhost","root","","decanat");
+        $this->con->set_charset('utf8'); 
     }
     
     public function getConnexionBDD() {

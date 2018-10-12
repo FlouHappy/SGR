@@ -20,10 +20,10 @@ class VueConnexion {
         <div id="divcon">
 
         <label for="usager">Utilisateur: </label><br>
-        <input type="text" id="placeholder" required placeholder="Entrez votre identifiant" name="usager" placeholder="Votre nom d'."'".'utilisateur..">
+        <input type="text" id="placeholder" required placeholder="Entrez votre identifiant" name="usager" >
 <br>
         <label for="mdp">Mot de Passe: </label><br>
-        <input type="password" id="placeholder" required placeholder="Entrez votre mot de passe" name="mdp" placeholder="Votre Mot de Passe.."><br>
+        <input type="password" id="placeholder" required placeholder="Entrez votre mot de passe" name="mdp" ><br>
 
 
         <input type="submit" name="connexion" value="Connexion">

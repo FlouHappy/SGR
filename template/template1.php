@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Systeme de Gestion des Resolutions</title>
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
 <!--CSS et JS pour le calendrier sur vuePublique-->

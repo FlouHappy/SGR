@@ -8,7 +8,7 @@ use SGR\controller\controlAgent;
 use SGR\controller\controlAdmin;
 ?>
 
-<?php include("template1.php") ?>
+<?php include("template/template1.php") ?>
 
 
 
@@ -41,9 +41,10 @@ $controlCon->verifierConnexion();
           $controlPublic->accueil();
           break;
           case "soumettreReso":
-          $controlPublic->formulaireRéso();
-
+          $controlPublic->preFormulaireRéso();
           break;
+        case "FormulaireReso":
+            $controlPublic->formulaireRéso();
 
         }
         //parti non connecté (page accueil )
@@ -95,4 +96,4 @@ $controlCon->verifierConnexion();
     ?>
 
 
-<?php include("template2.php") ?>
+<?php include("template/template2.php") ?>

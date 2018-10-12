@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 18 sep. 2018 à 01:22
+-- Généré le :  ven. 12 oct. 2018 à 02:22
 -- Version du serveur :  5.7.21
 -- Version de PHP :  5.6.35
 
@@ -57,9 +57,32 @@ DROP TABLE IF EXISTS `cour`;
 CREATE TABLE IF NOT EXISTS `cour` (
   `Sigle` varchar(10) NOT NULL,
   `NomCours` varchar(100) NOT NULL,
-  `Cycle` varchar(100) DEFAULT NULL,
+  `Cycle` int(2) DEFAULT NULL,
   PRIMARY KEY (`Sigle`),
   UNIQUE KEY `Sigle` (`Sigle`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `cour`
+--
+
+INSERT INTO `cour` (`Sigle`, `NomCours`, `Cycle`) VALUES
+('ADM1003', 'Analyse des systèmes d\'information', 1),
+('BEA5031', 'Séminaire d’intégration IV', 1),
+('ANG1273', 'Rédaction anglaise - Avancé II', 1),
+('MAT1053', 'Algèbre linéaire', 1),
+('INF4103', 'Architecture des ordinateurs II', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `cour_receptionreso`
+--
+
+DROP TABLE IF EXISTS `cour_receptionreso`;
+CREATE TABLE IF NOT EXISTS `cour_receptionreso` (
+  `cour_id` varchar(10) NOT NULL,
+  `receptionReso_id` int(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -77,6 +100,15 @@ CREATE TABLE IF NOT EXISTS `departement` (
   UNIQUE KEY `NumDepartement` (`NumDepartement`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `departement`
+--
+
+INSERT INTO `departement` (`NumDepartement`, `NomDepartement`, `NomSecteur_id`) VALUES
+('DCTB', 'Département des sciences comptables', 'Sciences comptables'),
+('EMI', 'École multidisciplinaire de l\'image', 'Arts'),
+('DII', 'Département d\'informatique et d\'ingénierie', 'Informatique/Ingénierie');
+
 -- --------------------------------------------------------
 
 --
@@ -86,12 +118,33 @@ CREATE TABLE IF NOT EXISTS `departement` (
 DROP TABLE IF EXISTS `programmes`;
 CREATE TABLE IF NOT EXISTS `programmes` (
   `CodeProgramme` varchar(20) NOT NULL,
-  `NomProgramme` varchar(50) NOT NULL,
-  `TypeProgramme` varchar(20) NOT NULL,
+  `NomProgramme` varchar(100) NOT NULL,
+  `TypeProgramme` varchar(50) NOT NULL,
   `codeUgp_id` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`CodeProgramme`),
   UNIQUE KEY `CodeProgramme` (`CodeProgramme`),
   UNIQUE KEY `NomProgramme` (`NomProgramme`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `programmes`
+--
+
+INSERT INTO `programmes` (`CodeProgramme`, `NomProgramme`, `TypeProgramme`, `codeUgp_id`) VALUES
+('0028', 'Programme court de premier cycle en enseignement de l\'initiation à l\'informatique', 'court de premier cycle', NULL),
+('0014', 'Programme court de premier cycle: cours supplémentaires pour l\'obtention du diplôme', 'court de premier cycle', NULL),
+('0048', 'Programme court de premier cycle en enseignement des matières administratives et commerciales', 'court de premier cycle', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `programme_receptionreso`
+--
+
+DROP TABLE IF EXISTS `programme_receptionreso`;
+CREATE TABLE IF NOT EXISTS `programme_receptionreso` (
+  `programme_id` varchar(20) NOT NULL,
+  `receptionReso_id` varchar(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -102,14 +155,21 @@ CREATE TABLE IF NOT EXISTS `programmes` (
 
 DROP TABLE IF EXISTS `projet`;
 CREATE TABLE IF NOT EXISTS `projet` (
-  `NumProjet` int(11) NOT NULL,
+  `NumProjet` int(11) NOT NULL AUTO_INCREMENT,
   `DescriptionProjet` varchar(1000) DEFAULT NULL,
   `EtatProjet` varchar(50) DEFAULT NULL,
   `Notes` varchar(2000) DEFAULT NULL,
   `LienDossier` varchar(2098) DEFAULT NULL,
   PRIMARY KEY (`NumProjet`),
   UNIQUE KEY `NumProjet` (`NumProjet`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `projet`
+--
+
+INSERT INTO `projet` (`NumProjet`, `DescriptionProjet`, `EtatProjet`, `Notes`, `LienDossier`) VALUES
+(1, 'Suppression programme court', 'ouvert', 'voir monsieur x', NULL);
 
 -- --------------------------------------------------------
 
@@ -119,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `projet` (
 
 DROP TABLE IF EXISTS `receptionreso`;
 CREATE TABLE IF NOT EXISTS `receptionreso` (
-  `NumReception` varchar(5) NOT NULL,
+  `NumReception` varchar(10) NOT NULL,
   `Sujet` varchar(300) DEFAULT NULL,
   `NumProjet_id` int(11) DEFAULT NULL,
   `DateDemande` date NOT NULL,
@@ -167,6 +227,17 @@ CREATE TABLE IF NOT EXISTS `secteur` (
   PRIMARY KEY (`NomSecteur`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `secteur`
+--
+
+INSERT INTO `secteur` (`NomSecteur`) VALUES
+('Arts'),
+('Études langagières'),
+('Informatique'),
+('Ingénierie'),
+('Sciences comptables');
+
 -- --------------------------------------------------------
 
 --
@@ -182,6 +253,17 @@ CREATE TABLE IF NOT EXISTS `typeresolution` (
   UNIQUE KEY `TypeReso` (`TypeReso`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `typeresolution`
+--
+
+INSERT INTO `typeresolution` (`TypeReso`, `Priorite`, `LienProcedure`) VALUES
+('Contingentement', NULL, NULL),
+('Creation de cours', NULL, NULL),
+('Administration, Politique, Reglement', NULL, NULL),
+('Ouverture des admissions', NULL, NULL),
+('Modification de cours', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -192,11 +274,22 @@ DROP TABLE IF EXISTS `ugp`;
 CREATE TABLE IF NOT EXISTS `ugp` (
   `CodeUGP` varchar(10) NOT NULL,
   `NomUGP` varchar(100) NOT NULL,
+  `cycle` int(2) NOT NULL,
   `NumDepartement_id` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`CodeUGP`),
   UNIQUE KEY `CodeUGP` (`CodeUGP`),
   UNIQUE KEY `NomUGP` (`NomUGP`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `ugp`
+--
+
+INSERT INTO `ugp` (`CodeUGP`, `NomUGP`, `cycle`, `NumDepartement_id`) VALUES
+('1CTB', 'Module des sciences comptables', 1, 'DCTB'),
+('1EMI', 'UGP de 1er cycle en arts', 1, 'EMI'),
+('1INF', 'Module de l\'informatique', 1, 'DII'),
+('1ING', 'Module de l\'ingénierie', 1, 'DII');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

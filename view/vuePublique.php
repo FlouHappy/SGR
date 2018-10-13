@@ -37,7 +37,7 @@ class VuePublique {
 
         echo ('
 
-      <form action="index.php?action=FormulaireReso" class="formPreForm" method="POST">
+      <form action="index.php?action=formulaireReso" class="formPreForm" method="POST">
         <div class="input-groupe">
         <h2> Renseignement Résolution</h2>
           <label for="projet">Projet deja existant:</label>

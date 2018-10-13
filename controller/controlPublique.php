@@ -34,14 +34,17 @@ class controlPublique {
         $this->vue->afficherAccueil();
     }
 
-    public function preFormulaireRéso() {
+    public function preFormulaireReso() {
         $this->vue->afficherPreFormulaireRésolution(10, 10);
     }
 
-    public function formulaireRéso() {
-        echo ('<form action="index.php?action=TraitementRéso" class="formReso" id="formReso" method="POST">');
+    public function formulaireReso() {
+        echo ('<form action="index.php?action=traitementReso" class="formReso" id="formReso" method="POST">');
         if ($_POST["projet"] == "non") {
+            $_SESSION['projet'] = "oui";
             $this->vue->afficherFormulaireProjet();
+        } else {
+            $_SESSION['projet'] = "non";
         }
 
         $_SESSION['nbCour'] = $_POST['cour'];
@@ -51,6 +54,20 @@ class controlPublique {
         $ugp = $this->modelUgp->allUgpTrie();
         $projet = $this->modelProjet->allProjetTrie();
         $this->vue->afficherFormulaireResolution($cour, $prog, $ugp, $projet);
+    }
+
+    public function traitementReso() {
+        $msgProjet;
+        if ($_SESSION['projet'] == "oui") {
+            $descrip = filter_var($_POST["description"], FILTER_SANITIZE_STRING);
+            $noteProjet = filter_var($_POST["noteProjet"], FILTER_SANITIZE_STRING);
+            $lien = filter_var($_POST["lien"], FILTER_SANITIZE_STRING);
+            $msgProjet = $this->modelProjet->nouveauProjet($descrip, $_POST["etat"], $noteProjet, $lien);
+        }
+        $numReso = filter_var($_POST["description"], FILTER_SANITIZE_STRING);
+        $sujetReso = filter_var($_POST["description"], FILTER_SANITIZE_STRING);
+        $ugp= filter_var($_POST["description"], FILTER_SANITIZE_STRING);
+        $noteReso= filter_var($_POST["description"], FILTER_SANITIZE_STRING);
     }
 
 }

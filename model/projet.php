@@ -44,6 +44,34 @@ class Projet {
         $bdd->fermerConnexion();
         return($allProjet);
     }
+    
+    function chercherNumProjetParDescrip($descript) {
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM projet WHERE DescriptionProjet= '$descript' ";
+        $projet=null;
+        while ($row = mysqli_fetch_array($result)) {
+            $projet = $this->creerProjet($row["NumProjet"], $row["DescriptionProjet"], $row["EtatProjet"], $row["Notes"], $row["LienDossier"]);
+        }
+        $bdd->fermerConnexion();
+        if ($projet !=null) {
+            return($projet->num);
+        }else{
+            return ('none');
+        }
+        
+    }
+
+    function nouveauProjet($descrip, $etat, $note, $lien) {
+        $bdd = new ConnexionBDD();
+        $sql = "INSERT INTO projet (DescriptionProjet, EtatProjet, Notes, LienDossier) VALUES ('$descrip','$etat','$note','$lien')";
+        $msg='';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg="Projet créé";
+        } else {
+            $mmsg= "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        return $msg;
+    }
 
     function getNum() {
         return $this->num;

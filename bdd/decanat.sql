@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 12 oct. 2018 à 02:22
+-- Généré le :  jeu. 01 nov. 2018 à 15:13
 -- Version du serveur :  5.7.21
 -- Version de PHP :  5.6.35
 
@@ -82,8 +82,15 @@ INSERT INTO `cour` (`Sigle`, `NomCours`, `Cycle`) VALUES
 DROP TABLE IF EXISTS `cour_receptionreso`;
 CREATE TABLE IF NOT EXISTS `cour_receptionreso` (
   `cour_id` varchar(10) NOT NULL,
-  `receptionReso_id` int(10) NOT NULL
+  `receptionReso_id` varchar(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `cour_receptionreso`
+--
+
+INSERT INTO `cour_receptionreso` (`cour_id`, `receptionReso_id`) VALUES
+('ADM1003', 'saadg');
 
 -- --------------------------------------------------------
 
@@ -147,6 +154,15 @@ CREATE TABLE IF NOT EXISTS `programme_receptionreso` (
   `receptionReso_id` varchar(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `programme_receptionreso`
+--
+
+INSERT INTO `programme_receptionreso` (`programme_id`, `receptionReso_id`) VALUES
+('0028', 'saadg'),
+('0048', 'zecg187'),
+('0048', 'zecg187');
+
 -- --------------------------------------------------------
 
 --
@@ -162,14 +178,38 @@ CREATE TABLE IF NOT EXISTS `projet` (
   `LienDossier` varchar(2098) DEFAULT NULL,
   PRIMARY KEY (`NumProjet`),
   UNIQUE KEY `NumProjet` (`NumProjet`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `projet`
 --
 
 INSERT INTO `projet` (`NumProjet`, `DescriptionProjet`, `EtatProjet`, `Notes`, `LienDossier`) VALUES
-(1, 'Suppression programme court', 'ouvert', 'voir monsieur x', NULL);
+(1, 'Suppression programme court', 'ouvert', 'voir monsieur x', NULL),
+(2, 'dsds', 'fermé', 'dsds', 'ds'),
+(3, 'gsds', 'ouvert', 'dsfs', ''),
+(4, 'dsa', 'fermé', 'sa', ''),
+(5, 'dss', 'ouvert', 'ds', 'dfsf'),
+(6, 'dss', 'ouvert', 'ds', 'dfsf'),
+(7, 'dssa', 'fermé', 'sasa', 'sa'),
+(8, 'sasa', 'fermé', 'sfd', ''),
+(9, 'ds', 'fermé', 'sa', 'sa'),
+(10, 'ds', 'fermé', 'sa', 'sa'),
+(11, 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
+(12, 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
+(13, 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
+(14, 'f', 'ouvert', 'sasa', 'sasa'),
+(15, 'f', 'ouvert', 'sasa', 'sasa'),
+(16, 'f', 'ouvert', 'sasa', 'sasa'),
+(17, 'f', 'ouvert', 'sasa', 'sasa'),
+(18, 'f', 'ouvert', 'sasa', 'sasa'),
+(19, 'f', 'ouvert', 'sasa', 'sasa'),
+(20, 'f', 'ouvert', 'sasa', 'sasa'),
+(21, 'f', 'ouvert', 'sasa', 'sasa'),
+(22, 'f', 'ouvert', 'sasa', 'sasa'),
+(23, 'f', 'ouvert', 'sasa', 'sasa'),
+(24, 'f', 'ouvert', 'sasa', 'sasa'),
+(25, 'f', 'ouvert', 'sasa', 'sasa');
 
 -- --------------------------------------------------------
 
@@ -183,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `receptionreso` (
   `Sujet` varchar(300) DEFAULT NULL,
   `NumProjet_id` int(11) DEFAULT NULL,
   `DateDemande` date NOT NULL,
-  `DateReception` date NOT NULL,
+  `DateReception` date DEFAULT NULL,
   `Traitement` varchar(60) DEFAULT NULL,
   `Notes` varchar(2000) DEFAULT NULL,
   `Departement_id` varchar(10) DEFAULT NULL,
@@ -192,6 +232,14 @@ CREATE TABLE IF NOT EXISTS `receptionreso` (
   PRIMARY KEY (`NumReception`),
   UNIQUE KEY `NumReception` (`NumReception`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `receptionreso`
+--
+
+INSERT INTO `receptionreso` (`NumReception`, `Sujet`, `NumProjet_id`, `DateDemande`, `DateReception`, `Traitement`, `Notes`, `Departement_id`, `codeUgp_id`, `agent_id`) VALUES
+('saadg', 'sadffsd', 23, '2018-10-30', NULL, NULL, 'ds', 'DII', '1CTB', NULL),
+('zecg187', 'fdg', 3, '2018-10-31', NULL, NULL, '', 'DII', '1CTB', NULL);
 
 -- --------------------------------------------------------
 

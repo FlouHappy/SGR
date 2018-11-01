@@ -94,12 +94,12 @@ class VuePublique {
                 <textarea name="noteProjet" rows="10" cols="50"  form="formReso"></textarea>
                 <br><br>
            <label for="nlien">Lien vers le dossier du projet (facultatif):</label>     
-    <input type="text" i required placeholder="lien vers le dossier du projet" name="lien" >
+    <input type="text"  placeholder="lien vers le dossier du projet" name="lien" >
     <br>
                 <br>');
     }
 
-    public function afficherFormulaireResolution($cour, $prog, $ugp, $projet) {
+    public function afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement) {
 
 
         echo('<h1> Renseignement sur la résolution :</h1><br>
@@ -120,7 +120,7 @@ class VuePublique {
         foreach ($ugp as $value) {
             echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
         }
-        echo('</select> </div> ');
+        echo('</select><br>  ');
 
         if ($_POST["projet"] == "oui") {
             echo('<label for="projet">Projet : </label>
@@ -128,7 +128,7 @@ class VuePublique {
             foreach ($projet as $value) {
                 echo('<option value="' . $value->getNum() . '">' . $value->getNum() . ': ' . $value->getDescription() . '</option>');
             }
-            echo('</select> </div> ');
+            echo('</select>  ');
         }
 
         if (($_POST['cour'] != "none") && ($_POST['cour'] != "all" )) {
@@ -159,12 +159,178 @@ class VuePublique {
             }
         }
 
+        echo('<div class="departement">
+                <label for="departement">Departement concerné par la résolution: </label>
+                <select id="departement"  name="departement">');
+
+
+        foreach ($departement as $value) {
+            echo('<option value="' . $value->getNum() . '">' . $value->getNum() . ': ' . $value->getNom() . '</option>');
+        }
+        echo('</select> 
+                   </div> ');
+
         echo('<label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label>
            <br>
                 <textarea name="noteReso" rows="10" cols="50"  form="formReso"></textarea>
                 <br><br>
                 
              <input type="submit" name="valider" value="Créer"></form> ');
+    }
+
+    public function rechercheResolution($reso) {
+
+        echo('<br><br>Rechercher : <a href="index.php?action=rechercheResoPar">
+          <button id="btn_seconnecter" type="button">Par élément </button>
+        </a> <a href="index.php?action=rechercheResoMot">
+          <button id="btn_seconnecter" type="button">Par mot clé</button>
+        </a><a href="index.php?action=voirReso">
+          <button id="btn_seconnecter" type="button">Toutes les résolutions</button>
+        </a>
+        <br> <br><h2>Liste de toutes les résolutions :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><br><table >
+        <tr>
+            <th>Numéro</th>
+            <th>Sujet</th>
+            <th>Date de la demande</th>
+            <th>Date de reception</th>
+            <th>Département</th>
+            <th>Ugp</th>
+        </tr>');
+        foreach ($reso as $value) {
+            echo('<tr><td><a href="index.php?action=resolution&id='.$value->getNum().'"> '.$value->getNum().'</a></td>
+                    <td>'.$value->getSujet().'</td>
+                    <td>'.$value->getDateDemande().'</td>
+                    <td>'.$value->getDateReception().'</td>
+                    <td>'.$value->getDepartement_id().'</td>
+                    <td>'.$value->getCodeUgp_id().'</td></tr>'  );
+        }
+     echo('</table>');
+    }
+    
+    public function rechercheResolutionParType($reso) {
+
+        echo('<br><br>Rechercher : <a href="index.php?action=rechercheResoPar">
+          <button id="btn_seconnecter" type="button">Par élément </button>
+        </a> <a href="index.php?action=rechercheResoMot">
+          <button id="btn_seconnecter" type="button">Par mot clé</button>
+        </a> <a href="index.php?action=voirReso">
+          <button id="btn_seconnecter" type="button">Toutes les résolutions</button>
+        </a>
+        <br> <br><h2>Liste des résolutions '.$_SESSION['recherche'].' :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><br><table>
+        <tr>
+            <th>Numéro</th>
+            <th>Sujet</th>
+            <th>Date de la demande</th>
+            <th>Département</th>
+            <th>Ugp</th>
+        </tr>');
+        foreach ($reso as $value) {
+            echo('<tr><td><a href="index.php?action=resolution&id='.$value->getNum().'"> '.$value->getNum().'</a></td>
+                    <td>'.$value->getSujet().'</td>
+                    <td>'.$value->getDateDemande().'</td>
+                    <td>'.$value->getDepartement_id().'</td>
+                    <td>'.$value->getCodeUgp_id().'</td></tr>'  );
+        }
+     echo('</table>');
+    }
+                    
+    public function afficherUneResolution($reso,$programme,$cour){
+        echo('<div class="resolution">
+                Numéro de la résolution:    '.$reso->getNum().'<br>
+                Sujet de la résolution:     '.$reso->getSujet().'<br>
+                Projet associé:     <a href="index.php?action=projet&id='.$reso->getNumProjet_id().'"> '.$reso->getNumProjet_id().'</a><br>
+                Date de demande:    '.$reso->getDateDemande(). '<br>
+                Date de reception:    '.$reso->getDateReception(). '<br>
+                Traitement:     '.$reso->getTraitement(). '<br>
+                Notes:  '.$reso->getNotes(). '<br>
+                Departement:    '.$reso->getDepartement_id(). '<br>
+                Ugp:    '.$reso->getCodeUgp_id(). '<br>
+                agent:  '.$reso->getAgent_id(). '<br><br>
+                Liste des programmes concerné :  <br> 
+                ');
+        foreach ($programme as $value){
+            echo($value->getCode().':  '.$value->getNom().'<br>');
+            
+        }
+        echo('
+                
+                <br><br> Liste des cours concerné: <br>
+                 ');
+        foreach ($cour as $value){
+            echo($value->getSigle().':  '.$value->getNom().'<br>');
+            
+        }
+        echo('
+                
+</div>');
+    }
+    
+    public function afficherUnProjet($projet){
+        echo('<div class="resolution">
+                Numéro du projet:    '.$projet->getNum().'<br>
+                Description :     '.$projet->getDescription().'<br>
+                État:    '.$projet->getEtat().'<br>
+                Notes:    '.$projet->getNote(). '<br>
+                Lien dossier:     '.$projet->getLien(). '<br><br><br>
+                
+        </div>');   
+        
+    }
+    
+    
+    public function rechercheParType($cour,$prog,$ugp,$departement,$agent){
+         //par Ugp
+        echo ('<form action="index.php?action=resultatRecherchePar&type=ugp" class="formReso" id="formReso" method="POST">
+                 <h2>Recherche Par UGP:</h2>
+                 <div class="ugp">     
+        <label for="element">UGP: </label>
+         <select id="element" name="element">');
+        foreach ($ugp as $value) {
+            echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
+        }
+        echo('</select><br>  
+                <input type="submit" name="valider" value="Rechercher">
+                 </form><br>  <br>  <br>  ');
+        
+        //Par programme
+         echo ('<form action="index.php?action=resultatRecherchePar&type=programme" class="formReso" id="formReso" method="POST">
+                 <h2>Recherche Par programme:</h2>
+                 <div class="programme">     
+        <label for="element">Programme: </label>
+         <select id="element" name="element">');
+        foreach ($prog as $value) {
+            echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
+        }
+        echo('</select><br>  
+                <input type="submit" name="valider" value="Rechercher">
+                 </form>');
+        
+        //Par cour
+         echo ('<form action="index.php?action=resultatRecherchePar&type=cour" class="formReso" id="formReso" method="POST">
+                 <h2>Recherche Par cour:</h2>
+                 <div class="cour">     
+        <label for="element">Cour: </label>
+         <select id="element" name="element">');
+        foreach ($cour as $value) {
+            echo('<option value="' . $value->getSigle() . '">' . $value->getSigle() . ': ' . $value->getNom() . '</option>');
+        }
+        echo('</select><br>  
+                <input type="submit" name="valider" value="Rechercher">
+                 </form>');
+        
+         
+        //Par Agent
+         echo ('<form action="index.php?action=resultatRecherchePar&type=agent" class="formReso" id="formReso" method="POST">
+                 <h2>Recherche Par agent:</h2>
+                 <div class="agent">     
+        <label for="element">Agent: </label>
+         <select id="element" name="element">');
+        foreach ($agent as $value) {
+            echo('<option value="' . $value->getId() . '">' . $value->getNom() . ' ' . $value->getPrenom() . '</option>');
+        }
+        echo('</select><br>  
+                <input type="submit" name="valider" value="Rechercher">
+                 </form>');
     }
 
 }

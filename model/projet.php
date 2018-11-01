@@ -44,33 +44,52 @@ class Projet {
         $bdd->fermerConnexion();
         return($allProjet);
     }
-    
+    function rechercheProjetParId($id){
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM projet WHERE NumProjet='$id'";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $projet=null;
+        while ($row = mysqli_fetch_array($result)) {
+            $projet= $this->creerProjet($row["NumProjet"], $row["DescriptionProjet"], $row["EtatProjet"], $row["Notes"], $row["LienDossier"]);
+        }
+        $bdd->fermerConnexion();
+        return($projet);
+    }
+
     function chercherNumProjetParDescrip($descript) {
         $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM projet WHERE DescriptionProjet= '$descript' ";
-        $projet=null;
+        $projet = null;
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         while ($row = mysqli_fetch_array($result)) {
             $projet = $this->creerProjet($row["NumProjet"], $row["DescriptionProjet"], $row["EtatProjet"], $row["Notes"], $row["LienDossier"]);
         }
         $bdd->fermerConnexion();
-        if ($projet !=null) {
+        if ($projet != null) {
             return($projet->num);
-        }else{
+        } else {
             return ('none');
         }
-        
     }
 
     function nouveauProjet($descrip, $etat, $note, $lien) {
         $bdd = new ConnexionBDD();
         $sql = "INSERT INTO projet (DescriptionProjet, EtatProjet, Notes, LienDossier) VALUES ('$descrip','$etat','$note','$lien')";
-        $msg='';
+        $msg = '';
         if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
-            $msg="Projet créé";
+            $msg = "Projet créé";
         } else {
-            $mmsg= "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
         }
-        return $msg;
+        $sql = "SELECT NumProjet FROM projet WHERE DescriptionProjet='$descrip'AND Notes='$note'";
+        $id = null;
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        while ($row = mysqli_fetch_array($result)) {
+            $id = $row["NumProjet"];
+        }
+        ;
+        $bdd->fermerConnexion();
+        return $id;
     }
 
     function getNum() {

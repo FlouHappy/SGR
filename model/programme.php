@@ -29,6 +29,19 @@ class Programme {
         $prog->ugp = $u;
         return ($prog);
     }
+    
+    function chercherUnProgramme($id){
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM programmes WHERE codeProgramme='$id'";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $prog=null;
+        while ($row = mysqli_fetch_array($result)) {
+            $prog= $this->creerProgramme($row["CodeProgramme"], $row["NomProgramme"],$row["TypeProgramme"],$row["codeUgp_id"]);
+        }
+        $bdd->fermerConnexion();
+        return($prog);
+        
+    }
     function allProgrammeTrie(){
         $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM programmes ORDER BY CodeProgramme ASC";
@@ -41,6 +54,21 @@ class Programme {
         $bdd->fermerConnexion();
         return($allProg);
     }
+    
+    function programmeAssocier($id){
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM programme_receptionreso WHERE receptionReso_id = '$id'";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $allProg=array();
+        while ($row = mysqli_fetch_array($result)) {
+            $prog=$this->chercherUnProgramme($row["programme_id"]);
+            array_push($allProg,$prog);
+        }
+        $bdd->fermerConnexion();
+        return($allProg);
+    }
+        
+    
     
     
     

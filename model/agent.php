@@ -32,6 +32,18 @@ class Agent {
         $agent->creerAgent($i, $m, $n, $p, $e, $a);
         return $agent;
     }
+     function allAgentTrie() {
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM agent ORDER BY Nom ASC";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $allAgent = array();
+        while ($row = mysqli_fetch_array($result)) {
+            $agent = $this->creerUnAgent($row["Id"], $row["Password"], $row["Nom"], $row["Prenom"], $row["Email"], $row["Actif"]);
+            array_push($allAgent, $agent);
+        }
+        $bdd->fermerConnexion();
+        return($allAgent);
+    }
 
     public function rechercheParId($user) {
         $bdd = new ConnexionBDD();

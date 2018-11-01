@@ -50,10 +50,29 @@ if (!isset($_SESSION["user"])) {
                 $controlPublic->formulaireReso();
                 break;
             case "traitementReso":
-                var_dump($_POST);
-                var_dump($_SESSION);
                 $controlPublic->traitementReso();
+                 header('Location: index.php?action=resoCreer');
                 break;
+            case "resoCreer":
+                $controlPublic->accueil();
+                echo('Votre résolution a été enregistré');
+                break;
+            case "voirReso":
+                 $controlPublic->rechercheReso();
+                break;
+            case "resolution":
+                 $controlPublic->resolutionComplete();
+                break;
+            case "projet":
+                 $controlPublic->projetComplet();
+                break;
+            case"rechercheResoPar":
+                $controlPublic->rechercheParType();
+                break;
+            case "resultatRecherchePar":
+                $controlPublic->resultatRechercheParType();
+                break;
+                
         }
         //parti non connecté (page accueil )
     } else {

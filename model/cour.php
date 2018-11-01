@@ -27,6 +27,18 @@ class Cour {
         $cour->cycle = $c;
         return ($cour);
     }
+    
+    function chercherUnCour($id){
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM cour WHERE Sigle='$id'";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $cour=null;
+        while ($row = mysqli_fetch_array($result)) {
+            $cour= $this->creerCour($row["Sigle"], $row["NomCours"],$row["Cycle"]);
+        }
+        $bdd->fermerConnexion();
+        return($cour);
+    }
 
     function allCourTrie() {
         $bdd = new ConnexionBDD();
@@ -36,6 +48,19 @@ class Cour {
         while ($row = mysqli_fetch_array($result)) {
             $cour = $this->creerCour($row["Sigle"], $row["NomCours"], $row["Cycle"]);
             array_push($allCour, $cour);
+        }
+        $bdd->fermerConnexion();
+        return($allCour);
+    }
+    
+    function courAssocier($id){
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM cour_receptionreso WHERE receptionReso_id = '$id'";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $allCour=array();
+        while ($row = mysqli_fetch_array($result)) {
+            $cour=$this->chercherUnCour($row["cour_id"]);
+            array_push($allCour,$cour);
         }
         $bdd->fermerConnexion();
         return($allCour);

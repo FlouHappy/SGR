@@ -80,10 +80,26 @@ Authors:  Franck Happy
   text-align: center;
 }
 /**** Fin Pour Calendrier **/
-#btn_seconnecter{
-padding: auto;
-text-align: center;
-cursor: pointer;
+.btn-goup button a:link {
+  color: inherit;
+  text-decoration: none;
+}
+.btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    width: 50%; /* Set a width if needed */
+    display: block; /* Make the buttons appear below each other */
+}
+.btn-group button:not(:last-child) {
+    border-bottom: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #3e8e41;
 }
 /***Fin Style pour barre de gauche***/
 
@@ -163,6 +179,25 @@ input[type=submit]:hover {
     padding: 170px;
     text-align: center;
 }
+#divconhalf1 {
+      height: 700px;
+      margin-top: 20px;
+        border-radius: 8px;
+        background-color: #f2f2f2;
+        padding: 30px;
+        text-align: center;
+      float: left;
+}
+
+#divconhalf2 {
+  height: 700px;
+  margin-top: 20px;
+    border-radius: 8px;
+    background-color: #f2f2f2;
+    padding: 30px;
+    text-align: center;
+  }
+
 #divcon1 {
   height: 500px;
   margin-top: 30px;

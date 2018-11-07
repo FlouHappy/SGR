@@ -193,6 +193,7 @@ class VuePublique {
         </a>
         <br> <br><h2>Liste de toutes les résolutions :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><br><table >
         <tr>
+            <th>Id</th>
             <th>Numéro</th>
             <th>Sujet</th>
             <th>Date de la demande</th>
@@ -201,7 +202,8 @@ class VuePublique {
             <th>Ugp</th>
         </tr>');
         foreach ($reso as $value) {
-            echo('<tr><td><a href="index.php?action=resolution&id='.$value->getNum().'"> '.$value->getNum().'</a></td>
+            echo('<tr><td><a href="index.php?action=resolution&id='.$value->getId().'"> '.$value->getId().'</a></td>
+                    <td>'.$value->getNum().'</td>
                     <td>'.$value->getSujet().'</td>
                     <td>'.$value->getDateDemande().'</td>
                     <td>'.$value->getDateReception().'</td>
@@ -230,7 +232,8 @@ class VuePublique {
             <th>Ugp</th>
         </tr>');
         foreach ($reso as $value) {
-            echo('<tr><td><a href="index.php?action=resolution&id='.$value->getNum().'"> '.$value->getNum().'</a></td>
+            echo('<tr><td><<td><a href="index.php?action=resolution&id='.$value->getId().'"> '.$value->getId().'</a></td>
+                    <td>'.$value->getNum().'</td>
                     <td>'.$value->getSujet().'</td>
                     <td>'.$value->getDateDemande().'</td>
                     <td>'.$value->getDepartement_id().'</td>
@@ -241,6 +244,7 @@ class VuePublique {
 
     public function afficherUneResolution($reso,$programme,$cour){
         echo('<div class="resolution">
+                Id de la résolution:    '.$reso->getId().'<br>
                 Numéro de la résolution:    '.$reso->getNum().'<br>
                 Sujet de la résolution:     '.$reso->getSujet().'<br>
                 Projet associé:     <a href="index.php?action=projet&id='.$reso->getNumProjet_id().'"> '.$reso->getNumProjet_id().'</a><br>

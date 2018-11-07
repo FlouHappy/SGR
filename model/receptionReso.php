@@ -11,7 +11,7 @@ namespace SGR\model;
 use SGR\model\ConnexionBDD;
 
 class ReceptionReso {
-
+    private $id;
     private $num;
     private $sujet;
     private $numProjet_id;
@@ -27,8 +27,9 @@ class ReceptionReso {
         
     }
 
-    function creerReceptionReso($n,$s, $np, $dd, $dr, $t,$nt,$d,$c,$a) {
+    function creerReceptionReso($i,$n,$s, $np, $dd, $dr, $t,$nt,$d,$c,$a) {
         $reso = new ReceptionReso();
+        $reso->id=$i;
         $reso->num = $n;
         $reso->sujet=$s;
         $reso->numProjet_id = $np;
@@ -61,7 +62,7 @@ class ReceptionReso {
     
     function associationProgramme($idReso,$idProg){
          $bdd = new ConnexionBDD();
-        $sql = "INSERT INTO programme_receptionreso (programme_id, receptionReso_id) VALUES ('$idProg','$idReso')";
+        $sql = "INSERT INTO programme_receptionreso (programme_id, receptionReso_id) VALUES ('$idProg',$idReso)";
         $msg='';
         if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
             $msg="Résolution créé";
@@ -75,7 +76,7 @@ class ReceptionReso {
     
     function associationCour($idReso,$idCour){
          $bdd = new ConnexionBDD();
-        $sql = "INSERT INTO cour_receptionreso (cour_id, receptionReso_id) VALUES ('$idCour','$idReso')";
+        $sql = "INSERT INTO cour_receptionreso (cour_id, receptionReso_id) VALUES ('$idCour',$idReso)";
         $msg='';
         if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
             $msg="Résolution créé";
@@ -89,15 +90,28 @@ class ReceptionReso {
     
      function rechercheResoParId($id){
         $bdd = new ConnexionBDD();
-        $sql = "SELECT * FROM receptionreso WHERE NumReception='$id'";
+        $sql = "SELECT * FROM receptionreso WHERE id=$id";
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $reso=new ReceptionReso();
         while ($row = mysqli_fetch_array($result)) {
-            $reso= $this->creerReceptionReso($row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]); 
+            $reso= $this->creerReceptionReso($row["id"],$row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]); 
         }
         $bdd->fermerConnexion();
         return($reso);
     }
+    
+         function rechercheResoParNumReception($id){
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM receptionreso WHERE NumReception='$id'";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $reso=new ReceptionReso();
+        while ($row = mysqli_fetch_array($result)) {
+            $reso= $this->creerReceptionReso($row["id"],$row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]); 
+        }
+        $bdd->fermerConnexion();
+        return($reso);
+    }
+    
     
     
     
@@ -108,7 +122,7 @@ class ReceptionReso {
         $allReso= array();
         while ($row = mysqli_fetch_array($result)) {
             $_SESSION["count"]++;
-            $reso= $this->creerReceptionReso($row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]);
+            $reso= $this->creerReceptionReso($row["id"],$row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]);
             array_push($allReso,$reso);
         }
         $bdd->fermerConnexion();
@@ -122,7 +136,7 @@ class ReceptionReso {
         $allReso= array();
         while ($row = mysqli_fetch_array($result)) {
             $_SESSION["count"]++;
-            $reso= $this->creerReceptionReso($row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]);
+            $reso= $this->creerReceptionReso($row["id"],$row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]);
             array_push($allReso,$reso);
         }
         $bdd->fermerConnexion();
@@ -136,7 +150,7 @@ class ReceptionReso {
         $allReso= array();
         while ($row = mysqli_fetch_array($result)) {
             $_SESSION["count"]++;
-            $reso= $this->creerReceptionReso($row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]);
+            $reso= $this->creerReceptionReso($row["id"],$row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]);
             array_push($allReso,$reso);
         }
         $bdd->fermerConnexion();
@@ -173,6 +187,10 @@ class ReceptionReso {
         return($allReso);
         
     }
+    function getId() {
+        return $this->id;
+    }
+    
     
     function getNum() {
         return $this->num;

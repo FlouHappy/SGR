@@ -57,7 +57,7 @@ class Programme {
     
     function programmeAssocier($id){
         $bdd = new ConnexionBDD();
-        $sql = "SELECT * FROM programme_receptionreso WHERE receptionReso_id = '$id'";
+        $sql = "SELECT * FROM programme_receptionreso WHERE receptionReso_id = $id";
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $allProg=array();
         while ($row = mysqli_fetch_array($result)) {

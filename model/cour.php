@@ -55,7 +55,7 @@ class Cour {
     
     function courAssocier($id){
         $bdd = new ConnexionBDD();
-        $sql = "SELECT * FROM cour_receptionreso WHERE receptionReso_id = '$id'";
+        $sql = "SELECT * FROM cour_receptionreso WHERE receptionReso_id = $id";
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $allCour=array();
         while ($row = mysqli_fetch_array($result)) {

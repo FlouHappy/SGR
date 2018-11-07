@@ -83,15 +83,15 @@ class controlPublique {
             $idProjet = $_POST["projet"];
         }
         $this->modelReceptionReso->nouvelleReso($numReso, $sujetReso, $idProjet, $noteReso, $departement, $ugp);
-
+        $id= $this->modelReceptionReso->rechercheResoParNumReception($numReso);
         if ($_SESSION['nbCour'] != "none") {
             for ($i = 1; $i <= $_SESSION['nbCour']; $i++) {
-                $this->modelReceptionReso->associationCour($numReso, $_POST["cour" . $i]);
+                $this->modelReceptionReso->associationCour($id->getId(), $_POST["cour" . $i]);
             }
         }
         if ($_SESSION['nbProgramme'] != "none") {
             for ($i = 1; $i <= $_SESSION['nbCour']; $i++) {
-                $this->modelReceptionReso->associationProgramme($numReso, $_POST["programme" . $i]);
+                $this->modelReceptionReso->associationProgramme($id->getId(), $_POST["programme" . $i]);
             }
         }
     }
@@ -103,7 +103,7 @@ class controlPublique {
     }
 
     public function resolutionComplete() {
-        $id = filter_var($_GET["id"], FILTER_SANITIZE_STRING);
+        $id = filter_var($_GET["id"], FILTER_SANITIZE_NUMBER_INT);
         $reso = $this->modelReceptionReso->rechercheResoParId($id);
         $programme = $this->modelProg->programmeAssocier($id);
         $cour = $this->modelCour->courAssocier($id);

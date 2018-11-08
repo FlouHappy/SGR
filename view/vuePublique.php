@@ -87,7 +87,6 @@ class VuePublique {
                 <br><br>
           <label for="etat">Etat du projet:</label>
           <input type="radio" name="etat" value="ouvert" required> Ouvert
-          <input type="radio" name="etat" value="fermé"> Fermé
           <input type="radio" name="etat" value="attente"> En attente <br><br><br>
 
            <label for="noteProjet">Note supplémentaire concernant le projet (facultatif):</label>
@@ -186,8 +185,8 @@ class VuePublique {
       echo('<div id="divcon">');
         echo('<br><br>Rechercher : <a href="index.php?action=rechercheResoPar">
           <button id="btn_seconnecter" type="button">Par élément </button>
-        </a> <a href="index.php?action=rechercheResoMot">
-          <button id="btn_seconnecter" type="button">Par mot clé</button>
+        </a> <a href="index.php?action=rechercheAvancer">
+          <button id="btn_seconnecter" type="button">Recherche avancée</button>
         </a><a href="index.php?action=voirReso">
           <button id="btn_seconnecter" type="button">Toutes les résolutions</button>
         </a>
@@ -211,20 +210,22 @@ class VuePublique {
                     <td>'.$value->getCodeUgp_id().'</td></tr>'  );
         }
      echo('</table>');
-     echo('</div>');
+     echo('<a href="Excel/allResolution.xlsx" download="allResolution.xlsx">Télécharger la liste</a>
+        </a></div>');
     }
 
-    public function rechercheResolutionParType($reso) {
+    public function rechercheResolutionParType($reso,$titreFichier) {
 
-        echo('<br><br>Rechercher : <a href="index.php?action=rechercheResoPar">
+        echo('<div id="divcon"><br><br>Rechercher : <a href="index.php?action=rechercheResoPar">
           <button id="btn_seconnecter" type="button">Par élément </button>
-        </a> <a href="index.php?action=rechercheResoMot">
-          <button id="btn_seconnecter" type="button">Par mot clé</button>
+        </a> <a href="index.php?action=rechercheAvancer">
+          <button id="btn_seconnecter" type="button">recherche avancée</button>
         </a> <a href="index.php?action=voirReso">
           <button id="btn_seconnecter" type="button">Toutes les résolutions</button>
         </a>
         <br> <br><h2>Liste des résolutions '.$_SESSION['recherche'].' :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><br><table>
         <tr>
+            <th>Id</th>
             <th>Numéro</th>
             <th>Sujet</th>
             <th>Date de la demande</th>
@@ -232,14 +233,15 @@ class VuePublique {
             <th>Ugp</th>
         </tr>');
         foreach ($reso as $value) {
-            echo('<tr><td><<td><a href="index.php?action=resolution&id='.$value->getId().'"> '.$value->getId().'</a></td>
+            echo('<tr><td><a href="index.php?action=resolution&id='.$value->getId().'"> '.$value->getId().'</a></td>
                     <td>'.$value->getNum().'</td>
                     <td>'.$value->getSujet().'</td>
                     <td>'.$value->getDateDemande().'</td>
                     <td>'.$value->getDepartement_id().'</td>
                     <td>'.$value->getCodeUgp_id().'</td></tr>'  );
         }
-     echo('</table>');
+     echo('</table><a href="Excel/'.$titreFichier.'.xlsx" download="'.$titreFichier.'.xlsx">Télécharger la liste</a>
+        </a></div>');
     }
 
     public function afficherUneResolution($reso,$programme,$cour){
@@ -285,6 +287,7 @@ class VuePublique {
         </div>');
 
     }
+    
 
 
     public function rechercheParType($cour,$prog,$ugp,$departement,$agent){
@@ -340,6 +343,37 @@ class VuePublique {
         echo('</select><br>
                 <input type="submit" name="valider" value="Rechercher">
                  </form>');
-    }
+        
 
+        //Par date
+        echo ('<form action="index.php?action=resultatRecherchePar&type=date" class="formReso" id="formReso" method="POST">
+                 <h2>Recherche Par Date:</h2>
+                 <div class="date">
+        <label for="element">Date: </label>
+         <select id="element" name="element">');
+        $i=2015;
+        $date=date("Y");
+        $fin= intval($date);
+        while ($i <=$fin ) {
+            echo('<option value="' . $i. '">' . $i . '</option>');
+            $i++;
+        }
+        echo('</select><br>
+                <input type="submit" name="valider" value="Rechercher">
+                 </form>');
+        
+         //Par Mot clé
+        echo ('<form action="index.php?action=resultatRecherchePar&type=mot" class="formReso" id="formReso" method="POST">
+                 <h2>Recherche Par Mot clé:</h2>
+                 <div class="Mot">
+        <label for="element">Mot clé: </label>
+        <input type="text" id="element" name="element" required >
+
+        <br>
+                <input type="submit" name="valider" value="Rechercher">
+                 </form>');
+        
+    }
+    
+    
 }

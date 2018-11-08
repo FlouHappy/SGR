@@ -72,6 +72,7 @@ if (!isset($_SESSION["user"])) {
             case "resultatRecherchePar":
                 $controlPublic->resultatRechercheParType();
                 break;
+            
                 
         }
         //parti non connecté (page accueil )

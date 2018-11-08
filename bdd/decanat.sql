@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 07 nov. 2018 à 21:42
+-- Généré le :  jeu. 08 nov. 2018 à 17:10
 -- Version du serveur :  5.7.21
 -- Version de PHP :  5.6.35
 
@@ -91,7 +91,9 @@ CREATE TABLE IF NOT EXISTS `cour_receptionreso` (
 
 INSERT INTO `cour_receptionreso` (`cour_id`, `receptionReso_id`) VALUES
 ('ADM1003', 5),
-('ANG1273', 5);
+('ANG1273', 5),
+('ANG1273', 6),
+('BEA5031', 6);
 
 -- --------------------------------------------------------
 
@@ -161,7 +163,9 @@ CREATE TABLE IF NOT EXISTS `programme_receptionreso` (
 
 INSERT INTO `programme_receptionreso` (`programme_id`, `receptionReso_id`) VALUES
 ('0028', 5),
-('0014', 5);
+('0014', 5),
+('0014', 6),
+('', 6);
 
 -- --------------------------------------------------------
 
@@ -233,14 +237,15 @@ CREATE TABLE IF NOT EXISTS `receptionreso` (
   `agent_id` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `NumReception` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `receptionreso`
 --
 
 INSERT INTO `receptionreso` (`id`, `NumReception`, `Sujet`, `NumProjet_id`, `DateDemande`, `DateReception`, `Traitement`, `Notes`, `Departement_id`, `codeUgp_id`, `agent_id`) VALUES
-(5, 'CTB1X', 'Changement pré requis', 26, '2018-11-07', NULL, NULL, 'none', 'DII', '1CTB', NULL);
+(5, 'CTB1X', 'Changement pré requis', 26, '2018-11-07', NULL, NULL, 'none', 'DII', '1CTB', NULL),
+(6, 'CTB6X4', 'Fermeture cour', 11, '2018-11-08', NULL, NULL, 'voir conseil de septembre', 'DII', '1CTB', NULL);
 
 -- --------------------------------------------------------
 

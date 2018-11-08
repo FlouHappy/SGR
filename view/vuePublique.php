@@ -190,7 +190,8 @@ class VuePublique {
         </a><a href="index.php?action=voirReso">
           <button id="btn_seconnecter" type="button">Toutes les résolutions</button>
         </a>
-        <br> <br><h2>Liste de toutes les résolutions :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><br><table >
+        <br> <br><h2>Liste de toutes les résolutions :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><a href="Excel/allResolution.xlsx" download="allResolution.xlsx">Télécharger la liste</a>
+        </a><br><br><table >
         <tr>
             <th>Id</th>
             <th>Numéro</th>
@@ -210,8 +211,7 @@ class VuePublique {
                     <td>'.$value->getCodeUgp_id().'</td></tr>'  );
         }
      echo('</table>');
-     echo('<a href="Excel/allResolution.xlsx" download="allResolution.xlsx">Télécharger la liste</a>
-        </a></div>');
+     echo('</div>');
     }
 
     public function rechercheResolutionParType($reso,$titreFichier) {
@@ -223,7 +223,8 @@ class VuePublique {
         </a> <a href="index.php?action=voirReso">
           <button id="btn_seconnecter" type="button">Toutes les résolutions</button>
         </a>
-        <br> <br><h2>Liste des résolutions '.$_SESSION['recherche'].' :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><br><table>
+        <br> <br><h2>Liste des résolutions '.$_SESSION['recherche'].' :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><a href="Excel/'.$titreFichier.'.xlsx" download="'.$titreFichier.'.xlsx">Télécharger la liste</a>
+        </a><br><br><table>
         <tr>
             <th>Id</th>
             <th>Numéro</th>
@@ -240,8 +241,7 @@ class VuePublique {
                     <td>'.$value->getDepartement_id().'</td>
                     <td>'.$value->getCodeUgp_id().'</td></tr>'  );
         }
-     echo('</table><a href="Excel/'.$titreFichier.'.xlsx" download="'.$titreFichier.'.xlsx">Télécharger la liste</a>
-        </a></div>');
+     echo('</table></div>');
     }
 
     public function afficherUneResolution($reso,$programme,$cour){

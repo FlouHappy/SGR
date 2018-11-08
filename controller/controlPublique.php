@@ -102,7 +102,7 @@ class controlPublique {
         $_SESSION["count"] = 0;
         $reso = $this->modelReceptionReso->allResolutionTrie();
         $titre = 'allResolution';
-        $this->telechargerExcel($titre,$reso);
+        $this->telechargerExcel($titre, $reso);
         $this->vue->rechercheResolution($reso);
     }
 
@@ -131,46 +131,46 @@ class controlPublique {
                 case "ugp":
                     $_SESSION['recherche'] = 'affiliées a l' . "'" . 'UGP ' . $_POST["element"];
                     $reso = $this->modelReceptionReso->rechercheParUgp($_POST["element"]);
-                   
+
                     break;
                 case "programme":
                     $programme = $this->modelProg->chercherUnProgramme($_POST["element"]);
                     $_SESSION['recherche'] = 'affiliées au programme ' . $_POST["element"] . ' (' . $programme->getNom() . ') ';
                     $reso = $this->modelReceptionReso->rechercheParProgramme($_POST["element"]);
-                    
+
                     break;
                 case "cour":
                     $cour = $this->modelCour->chercherUnCour($_POST["element"]);
                     $_SESSION['recherche'] = 'affiliées au cour ' . $_POST["element"] . ' (' . $cour->getNom() . ') ';
                     $reso = $this->modelReceptionReso->rechercheParCour($_POST["element"]);
-                    
+
                     break;
                 case "agent":
                     $agent = $this->modelAgent->rechercheParId($_POST["element"]);
                     $_SESSION['recherche'] = 'Traitées par ' . $agent->getPrenom() . ' ' . $agent->getNom();
                     $reso = $this->modelReceptionReso->rechercheParAgent($_POST["element"]);
-                    
+
                     break;
                 case "date":
                     $_SESSION['recherche'] = " de l'année " . $_POST["element"];
                     $reso = $this->modelReceptionReso->rechercheParDate($_POST["element"]);
-                    
+
                     break;
                 case "mot":
                     $_SESSION['recherche'] = ' contenant le mot "' . $_POST["element"] . '"';
                     $reso = $this->modelReceptionReso->rechercheParMot($_POST["element"]);
-                    
+
                     break;
                 default:
                     header('Location: index.php?action=voirReso');
             }
-            $titreFichier = 'recherchePar'.$_GET['type'].'_'.$_POST["element"];
-            $this->telechargerExcel($titreFichier,$reso);
-            $this->vue->rechercheResolutionParType($reso,$titreFichier);
+            $titreFichier = 'recherchePar' . $_GET['type'] . '_' . $_POST["element"];
+            $this->telechargerExcel($titreFichier, $reso);
+            $this->vue->rechercheResolutionParType($reso, $titreFichier);
         }
     }
 
-    public function telechargerExcel($titre,$reso) {
+    public function telechargerExcel($titre, $reso) {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'Id');
@@ -183,46 +183,45 @@ class controlPublique {
         $sheet->setCellValue('H1', 'Notes');
         $sheet->setCellValue('I1', 'Numéro de projet');
         $sheet->setCellValue('J1', 'agent_id');
-         $y=2;
+        $y = 2;
         foreach ($reso as $value) {
-           
+
             $i = 1;
             while ($i <= 11) {
-                
+
                 switch ($i) {
                     case 1:
-                        $sheet->setCellValue('A'.$y, $value->getId());
+                        $sheet->setCellValue('A' . $y, $value->getId());
                         break;
                     case 2:
-                        $sheet->setCellValue('B'.$y, $value->getNum());
+                        $sheet->setCellValue('B' . $y, $value->getNum());
                         break;
                     case 3:
-                        $sheet->setCellValue('C'.$y, $value->getSujet());
+                        $sheet->setCellValue('C' . $y, $value->getSujet());
                         break;
                     case 4:
-                        $sheet->setCellValue('D'.$y, $value->getCodeUgp_id());
+                        $sheet->setCellValue('D' . $y, $value->getCodeUgp_id());
                         break;
                     case 5:
-                        $sheet->setCellValue('E'.$y, $value->getDepartement_id());
+                        $sheet->setCellValue('E' . $y, $value->getDepartement_id());
                         break;
                     case 6:
-                        $sheet->setCellValue('F'.$y, $value->getDateDemande());
+                        $sheet->setCellValue('F' . $y, $value->getDateDemande());
                         break;
                     case 7:
-                        $sheet->setCellValue('G'.$y, $value->getDateReception());
+                        $sheet->setCellValue('G' . $y, $value->getDateReception());
                         break;
                     case 8:
-                        $sheet->setCellValue('H'.$y, $value->getNotes());
+                        $sheet->setCellValue('H' . $y, $value->getNotes());
                         break;
                     case 9:
-                        $sheet->setCellValue('I'.$y, $value->getNumProjet_id());
+                        $sheet->setCellValue('I' . $y, $value->getNumProjet_id());
                         break;
                     case 10:
-                        $sheet->setCellValue('J'.$y, $value->getAgent_id());
+                        $sheet->setCellValue('J' . $y, $value->getAgent_id());
                         break;
                 }
                 $i++;
-                
             }
             $y++;
         }

@@ -117,7 +117,7 @@ class ReceptionReso {
     
     function allResolutionTrie(){
         $bdd = new ConnexionBDD();
-        $sql = "SELECT * FROM receptionreso ORDER BY NumReception ASC";
+        $sql = "SELECT * FROM receptionreso ORDER BY Id ASC";
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $allReso= array();
         while ($row = mysqli_fetch_array($result)) {
@@ -131,7 +131,7 @@ class ReceptionReso {
 
     function rechercheParUgp($ugp){
         $bdd = new ConnexionBDD();
-        $sql = "SELECT * FROM receptionreso WHERE CodeUgp_id= '$ugp'ORDER BY NumReception ASC";
+        $sql = "SELECT * FROM receptionreso WHERE CodeUgp_id= '$ugp'ORDER BY Id ASC";
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $allReso= array();
         while ($row = mysqli_fetch_array($result)) {
@@ -145,7 +145,7 @@ class ReceptionReso {
     
     function rechercheParAgent($agent){
         $bdd = new ConnexionBDD();
-        $sql = "SELECT * FROM receptionreso WHERE agent_id= '$agent'ORDER BY NumReception ASC";
+        $sql = "SELECT * FROM receptionreso WHERE agent_id= '$agent'ORDER BY Id ASC";
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $allReso= array();
         while ($row = mysqli_fetch_array($result)) {
@@ -155,6 +155,36 @@ class ReceptionReso {
         }
         $bdd->fermerConnexion();
         return($allReso);
+    }
+    
+    function rechercheParDate($date){
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM receptionreso WHERE  DATE_format(DateDemande,'%Y')='$date'";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $allReso= array();
+        while ($row = mysqli_fetch_array($result)) {
+            $_SESSION["count"]++;
+            $reso= $this->creerReceptionReso($row["id"],$row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]);
+            array_push($allReso,$reso);
+        }
+        $bdd->fermerConnexion();
+        return($allReso);
+        
+    }
+    
+    function rechercheParMot($mot){
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM receptionreso WHERE  Sujet LIKE '%$mot%'  ";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $allReso= array();
+        while ($row = mysqli_fetch_array($result)) {
+            $_SESSION["count"]++;
+            $reso= $this->creerReceptionReso($row["id"],$row["NumReception"], $row["Sujet"],$row["NumProjet_id"],$row["DateDemande"],$row["DateReception"],$row["Traitement"],$row["Notes"],$row["Departement_id"],$row["codeUgp_id"],$row["agent_id"]);
+            array_push($allReso,$reso);
+        }
+        $bdd->fermerConnexion();
+        return($allReso);
+        
     }
     
     

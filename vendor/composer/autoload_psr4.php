@@ -9,4 +9,7 @@ return array(
     'SGR\\view\\' => array($baseDir . '/view'),
     'SGR\\model\\' => array($baseDir . '/model'),
     'SGR\\controller\\' => array($baseDir . '/controller'),
+    'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
+    'PhpOffice\\PhpSpreadsheet\\' => array($vendorDir . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet'),
+    'Complex\\' => array($vendorDir . '/markbaker/complex/classes/src'),
 );

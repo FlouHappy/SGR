@@ -217,25 +217,16 @@ class VuePublique {
 
     public function rechercheResolutionParType($reso,$titreFichier) {
 
-<<<<<<< HEAD
-        echo('<br><br>Rechercher :
-        <div class="btn-group">
-        <a href="index.php?action=rechercheResoPar">
-          <button  type="button">Par élément </button>
-        </a> <a href="index.php?action=rechercheResoMot">
-          <button  type="button">Par mot clé</button>
 =======
         echo('<div id="divcon"><br><br>Rechercher : <a href="index.php?action=rechercheResoPar">
           <button id="btn_seconnecter" type="button">Par élément </button>
         </a> <a href="index.php?action=rechercheAvancer">
           <button id="btn_seconnecter" type="button">recherche avancée</button>
->>>>>>> 13594d3c76b6a4f30ae8df45553afd13685ef62f
         </a> <a href="index.php?action=voirReso">
           <button type="button">Toutes les résolutions</button>
         </a>
-<<<<<<< HEAD
-        </div>
-        <br> <br><h2>Liste des résolutions '.$_SESSION['recherche'].' :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><br><table>
+        <br> <br><h2>Liste des résolutions '.$_SESSION['recherche'].' :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><a href="Excel/'.$titreFichier.'.xlsx" download="'.$titreFichier.'.xlsx">Télécharger la liste</a>
+        </a><br><br><table>
 =======
         <br> <br><h2>Liste des résolutions '.$_SESSION['recherche'].' :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><a href="Excel/'.$titreFichier.'.xlsx" download="'.$titreFichier.'.xlsx">Télécharger la liste</a>
         </a><br><br><table>
@@ -302,7 +293,7 @@ class VuePublique {
         </div>');
 
     }
-    
+
 
 
     public function rechercheParType($cour,$prog,$ugp,$departement,$agent){
@@ -358,7 +349,7 @@ class VuePublique {
         echo('</select><br>
                 <input type="submit" name="valider" value="Rechercher">
                  </form>');
-        
+
 
         //Par date
         echo ('<form action="index.php?action=resultatRecherchePar&type=date" class="formReso" id="formReso" method="POST">
@@ -376,7 +367,7 @@ class VuePublique {
         echo('</select><br>
                 <input type="submit" name="valider" value="Rechercher">
                  </form>');
-        
+
          //Par Mot clé
         echo ('<form action="index.php?action=resultatRecherchePar&type=mot" class="formReso" id="formReso" method="POST">
                  <h2>Recherche Par Mot clé:</h2>
@@ -387,8 +378,8 @@ class VuePublique {
         <br>
                 <input type="submit" name="valider" value="Rechercher">
                  </form>');
-        
+
     }
-    
-    
+
+
 }

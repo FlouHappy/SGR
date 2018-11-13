@@ -17,18 +17,18 @@ class VuePublique {
     public function afficherAccueil() {
 
         echo('
-      <div id="divcon" class="btn-grou">
+      <div id="divcon" class="btn-group">
 
         <a href="index.php?action=soumettreReso">
-          <button type="button">Soumettre une resolution </button>
+          <button id="btn_seconnecter" type="button">Soumettre une resolution </button>
         </a> <br>
 
         <a href="index.php?action=voirReso">
-          <button type="button">Consulter liste de resolutions</button></a>
+          <button id="btn_seconnecter" type="button">Consulter liste de resolutions</button></a>
       <br>
 
         <a href="index.php?action=connexion">
-          <button type="button">Se Connecter</button>
+          <button id="btn_seconnecter" type="button">Se Connecter</button>
         </a>
       </div>');
     }
@@ -75,9 +75,8 @@ class VuePublique {
 
       <input type="submit" value="Valider">
 
-      </form>
-      </div>');
-
+      </form>');
+      echo('</div>');
     }
 
     public function afficherFormulaireProjet() {
@@ -217,20 +216,15 @@ class VuePublique {
 
     public function rechercheResolutionParType($reso,$titreFichier) {
 
-=======
         echo('<div id="divcon"><br><br>Rechercher : <a href="index.php?action=rechercheResoPar">
           <button id="btn_seconnecter" type="button">Par élément </button>
         </a> <a href="index.php?action=rechercheAvancer">
           <button id="btn_seconnecter" type="button">recherche avancée</button>
         </a> <a href="index.php?action=voirReso">
-          <button type="button">Toutes les résolutions</button>
+          <button id="btn_seconnecter" type="button">Toutes les résolutions</button>
         </a>
         <br> <br><h2>Liste des résolutions '.$_SESSION['recherche'].' :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><a href="Excel/'.$titreFichier.'.xlsx" download="'.$titreFichier.'.xlsx">Télécharger la liste</a>
         </a><br><br><table>
-=======
-        <br> <br><h2>Liste des résolutions '.$_SESSION['recherche'].' :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><a href="Excel/'.$titreFichier.'.xlsx" download="'.$titreFichier.'.xlsx">Télécharger la liste</a>
-        </a><br><br><table>
->>>>>>> 13594d3c76b6a4f30ae8df45553afd13685ef62f
         <tr>
             <th>Id</th>
             <th>Numéro</th>
@@ -293,7 +287,7 @@ class VuePublique {
         </div>');
 
     }
-
+    
 
 
     public function rechercheParType($cour,$prog,$ugp,$departement,$agent){
@@ -349,7 +343,7 @@ class VuePublique {
         echo('</select><br>
                 <input type="submit" name="valider" value="Rechercher">
                  </form>');
-
+        
 
         //Par date
         echo ('<form action="index.php?action=resultatRecherchePar&type=date" class="formReso" id="formReso" method="POST">
@@ -367,7 +361,7 @@ class VuePublique {
         echo('</select><br>
                 <input type="submit" name="valider" value="Rechercher">
                  </form>');
-
+        
          //Par Mot clé
         echo ('<form action="index.php?action=resultatRecherchePar&type=mot" class="formReso" id="formReso" method="POST">
                  <h2>Recherche Par Mot clé:</h2>
@@ -378,8 +372,8 @@ class VuePublique {
         <br>
                 <input type="submit" name="valider" value="Rechercher">
                  </form>');
-
+        
     }
-
-
+    
+    
 }

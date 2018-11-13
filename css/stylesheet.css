@@ -66,22 +66,9 @@ Authors:  Franck Happy
 }
 /***Fin de Style pour Head***/
 
-/***Style pour barre de gauche***/
-#side {
-  height: 740px;
-  width: 15.9%;
-  background-color: tomato;
-  border: 1px solid blue;
-}
-/***** Pour Calendrier **/
-#calendar {/*le reste est dans la librairie dyCalendar*/
-  height: 275px;
-  width: 100%;
-  text-align: center;
-}
-/**** Fin Pour Calendrier **/
-.btn-goup button a:link {
-  color: inherit;
+
+
+.btn-goup button a:link, a:visited {
   text-decoration: none;
 }
 .btn-group button {
@@ -100,6 +87,29 @@ Authors:  Franck Happy
 /* Add a background color on hover */
 .btn-group button:hover {
     background-color: #3e8e41;
+}
+
+.btt a:link, a:visited {
+  background-color: #4CAF50; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  text-align: center;
+  text-decoration: none;
+  padding: 20px 64px;/*  Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 90%; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+}
+.btt a:hover, a:active {
+    background-color: #3e8e41;
+}
+#divpublic {
+  height: 300px;
+  margin-top: 50px;
+    border-radius: 8px;
+    background-color: #f2f2f2;
+    padding: 100px 500px;
+  text-align: center;
 }
 /***Fin Style pour barre de gauche***/
 
@@ -179,6 +189,7 @@ input[type=submit]:hover {
     padding: 170px;
     text-align: center;
 }
+
 #divconhalf1 {
       height: 700px;
       margin-top: 20px;

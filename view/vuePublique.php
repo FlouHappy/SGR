@@ -17,18 +17,18 @@ class VuePublique {
     public function afficherAccueil() {
 
         echo('
-      <div id="divcon" class="btn-group">
+      <div id="divpublic" class="btt">
 
-        <a href="index.php?action=soumettreReso">
-          <button id="btn_seconnecter" type="button">Soumettre une resolution </button>
+        <a href="index.php?action=soumettreReso" target="_self">
+          Soumettre une resolution
         </a> <br>
 
         <a href="index.php?action=voirReso">
-          <button id="btn_seconnecter" type="button">Consulter liste de resolutions</button></a>
+          Consulter liste des resolutions</a>
       <br>
 
         <a href="index.php?action=connexion">
-          <button id="btn_seconnecter" type="button">Se Connecter</button>
+        Se Connecter
         </a>
       </div>');
     }
@@ -287,7 +287,7 @@ class VuePublique {
         </div>');
 
     }
-    
+
 
 
     public function rechercheParType($cour,$prog,$ugp,$departement,$agent){
@@ -343,7 +343,7 @@ class VuePublique {
         echo('</select><br>
                 <input type="submit" name="valider" value="Rechercher">
                  </form>');
-        
+
 
         //Par date
         echo ('<form action="index.php?action=resultatRecherchePar&type=date" class="formReso" id="formReso" method="POST">
@@ -361,7 +361,7 @@ class VuePublique {
         echo('</select><br>
                 <input type="submit" name="valider" value="Rechercher">
                  </form>');
-        
+
          //Par Mot clé
         echo ('<form action="index.php?action=resultatRecherchePar&type=mot" class="formReso" id="formReso" method="POST">
                  <h2>Recherche Par Mot clé:</h2>
@@ -372,8 +372,8 @@ class VuePublique {
         <br>
                 <input type="submit" name="valider" value="Rechercher">
                  </form>');
-        
+
     }
-    
-    
+
+
 }

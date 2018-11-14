@@ -34,34 +34,35 @@ class VuePublique {
     }
 
     public function afficherPreFormulaireRésolution($nbCour, $nbProgramme) {
-      echo('<div id="divcon">');
+
         echo ('
       <form action="index.php?action=formulaireReso" class="formPreForm" method="POST">
-        <div class="input-groupe">
-        <h2> Renseignement Résolution</h2>
-          <label for="projet">Projet deja existant:</label>
-          <input type="radio" name="projet" value="oui" required> Oui<br>
+
+        <div id="divsoumettre" >
+        <h1> Renseignement sur la résolution</h1><br>
+          Projet deja existant:
+          <input type="radio" name="projet" value="oui" required> Oui
           <input type="radio" name="projet" value="non"> Non<br><br>
           <a href="popUp.php"  target=_blank>Voir liste projet existant</a>
-        </div>
+<center>
+<table class="table1">
 
-        <div class="cour">
-          <label for="cour">Combien de cours sont concernés par la résolution: </label>
-          <select id="cour" name="cour">
+<tr>
+        <td> Combien de cours sont concernés par la résolution: </td>
+          <td> <select id="cour" name="cour">
             <option value="none">Inderteminé</option>');
         for ($i = 1; $i <= $nbCour; $i++) {
             echo('<option value="' . $i . '">' . $i . '</option>');
         }
-
-
         echo('
             <option value="all">tout</option>
-          </select>
-        </div>
+          </select></td></tr>
 
-         <div class="programme">
-          <label for="programme">Combien de programmes sont concernés par la résolution: </label>
-          <select id="programme" name="programme">
+
+
+<tr>
+          <td>Combien de programmes sont concernés par la résolution: </td>
+          <td><select id="programme" name="programme">
             <option value="none">Inderteminé</option>');
         for ($i = 1; $i <= $nbProgramme; $i++) {
             echo('<option value="' . $i . '">' . $i . '</option>');
@@ -70,20 +71,20 @@ class VuePublique {
 
         echo('
             <option value="all">tout</option>
-          </select>
-        </div>
-
+          </select></td></tr>
+</table></center><br>
       <input type="submit" value="Valider">
-
+</div>
       </form>');
-      echo('</div>');
+
     }
 
     public function afficherFormulaireProjet() {
-      echo('<div id="divconhalf1">');
-        echo('<h1> Renseignement du projet :</h1><br>
+
+        echo('<div id="divhalf1">
+        <h1> Renseignement sur le projet :</h1><br>
                 <label for="description">Description du projet :</label><br>
-                <textarea name="description" rows="10" cols="50" required form="formReso"></textarea>
+                <textarea name="description" rows="5" cols="50" required form="formReso"></textarea>
                 <br><br>
           <label for="etat">Etat du projet:</label>
           <input type="radio" name="etat" value="ouvert" required> Ouvert
@@ -91,94 +92,105 @@ class VuePublique {
 
            <label for="noteProjet">Note supplémentaire concernant le projet (facultatif):</label>
            <br>
-                <textarea name="noteProjet" rows="10" cols="50"  form="formReso"></textarea>
+                <textarea name="noteProjet" rows="5" cols="50"  form="formReso"></textarea>
                 <br><br>
            <label for="nlien">Lien vers le dossier du projet (facultatif):</label>
     <input type="text"  placeholder="lien vers le dossier du projet" name="lien" >
     <br>
-                <br>');
-                echo('</div>');
+
+                </div>');
+
     }
 
     public function afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement) {
-      echo('<div id="divconhalf2">');
 
-        echo('<h1> Renseignement sur la résolution :</h1><br>
-             <div class="num">
-                <label for="num">Numéro Résolution: </label>
-        <input type="text" id="num" required  name="num" ><br><br>
-        </div>
+
+        echo('<div id="divhalf2">
+        <h1> Renseignement sur la résolution :</h1><br>
+             <center>
+             <table class="table1">
+             <tr>
+                <td><label for="num">Numéro Résolution: </label></td>
+        <td><input type="text" id="num" required placeholder="1234567890" name="num" ><br><br>
+        </td></tr>
+        </table>
          <div class="sujet">
         <label for="sujet">Sujet de la résolution:</label>
            <br>
-                <textarea name="sujet" rows="10" cols="50" required form="formReso"></textarea>
+                <textarea name="sujet" rows="5" cols="50" required form="formReso"></textarea>
                 <br><br>
                </div>
 
-          <div class="ugp">
-        <label for="ugp">UGP : </label>
-         <select id="ugp" name="ugp">');
+               <center>
+               <table class="table1">
+               <tr>
+        <td><label for="ugp">UGP : </label></td>
+         <td><select id="ugp" name="ugp">');
         foreach ($ugp as $value) {
             echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
         }
-        echo('</select><br>  ');
+        echo('</select><br></td></tr>  ');
 
         if ($_POST["projet"] == "oui") {
-            echo('<label for="projet">Projet : </label>
-         <select id="projet" name="projet">');
+            echo('<tr>
+            <td><label for="projet">Projet : </label></td>
+         <td><select id="projet" name="projet">');
             foreach ($projet as $value) {
                 echo('<option value="' . $value->getNum() . '">' . $value->getNum() . ': ' . $value->getDescription() . '</option>');
             }
-            echo('</select>  ');
+            echo('</select></td></tr>  ');
         }
 
         if (($_POST['cour'] != "none") && ($_POST['cour'] != "all" )) {
             for ($i = 1; $i <= $_POST['cour']; $i++) {
                 echo('
-                 <div class="cour">
-                <label for="cour">Cours concernés par la résolution: </label>
-                <select id="cour' . $i . '" name="cour' . $i . '">');
+                 <tr>
+                <td><label for="cour">Cours concernés par la résolution: </label></td>
+                <td><select id="cour' . $i . '" name="cour' . $i . '">');
                 foreach ($cour as $value) {
                     echo('<option value="' . $value->getSigle() . '">' . $value->getSigle() . ': ' . $value->getNom() . '</option>');
                 }
-                echo('</select>
-                   </div> ');
+                echo('</select></td>
+                   </tr> ');
             }
         }
 
         if (($_POST['programme'] != "none") && ($_POST['programme'] != "all" )) {
             for ($i = 1; $i <= $_POST['programme']; $i++) {
                 echo('
-                 <div class="programme">
-                <label for="programme">Programmes concernés par la résolution: </label>
-                <select id="programme' . $i . '" name="programme' . $i . '">');
+                 <tr">
+                <td><label for="programme">Programmes concernés par la résolution: </label></td>
+                <td><select id="programme' . $i . '" name="programme' . $i . '">');
                 foreach ($prog as $value) {
                     echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
                 }
-                echo('</select>
-                   </div> ');
+                echo('</select></td>
+                   </tr> ');
             }
         }
 
-        echo('<div class="departement">
-                <label for="departement">Departement concerné par la résolution: </label>
-                <select id="departement"  name="departement">');
+        echo('<tr>
+                <td><label for="departement">Departement concerné par la résolution: </label></td>
+                <td><select id="departement"  name="departement">');
 
 
         foreach ($departement as $value) {
             echo('<option value="' . $value->getNum() . '">' . $value->getNum() . ': ' . $value->getNom() . '</option>');
         }
-        echo('</select>
-                   </div> ');
+        echo('</select></td>
+        </tr>
+                   </table><br> ');
 
         echo('<label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label>
            <br>
-                <textarea name="noteReso" rows="10" cols="50"  form="formReso"></textarea>
+                <textarea name="noteReso" rows="5" cols="50"  form="formReso"></textarea>
                 <br><br>
 
-            ');
-           echo('</div>
-           <input type="submit" name="valider" value="Créer"></form>');
+           <input type="submit" name="valider" value="Créer">
+
+           </center>
+           </div>
+           </form>');
     }
 
     public function rechercheResolution($reso) {

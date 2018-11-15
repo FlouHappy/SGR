@@ -15,9 +15,8 @@ class VueAgent {
         echo('
 <ul>
   
-  <li><a href="index.php?action=voirReso">Consulter la liste des résolution soumis</a></li>
-  <li><a href="index.php?action=voirResoPerso">Consulter les résolutions soumises dont vous etes responsable</a></li>
-  <li><a href="index.php?action=creerResoDeca">Créer une résolution Décanat</a></li>
+  <li><a href="index.php?action=voirReso">Consulter la liste des résolution soumises </a></li>
+  <li><a href="index.php?action=voirResoPerso">Consulter la liste des résolutions Decanat</a></li>
   <li><a href="index.php?action=creerSeance">Créer un nouveau Projet</a></li>
   <li><a href="index.php?action=creerSeance">Créer une nouvelle séance</a></li>
   <li><a href="index.php?action=creerCours">Ajouter un nouveau cours</a></li>

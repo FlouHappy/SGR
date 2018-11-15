@@ -2,14 +2,17 @@
 Authors:  Franck Happy
           Floriant Colly
 *****/
-body, html{
-  height: 100%
-  background-color: lightgray;
-}
-#page {
+html, body{
   height: 100%;
+
+}
+
+#page {
+
   width: 100%;
   background-color: lightgray;
+
+
 }
 /*--------------Debut Template------------------*/
 /***Style pour Head***/
@@ -20,7 +23,7 @@ body, html{
 }
 
 #head {
-  height: 150px;
+  height: 20%;
   width: 100%;
   background-color: black;
   opacity: 0.7;
@@ -38,8 +41,13 @@ body, html{
   font-weight: bold;
 }
 
-#head1 a:link, a:visited, a:hover, a:active {
+#head1 a:link, a:hover {
   color: inherit;
+  text-decoration: none;
+  background-color: inherit;
+}
+#head1 a:visited, a:active {
+  color: white;
   text-decoration: none;
 }
 
@@ -51,8 +59,13 @@ body, html{
   text-align: center;
 }
 
-#head2 a:link, a:visited, a:hover, a:active {
+#head2 a:link, a:hover {
   color: inherit;
+  text-decoration: none;
+  background-color: inherit;
+}
+#head2 a:visited, a:active {
+  color: white;
   text-decoration: none;
 }
 
@@ -71,9 +84,7 @@ body, html{
 
 
 
-.btn-goup button a:link, a:visited {
-  text-decoration: none;
-}
+
 .btn-group button {
     background-color: #4CAF50; /* Green background */
     border: 1px solid green; /* Green border */
@@ -89,10 +100,10 @@ body, html{
 
 /* Add a background color on hover */
 .btn-group button:hover {
-    background-color: #3e8e41;
+    background-color: red;
 }
 
-.btt a:link, a:visited {
+.btt a:link {
   background-color: #4CAF50; /* Green background */
   border: 1px solid green; /* Green border */
   color: white; /* White text */
@@ -103,25 +114,26 @@ body, html{
   width: 90%; /* Set a width if needed */
   display: block; /* Make the buttons appear below each other */
 }
-.btt a:hover, a:active {
+.btt a:hover {
     background-color: #3e8e41;
+}
+.btt a:visited, a:active {
+  color: white;
+  text-decoration: none;
 }
 
 /***Fin Style pour barre de gauche***/
 
 #container {
-  height: 100%;
   width: 100%;
 }
 
-.formpub{
-  width: 95%;
-  margin: 10px auto;
-  padding: 20px;
-  border: 1px solid blue;
-  background: white;
-  border-radius: 10px 10px 10px 10px;
+
+#footer {
+  width: 100%;
+  background-color: black;
 }
+/*---------------------Fin du Template------------------------*/
 /**---------------Style des formulaires----------------**/
 input[type=text], [type=password], select {
     width: 25%;
@@ -148,57 +160,33 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 /** Pour les types de Resolution**/
-.input-groupe {
-  margin: 10px 0px 10px 0px;
-}
 
-.input-groupe label{
-  display: block;
-  text-align: left;
-  margin: 3px;
 
-}
-.input-groupe input{
-  height: 25px;
-  width: 20%;
-  padding:12px 20px;
-  border-radius: 5px;
-  text-align: center;
-  border: 1px solid black;
-}
-.input-groupe select{
-  width: 24%;
-  padding: 2px 10px;
-  margin: 5px 0;
-  display: inline-block;
-  border: 1px solid blue;
-  border-radius: 4px;
-  box-sizing:border-box;
-}
 
 #divcon {
-  height: 90%;
+  height: 70%;
   margin-top: 50px;
     border-radius: 8px;
     background-color: #f2f2f2;
-    padding: 170px;
+    padding: 90px;
     text-align: center;
 }
 #divpublic {
-  height: 100%;
-
+  height: 35%;
+overflow: auto;
   margin-top: 50px;
-    border-radius: 8px;
+  margin-bottom: 50px;
+    border-radius: 18px;
     background-color: #f2f2f2;
-    padding: 100px 500px;
+    padding: 100px 450px;
   text-align: center;
 }
 #divsoumettre {
-  height: 90%;
-  margin-top: 50px;
+  height: 40%;
+  margin-top: 35px;
 padding-top: 50px;
-padding-bottom: 150px;
-    border-radius: 8px;
+padding-bottom: 50px;
+    border-radius: 18px;
     background-color: #f2f2f2;
     text-align: center;
   }
@@ -228,42 +216,96 @@ padding-bottom: 150px;
   }
 
 #divhalf1 {
-      height: 90%;
+      height: 100%;
       width: 49.7%;
-      margin-top: 10px;
+      margin-top: 30px;
         border-radius: 8px;
         background-color: #f2f2f2;
-        padding-top: 50px;
+        padding-bottom: 10px;
         text-align: center;
 float: left;
-      border: 1px solid blue;
+
 }
 
 #divhalf2 {
-  height: 90%;
+  height: 100%;
 width: 50%;
-  margin-top: 10px;
-    border-radius: 8px;
-    background-color: #f2f2f2;
-    padding-top: 50px;
-    text-align: center;
-    float: none;
-      border: 1px solid red;
-  }
-
-#divcon1 {
-  height: 500px;
   margin-top: 30px;
     border-radius: 8px;
     background-color: #f2f2f2;
-    padding: 20px;
+    padding-bottom:10px;
+    text-align: center;
+    float: left;
+
+  }
+  #divb{
+    width: 100%;
+    text-align: center;
+  }
+  #divl{
+    color: white;
+    width: 49.6%;
+    text-align: left;
+    float: left;
+  }
+  #divr{
+    color: white;
+    width: 50%;
+    text-align: right;
+    float: left;
+  }
+/****************************************************************/
+#divconsult{
+  height: 70%;
+  margin-top: 35px;
+  margin-bottom: 50px;
+padding-top: 20px;
+padding-bottom: 50px;
+    border-radius: 18px;
+    background-color: #f2f2f2;
     text-align: center;
 }
-/**Fin des styles*/
-
-#footer {
-  height: 5%;
-  width: 100%;
-  background-color: black;
+.btt2 a:link {
+  background-color: #4CAF50; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  text-align: center;
+  text-decoration: none;
+  padding: 5px 10px;/*  Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 10%; /* Set a width if needed */
+  display: inline-block;; /* Make the buttons appear below each other */
 }
-/*---------------------Fin du Template------------------------*/
+.btt2 a:visited, a:active {
+  color: white;
+}
+.btt2 a:hover {
+    background-color: #3e8e41;
+}
+.table2 tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+.table2 a:link {
+  text-decoration: none;
+}
+.table2  a:visited, a:active {
+  color: blue;
+}
+.table2 a:hover {
+  background-color: inherit;
+}
+  .table2{
+    width: 80%;
+    border-collapse: collapse;
+  }
+  .table2 th{
+    padding: 5px;
+border: 1px solid black;
+  }
+  .table2 td{
+    text-align: left;
+    padding: 11px;
+border: 1px solid black;
+  }
+/****************************************************************/
+/**Fin des styles*/

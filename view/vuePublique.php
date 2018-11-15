@@ -38,12 +38,12 @@ class VuePublique {
         echo ('
       <form action="index.php?action=formulaireReso" class="formPreForm" method="POST">
 
-        <div id="divsoumettre" >
+        <div id="divsoumettre" class="btt2">
         <h1> Renseignement sur la résolution</h1><br>
           Projet deja existant:
           <input type="radio" name="projet" value="oui" required> Oui
           <input type="radio" name="projet" value="non"> Non<br><br>
-          <a href="popUp.php"  target=_blank>Voir liste projet existant</a>
+          <a href="popUp.php"  target=_blank>Voir les projets existants</a>
 <center>
 <table class="table1">
 
@@ -81,7 +81,8 @@ class VuePublique {
 
     public function afficherFormulaireProjet() {
 
-        echo('<div id="divhalf1">
+        echo('<div id="" class="row">
+        <div id="divhalf1">
         <h1> Renseignement sur le projet :</h1><br>
                 <label for="description">Description du projet :</label><br>
                 <textarea name="description" rows="5" cols="50" required form="formReso"></textarea>
@@ -117,7 +118,7 @@ class VuePublique {
          <div class="sujet">
         <label for="sujet">Sujet de la résolution:</label>
            <br>
-                <textarea name="sujet" rows="5" cols="50" required form="formReso"></textarea>
+                <textarea name="sujet" rows="3" cols="50" required form="formReso"></textarea>
                 <br><br>
                </div>
 
@@ -183,27 +184,37 @@ class VuePublique {
 
         echo('<label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label>
            <br>
-                <textarea name="noteReso" rows="5" cols="50"  form="formReso"></textarea>
+                <textarea name="noteReso" rows="3" cols="50"  form="formReso"></textarea>
                 <br><br>
 
-           <input type="submit" name="valider" value="Créer">
+
 
            </center>
            </div>
+
+           </div>
+           <div id="divb"> <input type="submit" name="valider" value="Créer"></div>
+           
            </form>');
+
     }
 
     public function rechercheResolution($reso) {
-      echo('<div id="divcon">');
-        echo('<br><br>Rechercher : <a href="index.php?action=rechercheResoPar">
-          <button id="btn_seconnecter" type="button">Par élément </button>
-        </a> <a href="index.php?action=rechercheAvancer">
-          <button id="btn_seconnecter" type="button">Recherche avancée</button>
-        </a><a href="index.php?action=voirReso">
-          <button id="btn_seconnecter" type="button">Toutes les résolutions</button>
-        </a>
-        <br> <br><h2>Liste de toutes les résolutions :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><a href="Excel/allResolution.xlsx" download="allResolution.xlsx">Télécharger la liste</a>
-        </a><br><br><table >
+
+        echo('<div id="divconsult" class="">
+        <div class="btt2">
+        <br>Rechercher :
+        <a href="index.php?action=rechercheResoPar">  Par élément  </a>
+        <a href="index.php?action=rechercheAvancer">  Recherche avancée  </a>
+        <a href="index.php?action=voirReso">          Toutes les résolutions  </a>
+        <br> <br>
+        <h2>Liste de toutes les résolutions :</h2>
+        <br>
+        Nombre trouvé: '.$_SESSION['count'].'<br><br>
+        <a href="Excel/allResolution.xlsx" download="allResolution.xlsx">Télécharger la liste</a>
+        </div><br><br>
+        <center>
+        <table class="table2" >
         <tr>
             <th>Id</th>
             <th>Numéro</th>
@@ -211,50 +222,22 @@ class VuePublique {
             <th>Date de la demande</th>
             <th>Date de reception</th>
             <th>Département</th>
-            <th>Ugp</th>
+            <th>UGP</th>
         </tr>');
         foreach ($reso as $value) {
             echo('<tr><td><a href="index.php?action=resolution&id='.$value->getId().'"> '.$value->getId().'</a></td>
                     <td>'.$value->getNum().'</td>
                     <td>'.$value->getSujet().'</td>
-                    <td>'.$value->getDateDemande().'</td>
                     <td>'.$value->getDateReception().'</td>
-                    <td>'.$value->getDepartement_id().'</td>
-                    <td>'.$value->getCodeUgp_id().'</td></tr>'  );
-        }
-     echo('</table>');
-     echo('</div>');
-    }
-
-    public function rechercheResolutionParType($reso,$titreFichier) {
-
-        echo('<div id="divcon"><br><br>Rechercher : <a href="index.php?action=rechercheResoPar">
-          <button id="btn_seconnecter" type="button">Par élément </button>
-        </a> <a href="index.php?action=rechercheAvancer">
-          <button id="btn_seconnecter" type="button">recherche avancée</button>
-        </a> <a href="index.php?action=voirReso">
-          <button id="btn_seconnecter" type="button">Toutes les résolutions</button>
-        </a>
-        <br> <br><h2>Liste des résolutions '.$_SESSION['recherche'].' :</h2>  <br> <br>Nombre de resultat trouvé: '.$_SESSION['count'].'<br><a href="Excel/'.$titreFichier.'.xlsx" download="'.$titreFichier.'.xlsx">Télécharger la liste</a>
-        </a><br><br><table>
-        <tr>
-            <th>Id</th>
-            <th>Numéro</th>
-            <th>Sujet</th>
-            <th>Date de la demande</th>
-            <th>Département</th>
-            <th>Ugp</th>
-        </tr>');
-        foreach ($reso as $value) {
-            echo('<tr><td><a href="index.php?action=resolution&id='.$value->getId().'"> '.$value->getId().'</a></td>
-                    <td>'.$value->getNum().'</td>
-                    <td>'.$value->getSujet().'</td>
                     <td>'.$value->getDateDemande().'</td>
                     <td>'.$value->getDepartement_id().'</td>
                     <td>'.$value->getCodeUgp_id().'</td></tr>'  );
         }
-     echo('</table></div>');
+     echo('</table></center></div>');
+
     }
+
+
 
     public function afficherUneResolution($reso,$programme,$cour){
         echo('<div class="resolution">
@@ -283,9 +266,7 @@ class VuePublique {
             echo($value->getSigle().':  '.$value->getNom().'<br>');
 
         }
-        echo('
-
-</div>');
+        echo('</div>');
     }
 
     public function afficherUnProjet($projet){

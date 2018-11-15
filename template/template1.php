@@ -5,11 +5,12 @@
     <title>Systeme de Gestion des Resolutions</title>
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
 <!--CSS et JS pour le calendrier sur vuePublique-->
-
+<script type="text/javascript" src="js/script.js"></script>
 </head>
 
 <body>
 
+  <div id="page">
     <div id="head" class="row">
       <div id="head1"><br><br>
         <a href="https://uqo.ca" title="Site officiel UQO.ca">UQO</a>
@@ -19,5 +20,5 @@
         <h5 class="head21"><a href="index.php">Systeme de Gestion des Resolutions</a></h5>
       </div>
     </div>
-    <div id="page">
-<div id="container" class="row">
+
+<div id="container" >

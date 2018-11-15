@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 08 nov. 2018 à 17:10
+-- Généré le :  jeu. 15 nov. 2018 à 16:35
 -- Version du serveur :  5.7.21
 -- Version de PHP :  5.6.35
 
@@ -50,6 +50,18 @@ INSERT INTO `agent` (`Id`, `Password`, `Actif`, `Prenom`, `Nom`, `Email`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `agentresponsable_decanatreso`
+--
+
+DROP TABLE IF EXISTS `agentresponsable_decanatreso`;
+CREATE TABLE IF NOT EXISTS `agentresponsable_decanatreso` (
+  `NumReso_id` int(5) NOT NULL,
+  `agent_id` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `cour`
 --
 
@@ -76,6 +88,18 @@ INSERT INTO `cour` (`Sigle`, `NomCours`, `Cycle`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `cour_decanatreso`
+--
+
+DROP TABLE IF EXISTS `cour_decanatreso`;
+CREATE TABLE IF NOT EXISTS `cour_decanatreso` (
+  `decanatReso_id` int(5) NOT NULL,
+  `cour_id` varchar(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `cour_receptionreso`
 --
 
@@ -94,6 +118,29 @@ INSERT INTO `cour_receptionreso` (`cour_id`, `receptionReso_id`) VALUES
 ('ANG1273', 5),
 ('ANG1273', 6),
 ('BEA5031', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `decanatreso`
+--
+
+DROP TABLE IF EXISTS `decanatreso`;
+CREATE TABLE IF NOT EXISTS `decanatreso` (
+  `Id` int(5) NOT NULL AUTO_INCREMENT,
+  `NumReso` varchar(20) NOT NULL,
+  `NumUniqueInstance` varchar(30) NOT NULL,
+  `seance_id` int(30) NOT NULL,
+  `projet_id` int(11) NOT NULL,
+  `ResumeReso` varchar(200) NOT NULL,
+  `DateReso` date NOT NULL,
+  `DescriptionReso` varchar(2000) NOT NULL,
+  `DateEffective` date NOT NULL,
+  `Campus` varchar(50) NOT NULL COMMENT 'Alexandre-Taché, Lucien-Brault, Saint-Jérôme',
+  `Note` varchar(3000) NOT NULL,
+  `VariaSuivi` varchar(300) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -144,6 +191,18 @@ INSERT INTO `programmes` (`CodeProgramme`, `NomProgramme`, `TypeProgramme`, `cod
 ('0028', 'Programme court de premier cycle en enseignement de l\'initiation à l\'informatique', 'court de premier cycle', NULL),
 ('0014', 'Programme court de premier cycle: cours supplémentaires pour l\'obtention du diplôme', 'court de premier cycle', NULL),
 ('0048', 'Programme court de premier cycle en enseignement des matières administratives et commerciales', 'court de premier cycle', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `programme_decanatreso`
+--
+
+DROP TABLE IF EXISTS `programme_decanatreso`;
+CREATE TABLE IF NOT EXISTS `programme_decanatreso` (
+  `programme_id` varchar(20) NOT NULL,
+  `decanatReso_id` int(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -237,15 +296,28 @@ CREATE TABLE IF NOT EXISTS `receptionreso` (
   `agent_id` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `NumReception` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `receptionreso`
 --
 
 INSERT INTO `receptionreso` (`id`, `NumReception`, `Sujet`, `NumProjet_id`, `DateDemande`, `DateReception`, `Traitement`, `Notes`, `Departement_id`, `codeUgp_id`, `agent_id`) VALUES
-(5, 'CTB1X', 'Changement pré requis', 26, '2018-11-07', NULL, NULL, 'none', 'DII', '1CTB', NULL),
-(6, 'CTB6X4', 'Fermeture cour', 11, '2018-11-08', NULL, NULL, 'voir conseil de septembre', 'DII', '1CTB', NULL);
+(5, 'CTB1X', 'Changement pré requis', 26, '2018-11-07', NULL, 'En attente de la prise en charge par un agent', 'none', 'DII', '1CTB', NULL),
+(6, 'CTB6X4', 'Fermeture cour', 11, '2018-11-08', NULL, 'En attente de la prise en charge par un agent', 'voir conseil de septembre', 'DII', '1CTB', NULL),
+(7, 'UGX18', 'Association cour', 11, '2018-11-15', NULL, 'Pris en charge', 'A debatre', 'DII', '1CTB', 'colf03');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `receptionreso_decanatreso`
+--
+
+DROP TABLE IF EXISTS `receptionreso_decanatreso`;
+CREATE TABLE IF NOT EXISTS `receptionreso_decanatreso` (
+  `receptionReso_id` int(5) NOT NULL,
+  `decanatReso_id` int(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -295,6 +367,19 @@ INSERT INTO `secteur` (`NomSecteur`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `suivi`
+--
+
+DROP TABLE IF EXISTS `suivi`;
+CREATE TABLE IF NOT EXISTS `suivi` (
+  `NomSuivi` varchar(200) NOT NULL,
+  `Processus` varchar(2000) NOT NULL,
+  PRIMARY KEY (`NomSuivi`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `typeresolution`
 --
 
@@ -317,6 +402,43 @@ INSERT INTO `typeresolution` (`TypeReso`, `Priorite`, `LienProcedure`) VALUES
 ('Administration, Politique, Reglement', NULL, NULL),
 ('Ouverture des admissions', NULL, NULL),
 ('Modification de cours', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `typeresolution_decanatreso`
+--
+
+DROP TABLE IF EXISTS `typeresolution_decanatreso`;
+CREATE TABLE IF NOT EXISTS `typeresolution_decanatreso` (
+  `TypeReso_id` varchar(200) NOT NULL,
+  `NumReso_id` int(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `typeresolution_receptionreso`
+--
+
+DROP TABLE IF EXISTS `typeresolution_receptionreso`;
+CREATE TABLE IF NOT EXISTS `typeresolution_receptionreso` (
+  `TypeReso_id` varchar(200) NOT NULL,
+  `NumReception_id` int(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `typereso_suivi`
+--
+
+DROP TABLE IF EXISTS `typereso_suivi`;
+CREATE TABLE IF NOT EXISTS `typereso_suivi` (
+  `Suivi_id` varchar(200) NOT NULL,
+  `TypeReso_id` varchar(200) NOT NULL,
+  `priorite` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -344,6 +466,18 @@ INSERT INTO `ugp` (`CodeUGP`, `NomUGP`, `cycle`, `NumDepartement_id`) VALUES
 ('1EMI', 'UGP de 1er cycle en arts', 1, 'EMI'),
 ('1INF', 'Module de l\'informatique', 1, 'DII'),
 ('1ING', 'Module de l\'ingénierie', 1, 'DII');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ugp_decanatreso`
+--
+
+DROP TABLE IF EXISTS `ugp_decanatreso`;
+CREATE TABLE IF NOT EXISTS `ugp_decanatreso` (
+  `ugp_id` varchar(10) NOT NULL,
+  `decanatReso_id` int(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

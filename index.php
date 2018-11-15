@@ -109,6 +109,9 @@ if (!isset($_SESSION["user"])) {
                 case "accueil":
                     $controlAgent->accueil();
                     break;
+                case"voirResoSoumi":
+                    $controlAgent->voirResoSoumi();
+                    break;
             }
         }
     } else {

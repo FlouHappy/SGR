@@ -81,10 +81,11 @@ class controlPublique {
         $ugp = filter_var($_POST["ugp"], FILTER_SANITIZE_STRING);
         $noteReso = filter_var($_POST["noteReso"], FILTER_SANITIZE_STRING);
         $departement = filter_var($_POST["departement"], FILTER_SANITIZE_STRING);
+        $traitement="En attente de la prise en charge par un agent";
         if ($idProjet == null) {
             $idProjet = $_POST["projet"];
         }
-        $this->modelReceptionReso->nouvelleReso($numReso, $sujetReso, $idProjet, $noteReso, $departement, $ugp);
+        $this->modelReceptionReso->nouvelleReso($numReso, $sujetReso, $idProjet, $noteReso, $departement, $ugp,$traitement);
         $id = $this->modelReceptionReso->rechercheResoParNumReception($numReso);
         if ($_SESSION['nbCour'] != "none") {
             for ($i = 1; $i <= $_SESSION['nbCour']; $i++) {
@@ -182,7 +183,8 @@ class controlPublique {
         $sheet->setCellValue('G1', 'Date Reception');
         $sheet->setCellValue('H1', 'Notes');
         $sheet->setCellValue('I1', 'Numéro de projet');
-        $sheet->setCellValue('J1', 'agent_id');
+          $sheet->setCellValue('J1', 'État');
+        $sheet->setCellValue('K1', 'agent_id');
         $y = 2;
         foreach ($reso as $value) {
 
@@ -218,7 +220,10 @@ class controlPublique {
                         $sheet->setCellValue('I' . $y, $value->getNumProjet_id());
                         break;
                     case 10:
-                        $sheet->setCellValue('J' . $y, $value->getAgent_id());
+                        $sheet->setCellValue('J' . $y, $value->getTraitement());
+                        break;
+                    case 11:
+                        $sheet->setCellValue('K', $y,$value->getAgent_id());
                         break;
                 }
                 $i++;

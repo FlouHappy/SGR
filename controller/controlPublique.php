@@ -223,7 +223,7 @@ class controlPublique {
                         $sheet->setCellValue('J' . $y, $value->getTraitement());
                         break;
                     case 11:
-                        $sheet->setCellValue('K', $y,$value->getAgent_id());
+                        $sheet->setCellValue('K'. $y,$value->getAgent_id());
                         break;
                 }
                 $i++;

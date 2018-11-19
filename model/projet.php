@@ -13,6 +13,7 @@ use SGR\model\ConnexionBDD;
 class Projet {
 
     private $num;
+    private $agent;
     private $description;
     private $etat;
     private $note;
@@ -22,9 +23,10 @@ class Projet {
         
     }
 
-    function creerProjet($no, $d, $e, $n, $l) {
+    function creerProjet($no,$a, $d, $e, $n, $l) {
         $projet = new Projet();
         $projet->num = $no;
+        $projet->agent=$a;
         $projet->description = $d;
         $projet->etat = $e;
         $projet->note = $n;
@@ -38,7 +40,7 @@ class Projet {
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $allProjet = array();
         while ($row = mysqli_fetch_array($result)) {
-            $projet = $this->creerProjet($row["NumProjet"], $row["DescriptionProjet"], $row["EtatProjet"], $row["Notes"], $row["LienDossier"]);
+            $projet = $this->creerProjet($row["NumProjet"],$row["agent_id"] ,$row["DescriptionProjet"], $row["EtatProjet"], $row["Notes"], $row["LienDossier"]);
             array_push($allProjet, $projet);
         }
         $bdd->fermerConnexion();
@@ -50,7 +52,7 @@ class Projet {
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $projet=null;
         while ($row = mysqli_fetch_array($result)) {
-            $projet= $this->creerProjet($row["NumProjet"], $row["DescriptionProjet"], $row["EtatProjet"], $row["Notes"], $row["LienDossier"]);
+            $projet= $this->creerProjet($row["NumProjet"], $row["agent_id"] ,$row["DescriptionProjet"], $row["EtatProjet"], $row["Notes"], $row["LienDossier"]);
         }
         $bdd->fermerConnexion();
         return($projet);
@@ -62,7 +64,7 @@ class Projet {
         $projet = null;
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         while ($row = mysqli_fetch_array($result)) {
-            $projet = $this->creerProjet($row["NumProjet"], $row["DescriptionProjet"], $row["EtatProjet"], $row["Notes"], $row["LienDossier"]);
+            $projet = $this->creerProjet($row["NumProjet"], $row["agent_id"] ,$row["DescriptionProjet"], $row["EtatProjet"], $row["Notes"], $row["LienDossier"]);
         }
         $bdd->fermerConnexion();
         if ($projet != null) {
@@ -87,13 +89,15 @@ class Projet {
         while ($row = mysqli_fetch_array($result)) {
             $id = $row["NumProjet"];
         }
-        ;
         $bdd->fermerConnexion();
         return $id;
     }
 
     function getNum() {
         return $this->num;
+    }
+    function getAgent(){
+        return $this->agent;
     }
 
     function getDescription() {

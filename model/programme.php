@@ -29,6 +29,19 @@ class Programme {
         $prog->ugp = $u;
         return ($prog);
     }
+    function nouveauProgramme($c, $n, $t,$u) {
+        $bdd = new ConnexionBDD();
+        $sql = "INSERT INTO programmes (CodeProgramme, NomProgramme,TypeProgramme,codeUgp_id) VALUES ('$c','$n','$t',$u)";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "programme créé";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        
+        $bdd->fermerConnexion();
+        return $msg;
+    }
     
     function chercherUnProgramme($id){
         $bdd = new ConnexionBDD();

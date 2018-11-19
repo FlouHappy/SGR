@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 15 nov. 2018 à 16:35
+-- Généré le :  lun. 19 nov. 2018 à 17:11
 -- Version du serveur :  5.7.21
 -- Version de PHP :  5.6.35
 
@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS `agent` (
 
 INSERT INTO `agent` (`Id`, `Password`, `Actif`, `Prenom`, `Nom`, `Email`) VALUES
 ('colf03', '$2y$10$s3kEcTBAZW7E1..pWDMZsuuI56o6Fng7iwoGG34Oor5qP.MBEiaKC', b'1', 'Florian', 'Colly', 'colf03@uqo.ca'),
-('admin', '$2y$10$2GU/C5psdWNY49dmAjRmH.Qysz3Zs6Nw1LmY8FWYeA9BTjHMqPSJy', b'0', 'admin', 'admin', 'admin');
+('admin', '$2y$10$2GU/C5psdWNY49dmAjRmH.Qysz3Zs6Nw1LmY8FWYeA9BTjHMqPSJy', b'0', 'admin', 'admin', 'admin'),
+('lionel', '$2y$10$IKYz5/dwGqr8Cdk0GZWdHexbMFr08ov0JQCgqM/lP2Bo9JkSbQsCC', b'1', 'Lionel', 'test', 'test');
 
 -- --------------------------------------------------------
 
@@ -83,7 +84,8 @@ INSERT INTO `cour` (`Sigle`, `NomCours`, `Cycle`) VALUES
 ('BEA5031', 'Séminaire d’intégration IV', 1),
 ('ANG1273', 'Rédaction anglaise - Avancé II', 1),
 ('MAT1053', 'Algèbre linéaire', 1),
-('INF4103', 'Architecture des ordinateurs II', 1);
+('INF4103', 'Architecture des ordinateurs II', 1),
+('IXI458', 'INFO test', 2);
 
 -- --------------------------------------------------------
 
@@ -117,7 +119,8 @@ INSERT INTO `cour_receptionreso` (`cour_id`, `receptionReso_id`) VALUES
 ('ADM1003', 5),
 ('ANG1273', 5),
 ('ANG1273', 6),
-('BEA5031', 6);
+('BEA5031', 6),
+('ADM1003', 8);
 
 -- --------------------------------------------------------
 
@@ -190,7 +193,8 @@ CREATE TABLE IF NOT EXISTS `programmes` (
 INSERT INTO `programmes` (`CodeProgramme`, `NomProgramme`, `TypeProgramme`, `codeUgp_id`) VALUES
 ('0028', 'Programme court de premier cycle en enseignement de l\'initiation à l\'informatique', 'court de premier cycle', NULL),
 ('0014', 'Programme court de premier cycle: cours supplémentaires pour l\'obtention du diplôme', 'court de premier cycle', NULL),
-('0048', 'Programme court de premier cycle en enseignement des matières administratives et commerciales', 'court de premier cycle', NULL);
+('0048', 'Programme court de premier cycle en enseignement des matières administratives et commerciales', 'court de premier cycle', NULL),
+('dafaDAF', 'DAA', 'none', NULL);
 
 -- --------------------------------------------------------
 
@@ -224,7 +228,8 @@ INSERT INTO `programme_receptionreso` (`programme_id`, `receptionReso_id`) VALUE
 ('0028', 5),
 ('0014', 5),
 ('0014', 6),
-('', 6);
+('', 6),
+('0014', 8);
 
 -- --------------------------------------------------------
 
@@ -235,45 +240,46 @@ INSERT INTO `programme_receptionreso` (`programme_id`, `receptionReso_id`) VALUE
 DROP TABLE IF EXISTS `projet`;
 CREATE TABLE IF NOT EXISTS `projet` (
   `NumProjet` int(11) NOT NULL AUTO_INCREMENT,
+  `agent_id` varchar(50) DEFAULT NULL,
   `DescriptionProjet` varchar(1000) DEFAULT NULL,
   `EtatProjet` varchar(50) DEFAULT NULL,
   `Notes` varchar(2000) DEFAULT NULL,
   `LienDossier` varchar(2098) DEFAULT NULL,
   PRIMARY KEY (`NumProjet`),
   UNIQUE KEY `NumProjet` (`NumProjet`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `projet`
 --
 
-INSERT INTO `projet` (`NumProjet`, `DescriptionProjet`, `EtatProjet`, `Notes`, `LienDossier`) VALUES
-(1, 'Suppression programme court', 'ouvert', 'voir monsieur x', NULL),
-(2, 'dsds', 'fermé', 'dsds', 'ds'),
-(3, 'gsds', 'ouvert', 'dsfs', ''),
-(4, 'dsa', 'fermé', 'sa', ''),
-(5, 'dss', 'ouvert', 'ds', 'dfsf'),
-(6, 'dss', 'ouvert', 'ds', 'dfsf'),
-(7, 'dssa', 'fermé', 'sasa', 'sa'),
-(8, 'sasa', 'fermé', 'sfd', ''),
-(9, 'ds', 'fermé', 'sa', 'sa'),
-(10, 'ds', 'fermé', 'sa', 'sa'),
-(11, 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
-(12, 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
-(13, 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
-(14, 'f', 'ouvert', 'sasa', 'sasa'),
-(15, 'f', 'ouvert', 'sasa', 'sasa'),
-(16, 'f', 'ouvert', 'sasa', 'sasa'),
-(17, 'f', 'ouvert', 'sasa', 'sasa'),
-(18, 'f', 'ouvert', 'sasa', 'sasa'),
-(19, 'f', 'ouvert', 'sasa', 'sasa'),
-(20, 'f', 'ouvert', 'sasa', 'sasa'),
-(21, 'f', 'ouvert', 'sasa', 'sasa'),
-(22, 'f', 'ouvert', 'sasa', 'sasa'),
-(23, 'f', 'ouvert', 'sasa', 'sasa'),
-(24, 'f', 'ouvert', 'sasa', 'sasa'),
-(25, 'f', 'ouvert', 'sasa', 'sasa'),
-(26, 'Changement de pré requis', 'ouvert', 'Liée a l gup 1CTB', '');
+INSERT INTO `projet` (`NumProjet`, `agent_id`, `DescriptionProjet`, `EtatProjet`, `Notes`, `LienDossier`) VALUES
+(1, '', 'Suppression programme court', 'ouvert', 'voir monsieur x', NULL),
+(2, '', 'dsds', 'fermé', 'dsds', 'ds'),
+(3, '', 'gsds', 'ouvert', 'dsfs', ''),
+(4, '', 'dsa', 'fermé', 'sa', ''),
+(5, '', 'dss', 'ouvert', 'ds', 'dfsf'),
+(6, '', 'dss', 'ouvert', 'ds', 'dfsf'),
+(7, '', 'dssa', 'fermé', 'sasa', 'sa'),
+(8, '', 'sasa', 'fermé', 'sfd', ''),
+(9, '', 'ds', 'fermé', 'sa', 'sa'),
+(10, '', 'ds', 'fermé', 'sa', 'sa'),
+(11, '', 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
+(12, '', 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
+(13, '', 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
+(14, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(15, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(16, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(17, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(18, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(19, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(20, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(21, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(22, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(23, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(24, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(25, '', 'f', 'ouvert', 'sasa', 'sasa'),
+(26, '', 'Changement de pré requis', 'ouvert', 'Liée a l gup 1CTB', '');
 
 -- --------------------------------------------------------
 
@@ -296,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `receptionreso` (
   `agent_id` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `NumReception` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `receptionreso`
@@ -305,7 +311,10 @@ CREATE TABLE IF NOT EXISTS `receptionreso` (
 INSERT INTO `receptionreso` (`id`, `NumReception`, `Sujet`, `NumProjet_id`, `DateDemande`, `DateReception`, `Traitement`, `Notes`, `Departement_id`, `codeUgp_id`, `agent_id`) VALUES
 (5, 'CTB1X', 'Changement pré requis', 26, '2018-11-07', NULL, 'En attente de la prise en charge par un agent', 'none', 'DII', '1CTB', NULL),
 (6, 'CTB6X4', 'Fermeture cour', 11, '2018-11-08', NULL, 'En attente de la prise en charge par un agent', 'voir conseil de septembre', 'DII', '1CTB', NULL),
-(7, 'UGX18', 'Association cour', 11, '2018-11-15', NULL, 'Pris en charge', 'A debatre', 'DII', '1CTB', 'colf03');
+(7, 'UGX18', 'Association cour', 11, '2018-11-15', NULL, 'Pris en charge', 'A debatre', 'DII', '1CTB', 'colf03'),
+(8, 'test185', 'dadag', 1, '2018-11-19', NULL, 'En attente de la prise en charge par un agent', 'dafgf', 'DCTB', '1CTB', NULL),
+(9, 'fada', 'sada', 29, '2018-11-19', NULL, 'Enregistré', 'dags', 'DCTB', '1CTB', NULL),
+(10, 'afgg', 'a', 30, '2018-11-19', NULL, 'Enregistré', 'fdhg', 'DCTB', '1CTB', NULL);
 
 -- --------------------------------------------------------
 

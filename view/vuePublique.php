@@ -20,7 +20,11 @@ class VuePublique {
       <div id="divpublic" class="btt">
 
         <a href="index.php?action=soumettreReso" target="_self">
+<<<<<<< HEAD
           Saisir une resolution recue
+=======
+          Soumettre une resolution reçues
+>>>>>>> d8de4c7abb314a8f750d2c44be9266064309d019
         </a> <br>
 
         <a href="index.php?action=voirReso">
@@ -28,7 +32,11 @@ class VuePublique {
       <br>
 
         <a href="index.php?action=connexion">
+<<<<<<< HEAD
         Gerer les resolutions du decanat
+=======
+        Se Connecter (traiter les résolutions décanat)
+>>>>>>> d8de4c7abb314a8f750d2c44be9266064309d019
         </a>
       </div>');
     }
@@ -113,6 +121,11 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
 
         echo('<div id="divhalf2">
+<<<<<<< HEAD
+=======
+      
+               
+>>>>>>> d8de4c7abb314a8f750d2c44be9266064309d019
         <h1> Renseignement sur la résolution reçue:</h1><br>
              <center>
              <table class="table1">

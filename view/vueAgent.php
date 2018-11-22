@@ -59,9 +59,8 @@ class VueAgent {
                     <td>' . $value->getTraitement() . '</td>
                     <td>' . $value->getCodeUgp_id() . '</td>');
             if ($value->getAgent_id() == NULL) {
-                echo(' <td><a href="index.php?action=validerResoSoumi"><img src="image/valider" width="30" title= "valider la résolution"></a>
-                        <a href="index.php?action=refuserResoSoumi"><img src="image/refuser" width="30" title= "refuser la résolution"></a>
-                        <a href="index.php?action=associerResoSoumi"><img src="image/transfert" width="30" title= "Associer a une résolution Decanat "></a></td>');
+                echo(' <td><a href="index.php?action=validerResoSoumi"><img src="image/valider" width="30" title= "Traiter la résolution"></a>
+                        <a href="index.php?action=associerResoSoumi"><img src="image/transfert" width="30" title= "Modifier la résolution "></a></td>');
             } else {
                 echo('<td></td>' );
             }

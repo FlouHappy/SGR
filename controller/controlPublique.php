@@ -81,11 +81,11 @@ class controlPublique {
         $ugp = filter_var($_POST["ugp"], FILTER_SANITIZE_STRING);
         $noteReso = filter_var($_POST["noteReso"], FILTER_SANITIZE_STRING);
         $departement = filter_var($_POST["departement"], FILTER_SANITIZE_STRING);
-        $traitement="En attente de la prise en charge par un agent";
+        $traitement = "Enregistré";
         if ($idProjet == null) {
             $idProjet = $_POST["projet"];
         }
-        $this->modelReceptionReso->nouvelleReso($numReso, $sujetReso, $idProjet, $noteReso, $departement, $ugp,$traitement);
+        $this->modelReceptionReso->nouvelleReso($numReso, $sujetReso, $idProjet, $noteReso, $departement, $ugp, $traitement);
         $id = $this->modelReceptionReso->rechercheResoParNumReception($numReso);
         if ($_SESSION['nbCour'] != "none") {
             for ($i = 1; $i <= $_SESSION['nbCour']; $i++) {
@@ -183,7 +183,7 @@ class controlPublique {
         $sheet->setCellValue('G1', 'Date Reception');
         $sheet->setCellValue('H1', 'Notes');
         $sheet->setCellValue('I1', 'Numéro de projet');
-          $sheet->setCellValue('J1', 'État');
+        $sheet->setCellValue('J1', 'État');
         $sheet->setCellValue('K1', 'agent_id');
         $y = 2;
         foreach ($reso as $value) {
@@ -223,7 +223,7 @@ class controlPublique {
                         $sheet->setCellValue('J' . $y, $value->getTraitement());
                         break;
                     case 11:
-                        $sheet->setCellValue('K'. $y,$value->getAgent_id());
+                        $sheet->setCellValue('K' . $y, $value->getAgent_id());
                         break;
                 }
                 $i++;
@@ -239,6 +239,47 @@ class controlPublique {
         $projet = $this->modelProjet->rechercheProjetParId($id);
 
         $this->vue->afficherUnProjet($projet);
+    }
+
+    public function allProjet() {
+        $allProjet = $this->modelProjet->allProjetTrie();
+        $this->vue->afficherProjet($allProjet);
+    }
+
+    public function allCour() {
+        $allCour = $this->modelCour->allCourTrie();
+        $this->vue->afficherCour($allCour);
+    }
+
+    public function allProgramme() {
+        $allProg = $this->modelProg->allProgrammeTrie();
+        $this->vue->afficherProgramme($allProg);
+    }
+
+    public function formulaireCour() {
+        $this->vue->afficherFormulaireCour();
+    }
+
+    public function traitementCour() {
+        $sigle = filter_var($_POST["sigle"], FILTER_SANITIZE_STRING);
+        $nom = filter_var($_POST["nom"], FILTER_SANITIZE_STRING);
+        $cycle = filter_var($_POST["cycle"], FILTER_SANITIZE_NUMBER_INT);
+        $this->modelCour->nouveauCour($sigle, $nom, $cycle);
+        $this->vue->afficherResulatCreation('Cour');
+    }
+
+    public function formulaireProgramme() {
+        $ugp = $this->modelUgp->allUgpTrie();
+        $this->vue->afficherFormulaireProgramme($ugp);
+    }
+
+    public function traitementProgramme() {
+
+        $code = filter_var($_POST["code"], FILTER_SANITIZE_STRING);
+        $nom = filter_var($_POST["nom"], FILTER_SANITIZE_STRING);
+        $type = filter_var($_POST["type"], FILTER_SANITIZE_STRING);
+        $this->modelProg->nouveauProgramme($code, $nom, $type, $_POST['ugp']);
+        $this->vue->afficherResulatCreation('Programme');
     }
 
 }

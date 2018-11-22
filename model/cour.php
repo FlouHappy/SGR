@@ -28,6 +28,20 @@ class Cour {
         return ($cour);
     }
     
+     function nouveauCour($sigle, $nom, $cycle) {
+        $bdd = new ConnexionBDD();
+        $sql = "INSERT INTO cour (Sigle, NomCours, Cycle) VALUES ('$sigle','$nom',$cycle)";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Cour créé";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        
+        $bdd->fermerConnexion();
+        return $msg;
+    }
+    
     function chercherUnCour($id){
         $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM cour WHERE Sigle='$id'";

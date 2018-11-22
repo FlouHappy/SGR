@@ -24,7 +24,7 @@ class VuePublique {
         </a> <br>
 
         <a href="index.php?action=voirReso">
-          Consulter liste des resolutions reçues</a>
+          Consulter la liste des resolutions reçues</a>
       <br>
 
         <a href="index.php?action=connexion">

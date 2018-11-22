@@ -41,3 +41,4 @@ if (isset($_GET["action"])) {
             break;
     }
 }
+include("template/template2.php") ?>

@@ -46,7 +46,7 @@ class ReceptionReso {
      function nouvelleReso($num,$sujet, $projet, $note,$departement, $ugp,$traitement) {
         $bdd = new ConnexionBDD();
         $date= date("Y-m-d");
-        $sql = "INSERT INTO receptionReso (NumReception, Sujet, NumProjet_id, DateDemande,Traitement,Notes,Departement_id,codeUgp_id) VALUES ('$num','$sujet','$projet','$date','$traitement','$note','$departement','$ugp')";
+        $sql = "INSERT INTO receptionReso (NumReception, Sujet, NumProjet_id, DateReception,Traitement,Notes,Departement_id,codeUgp_id) VALUES ('$num','$sujet','$projet','$date','$traitement','$note','$departement','$ugp')";
         $msg='';
         if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
             $msg="Résolution créé";
@@ -159,7 +159,7 @@ class ReceptionReso {
     
     function rechercheParDate($date){
         $bdd = new ConnexionBDD();
-        $sql = "SELECT * FROM receptionreso WHERE  DATE_format(DateDemande,'%Y')='$date'";
+        $sql = "SELECT * FROM receptionreso WHERE  DATE_format(DateReception,'%Y')='$date'";
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $allReso= array();
         while ($row = mysqli_fetch_array($result)) {

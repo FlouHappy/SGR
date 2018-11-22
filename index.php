@@ -85,6 +85,7 @@ if (!isset($_SESSION["user"])) {
 } else {
     $controlAgent = new controlAgent();
     $controlAdmin = new controlAdmin();
+    $controlPublic= new controlPublique;
     //parti  connecté commune
     if (isset($_GET["action"])) {
         switch ($_GET["action"]) {
@@ -112,6 +113,18 @@ if (!isset($_SESSION["user"])) {
                 case"voirResoSoumi":
                     $controlAgent->voirResoSoumi();
                     break;
+                
+                case"modifierResoSoumi":
+                    $controlAgent->modifierResoSoumi();
+                    break;
+                case "resolution":
+                 $controlPublic->resolutionComplete();
+                break;
+            
+               case"traitementModifReso":
+                   var_dump($_POST);
+                    $controlAgent->traitementModifResoSoumi();
+                break;
             }
         }
     } else {

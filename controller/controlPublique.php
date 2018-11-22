@@ -167,7 +167,7 @@ class controlPublique {
             }
             $titreFichier = 'recherchePar' . $_GET['type'] . '_' . $_POST["element"];
             $this->telechargerExcel($titreFichier, $reso);
-            $this->vue->rechercheResolutionParType($reso, $titreFichier);
+            $this->vue->rechercheResolution($reso, $titreFichier);
         }
     }
 

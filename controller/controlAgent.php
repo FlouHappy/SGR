@@ -19,7 +19,6 @@ use SGR\model\Departement;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-
 class controlAgent {
 
     private $vue;
@@ -112,6 +111,24 @@ class controlAgent {
         }
         $writer = new Xlsx($spreadsheet);
         $writer->save('Excel/' . $titre . '.xlsx');
+    }
+
+    public function modifierResoSoumi() {
+        $id = filter_var($_GET["num"], FILTER_SANITIZE_NUMBER_INT);
+        $reso = $this->modelReceptionReso->rechercheResoParId($id);
+        $programmeReso = $this->modelProg->programmeAssocier($id);
+        $courReso = $this->modelCour->courAssocier($id);
+        
+        $cour = $this->modelCour->allCourTrie();
+        $prog = $this->modelProg->allProgrammeTrie();
+        $ugp = $this->modelUgp->allUgpTrie();
+        $projet = $this->modelProjet->allProjetTrie();
+        $departement = $this->modelDepartement->allDepartementTrie();
+        $this->vue->afficherFormulaireModif($reso,$programmeReso,$courReso,$cour,$prog,$ugp,$projet,$departement);
+    }
+    
+    public function traitementModifResoSoumi(){
+        
     }
 
 }

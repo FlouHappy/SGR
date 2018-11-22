@@ -11,7 +11,7 @@ namespace SGR\view;
 class VuePublique {
 
     function __construct() {
-        
+
     }
 
     public function afficherAccueil() {
@@ -20,11 +20,7 @@ class VuePublique {
       <div id="divpublic" class="btt">
 
         <a href="index.php?action=soumettreReso" target="_self">
-<<<<<<< HEAD
           Saisir une resolution recue
-=======
-          Soumettre une resolution reçues
->>>>>>> 96664dd2ea306725c332c850bf97baf539f67eff
         </a> <br>
 
         <a href="index.php?action=voirReso">
@@ -32,11 +28,7 @@ class VuePublique {
       <br>
 
         <a href="index.php?action=connexion">
-<<<<<<< HEAD
         Gerer les resolutions du decanat
-=======
-        Se Connecter (traiter les résolutions décanat)
->>>>>>> 96664dd2ea306725c332c850bf97baf539f67eff
         </a>
       </div>');
     }
@@ -53,11 +45,10 @@ class VuePublique {
           Projet deja existant:
           <input type="radio" name="projet" value="oui" required> Oui
           <input type="radio" name="projet" value="non"> Non<br><br>
-          
-<center>
-<table class="table1">
 
-<tr>
+<center>
+  <table class="table1">
+    <tr>
         <td> Combien de cours sont concernés par la résolution: </td>
           <td> <select id="cour" name="cour">
             <option value="none">Inderteminé</option>');
@@ -66,13 +57,16 @@ class VuePublique {
         }
         echo('
             <option value="all">tout</option>
-          </select> </td></tr>  
-</table></center>
+          </select> </td></tr>
+  </table>
+</center>
+
 Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le cour </a>  <br><br><br><br>
-<center><table class="table1">
 
 
-<tr>
+<center>
+  <table class="table1">
+    <tr>
           <td>Combien de programmes sont concernés par la résolution: </td>
           <td><select id="programme" name="programme">
             <option value="none">Inderteminé</option>');
@@ -80,11 +74,13 @@ Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le c
             echo('<option value="' . $i . '">' . $i . '</option>');
         }
 
-
         echo('
             <option value="all">tout</option>
           </select></td></tr> </td>
-</table></center>Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >Créer le programme </a>  <br><br><br><br>
+  </table>
+</center>
+
+Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >Créer le programme </a>  <br><br><br><br>
       <input type="submit" value="Valider">
 </div>
       </form>');
@@ -117,19 +113,11 @@ Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le c
 
 
         echo('<div id="divhalf2">
-<<<<<<< HEAD
-        <h1> Renseignement sur la résolution recue :</h1><br>
-             <center>
-             <table class="table1">
-             <tr>
-                <td><label for="num">Numéro résolution recue: </label></td>
-=======
         <h1> Renseignement sur la résolution reçue:</h1><br>
              <center>
              <table class="table1">
              <tr>
                 <td><label for="num">Numéro Résolution reçues: </label></td>
->>>>>>> 96664dd2ea306725c332c850bf97baf539f67eff
         <td><input type="text" id="num" required placeholder="1234567890" name="num" ><br><br>
         </td></tr>
         </table>
@@ -397,7 +385,7 @@ Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le c
         }
         echo('</table></center></div>');
     }
-    
+
     public function afficherCour($cour) {
         echo('<center> <h1>Liste de tout les cours ordonnées par sigle </h1><br><br><br>
             </center><table class="table2" >
@@ -413,7 +401,7 @@ Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le c
         }
         echo('</table></center></div>');
     }
-    
+
      public function afficherProgramme($programme) {
         echo('<center> <h1>Liste de tout les programmes ordonnées par code </h1><br><br><br>
             </center><table class="table2" >
@@ -441,22 +429,22 @@ Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le c
         <h1> Renseignement sur le Cour:</h1><br><br>
           <label for="sigle">Sigle du cour: </label>
         <input type="text" id="sigle" required  name="sigle" ><br><br>
-       
+
 
         <label for="nom">Nom du cour: </label>
         <input type="text" id="nom" required  name="nom" ><br><br>
-        
+
 
         <label for="cycle">Cycle du cour: </label>
         <input type="number" id="cycle" required  name="cycle" ><br><br>
-        
+
             </select><br>
                 <input type="submit" name="valider" value="Créer">
         </div>
-      
+
                  </form>');
     }
-    
+
     public function afficherFormulaireProgramme($ugp) {
 
 
@@ -466,11 +454,11 @@ Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le c
         <h1> Renseignement sur le Programme:</h1><br><br>
           <label for="sigle">Code programme: </label>
         <input type="text" id="code" required  name="code" ><br><br>
-       
+
 
         <label for="nom">Nom du programme: </label>
         <input type="text" id="nom" required  name="nom" ><br><br>
-        
+
 
         <label for="type">Type programme (facultatif): </label>
        <select id="type" name="type">
@@ -480,26 +468,26 @@ Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le c
             <option value="court de deuxième cycle"> court de deuxième cycle</option>
             <option value="sur mesure"> sur mesure</option>
           </select><br>
-          
+
         <label for="ugp">UGP associé (facultatif): </label>
          <select id="ugp" name="ugp">
          <option value="NULL">none</option>');
-        
+
         foreach ($ugp as $value) {
             echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
         }
         echo('</select><br>
                 <input type="submit" name="valider" value="Créer">
         </div>
-      
+
                  </form>');
     }
-    
+
     public function afficherResulatCreation($res){
         echo('
                 <div id="divsoumettre" class="btt2">
                 Votre '.$res.' a été creé <br><br><br>
-                
+
         <a href="index.php?action=soumettreReso">Retourner au formulaire</a>
          </div>');
     }

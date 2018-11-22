@@ -11,13 +11,13 @@ namespace SGR\view;
 class VueAgent {
 
     function __construct() {
-        
+
     }
 
     public function afficherAccueil() {
         echo('
 <ul>
-  
+
   <li><a href="index.php?action=voirResoSoumi">Consulter la liste des résolution soumises </a></li>
   <li><a href="index.php?action=voirResoDecanat">Consulter la liste des résolutions Decanat</a></li>
   <li><a href="index.php?action=creerSeance">Créer un nouveau Projet</a></li>
@@ -33,7 +33,7 @@ class VueAgent {
         <br>Rechercher :
         <a href="index.php?action=resoNonTraiter">  Résolution non traité  </a>
         <a href="index.php?action=resoPerso">  Mes résolutions </a>
-         <a href="index.php?action=resoPerso">  Résolution en cour de traitement </a>
+         <a href="index.php?action=resoPerso">  Résolution en traitement </a>
         <br> <br>
         <h2>Liste de toutes les résolutions :</h2>
         <br>

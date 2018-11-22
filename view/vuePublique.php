@@ -20,7 +20,11 @@ class VuePublique {
       <div id="divpublic" class="btt">
 
         <a href="index.php?action=soumettreReso" target="_self">
+<<<<<<< HEAD
+          Saisir une resolution recue
+=======
           Soumettre une resolution reçues
+>>>>>>> 96664dd2ea306725c332c850bf97baf539f67eff
         </a> <br>
 
         <a href="index.php?action=voirReso">
@@ -28,7 +32,11 @@ class VuePublique {
       <br>
 
         <a href="index.php?action=connexion">
+<<<<<<< HEAD
+        Gerer les resolutions du decanat
+=======
         Se Connecter (traiter les résolutions décanat)
+>>>>>>> 96664dd2ea306725c332c850bf97baf539f67eff
         </a>
       </div>');
     }
@@ -109,11 +117,19 @@ Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le c
 
 
         echo('<div id="divhalf2">
+<<<<<<< HEAD
+        <h1> Renseignement sur la résolution recue :</h1><br>
+             <center>
+             <table class="table1">
+             <tr>
+                <td><label for="num">Numéro résolution recue: </label></td>
+=======
         <h1> Renseignement sur la résolution reçue:</h1><br>
              <center>
              <table class="table1">
              <tr>
                 <td><label for="num">Numéro Résolution reçues: </label></td>
+>>>>>>> 96664dd2ea306725c332c850bf97baf539f67eff
         <td><input type="text" id="num" required placeholder="1234567890" name="num" ><br><br>
         </td></tr>
         </table>
@@ -196,7 +212,7 @@ Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le c
 
            </div>
            <div id="divb"> <input type="submit" name="valider" value="Créer"></div>
-           
+
            </form>');
     }
 

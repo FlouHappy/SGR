@@ -20,7 +20,7 @@ class VuePublique {
       <div id="divpublic" class="btt">
 
         <a href="index.php?action=soumettreReso" target="_self">
-          Soumettre une resolution
+          Saisir une resolution recue
         </a> <br>
 
         <a href="index.php?action=voirReso">
@@ -28,7 +28,7 @@ class VuePublique {
       <br>
 
         <a href="index.php?action=connexion">
-        Se Connecter
+        Gerer les resolutions du decanat
         </a>
       </div>');
     }
@@ -107,11 +107,11 @@ class VuePublique {
 
 
         echo('<div id="divhalf2">
-        <h1> Renseignement sur la résolution :</h1><br>
+        <h1> Renseignement sur la résolution recue :</h1><br>
              <center>
              <table class="table1">
              <tr>
-                <td><label for="num">Numéro Résolution: </label></td>
+                <td><label for="num">Numéro résolution recue: </label></td>
         <td><input type="text" id="num" required placeholder="1234567890" name="num" ><br><br>
         </td></tr>
         </table>
@@ -194,7 +194,7 @@ class VuePublique {
 
            </div>
            <div id="divb"> <input type="submit" name="valider" value="Créer"></div>
-           
+
            </form>');
 
     }

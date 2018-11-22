@@ -101,7 +101,7 @@ class VueAgent {
         }
         echo('</div>
             <div id="divhalf2">
-              <form action="index.php?action=traitementModifReso&id='.$reso->getId().'" class="formModifReso" method="POST">
+              <form action="index.php?action=traitementModifReso&id='.$reso->getId().'&nbCour='.$nbCour.'&nbProg='.$nbProgramme.'" class="formModifReso" method="POST">
         <h1> Modification de la résolution reçue (Veuillez laisser vide les champs qui ne sont pas concernés par la modification):</h1><br>
              <center>
              <table class="table1">

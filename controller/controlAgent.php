@@ -128,7 +128,9 @@ class controlAgent {
     }
     
     public function traitementModifResoSoumi(){
-        
+        if ($_POST['num']==''){
+            echo('vide');
+        }
     }
 
 }

@@ -54,6 +54,7 @@ class controlPublique {
         if ($_POST["projet"] == "non") {
             $_SESSION['projet'] = "oui";
             $this->vue->afficherFormulaireProjet();
+
         } else {
             $_SESSION['projet'] = "non";
         }

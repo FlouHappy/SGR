@@ -41,6 +41,7 @@ class VuePublique {
         <a href="popUp.php?action=voirAllProjet"  target=_blank>Voir les projets existants</a>
          <a href="popUp.php?action=voirAllCour"  target=_blank>Voir les cours existants</a>
           <a href="popUp.php?action=voirAllProgramme"  target=_blank>Voir les programmes existants</a><br><br><br><br>
+
         <h1> Renseignement sur la résolution reçue</h1><br>
           Projet deja existant:
           <input type="radio" name="projet" value="oui" required> Oui
@@ -82,13 +83,12 @@ Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le c
 
 Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >Créer le programme </a>  <br><br><br><br>
       <input type="submit" value="Valider">
-</div>
-      </form>');
+</div>');
     }
 
     public function afficherFormulaireProjet() {
 
-        echo('<div id="" class="row">
+        echo('<div id="test" class="row">
         <div id="divhalf1">
         <h1> Renseignement sur le projet :</h1><br>
                 <label for="description">Description du projet :</label><br>
@@ -106,33 +106,36 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
     <input type="text"  placeholder="lien vers le dossier du projet" name="lien" >
     <br>
 
-                </div>');
+                </div>
+          ');
     }
 
     public function afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement) {
 
 
-        echo('<div id="divhalf2">
+        echo('
+
+        <div id="divhalf2">
         <h1> Renseignement sur la résolution reçue:</h1><br>
+
+          <div class="sujet">
+            <label for="sujet">Sujet de la résolution:</label>
+          <br>
+               <textarea name="sujet" rows="3" cols="50" required form="formReso"></textarea>
+               <br><br>
+              </div>
+
              <center>
              <table class="table1">
              <tr>
-                <td><label for="num">Numéro Résolution reçues: </label></td>
-        <td><input type="text" id="num" required placeholder="1234567890" name="num" ><br><br>
-        </td></tr>
-        </table>
-         <div class="sujet">
-        <label for="sujet">Sujet de la résolution:</label>
-           <br>
-                <textarea name="sujet" rows="3" cols="50" required form="formReso"></textarea>
-                <br><br>
-               </div>
+                <td><label for="num">Numéro résolution reçue: </label></td>
+                <td><input type="text" id="num" required placeholder="1234567890" name="num" >
+                </td>
+              </tr>
 
-               <center>
-               <table class="table1">
                <tr>
-        <td><label for="ugp">UGP : </label></td>
-         <td><select id="ugp" name="ugp">');
+                  <td><label for="ugp">UGP : </label></td>
+                  <td><select id="ugp" name="ugp">');
         foreach ($ugp as $value) {
             echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
         }
@@ -186,20 +189,110 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
         }
         echo('</select></td>
         </tr>
-                   </table><br> ');
+                   </table><br>
 
-        echo('<label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label>
+        <label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label>
            <br>
                 <textarea name="noteReso" rows="3" cols="50"  form="formReso"></textarea>
                 <br><br>
 
+           </center>
+           </div>
+           </div>
 
+           <div id="divb"> <input type="submit" name="valider" value="Créer"></div>
+
+           </form>');
+    }
+    public function afficherFormulaireResolution2($cour, $prog, $ugp, $projet, $departement) {
+
+
+        echo('
+<form action="index.php?action=formulaireReso" class="formPreForm" method="POST">
+        <div id="divhalf2">
+        <h1> Renseignement sur la résolution reçue:</h1><br>
+
+          <div class="sujet">
+            <label for="sujet">Sujet de la résolution:</label>
+          <br>
+               <textarea name="sujet" rows="3" cols="50" required form="formReso"></textarea>
+               <br><br>
+              </div>
+
+             <center>
+             <table class="table1">
+             <tr>
+                <td><label for="num">Numéro résolution reçue: </label></td>
+                <td><input type="text" id="num" required placeholder="1234567890" name="num" >
+                </td>
+              </tr>
+
+               <tr>
+                  <td><label for="ugp">UGP : </label></td>
+                  <td><select id="ugp" name="ugp">');
+        foreach ($ugp as $value) {
+            echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
+        }
+        echo('</select><br></td></tr>  ');
+
+        if ($_POST["projet"] == "oui") {
+            echo('<tr>
+            <td><label for="projet">Projet : </label></td>
+         <td><select id="projet" name="projet">');
+            foreach ($projet as $value) {
+                echo('<option value="' . $value->getNum() . '">' . $value->getNum() . ': ' . $value->getDescription() . '</option>');
+            }
+            echo('</select></td></tr>  ');
+        }
+
+        if (($_POST['cour'] != "none") && ($_POST['cour'] != "all" )) {
+            for ($i = 1; $i <= $_POST['cour']; $i++) {
+                echo('
+                 <tr>
+                <td><label for="cour">Cours concernés par la résolution: </label></td>
+                <td><select id="cour' . $i . '" name="cour' . $i . '">');
+                foreach ($cour as $value) {
+                    echo('<option value="' . $value->getSigle() . '">' . $value->getSigle() . ': ' . $value->getNom() . '</option>');
+                }
+                echo('</select></td>
+                   </tr> ');
+            }
+        }
+
+        if (($_POST['programme'] != "none") && ($_POST['programme'] != "all" )) {
+            for ($i = 1; $i <= $_POST['programme']; $i++) {
+                echo('
+                 <tr">
+                <td><label for="programme">Programmes concernés par la résolution: </label></td>
+                <td><select id="programme' . $i . '" name="programme' . $i . '">');
+                foreach ($prog as $value) {
+                    echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
+                }
+                echo('</select></td>
+                   </tr> ');
+            }
+        }
+
+        echo('<tr>
+                <td><label for="departement">Departement concerné par la résolution: </label></td>
+                <td><select id="departement"  name="departement">');
+
+
+        foreach ($departement as $value) {
+            echo('<option value="' . $value->getNum() . '">' . $value->getNum() . ': ' . $value->getNom() . '</option>');
+        }
+        echo('</select></td>
+        </tr>
+                   </table><br>
+
+        <label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label>
+           <br>
+                <textarea name="noteReso" rows="3" cols="50"  form="formReso"></textarea>
+                <br><br>
 
            </center>
            </div>
-
-           </div>
-           <div id="divb"> <input type="submit" name="valider" value="Créer"></div>
+           
 
            </form>');
     }
@@ -242,42 +335,115 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
     }
 
     public function afficherUneResolution($reso, $programme, $cour) {
-        echo('<div class="resolution">
-                Id de la résolution:    ' . $reso->getId() . '<br>
-                Numéro de la résolution:    ' . $reso->getNum() . '<br>
-                Sujet de la résolution:     ' . $reso->getSujet() . '<br>
-                Projet associé:     <a href="index.php?action=projet&id=' . $reso->getNumProjet_id() . '"> ' . $reso->getNumProjet_id() . '</a><br>
-                Date de demande:    ' . $reso->getDateDemande() . '<br>
-                Date de reception:    ' . $reso->getDateReception() . '<br>
-                Traitement:     ' . $reso->getTraitement() . '<br>
-                Notes:  ' . $reso->getNotes() . '<br>
-                Departement:    ' . $reso->getDepartement_id() . '<br>
-                Ugp:    ' . $reso->getCodeUgp_id() . '<br>
-                agent:  ' . $reso->getAgent_id() . '<br><br>
-                Liste des programmes concerné :  <br>
+        echo('<div id="divconsult" class="resolution">
+        <center>
+        <table class="table3">
+                <tr>
+                  <td>Id de la résolution :</td>
+                   <td>' . $reso->getId() . '</td>
+                  </tr>
+
+                <tr>
+                <td>Numéro de la résolution :</td>
+                <td>' . $reso->getNum() . '</td>
+                </tr>
+
+                <tr>
+                <td>Sujet de la résolution :</td>
+                <td>' . $reso->getSujet() . '</td>
+                </tr>
+
+                <tr>
+                <td>Projet associé :</td>
+                <td> <a href="index.php?action=projet&id=' . $reso->getNumProjet_id() . '"> ' . $reso->getNumProjet_id() . '</a></td>
+                </tr>
+
+                <tr>
+                <td>Date de demande :</td>
+                <td>' . $reso->getDateDemande() . '</td>
+                </tr>
+
+                <tr>
+                <td>Date de reception :</td>
+                <td>' . $reso->getDateReception() . '</td>
+                </tr>
+
+                <tr>
+                <td>Traitement :</td>
+                <td>' . $reso->getTraitement() . '</td>
+                </tr>
+
+                <tr>
+                <td>Notes :</td>  <td>' . $reso->getNotes() . '</td>
+                </tr>
+
+                <tr>
+                <td>Departement :</td>    <td>' . $reso->getDepartement_id() . '</td>
+                </tr>
+
+                <tr>
+                <td>Ugp :</td>    <td>' . $reso->getCodeUgp_id() . '</td>
+                </tr>
+
+                <tr>
+                <td>Agent :</td>  <td>' . $reso->getAgent_id() . '</td>
+                </tr>
+</table>
+</center>
+
+<center>
+<table class="table3">
+                <tr>
+                <th>Liste des programmes concerné :  </th>
+                </tr>
                 ');
         foreach ($programme as $value) {
-            echo($value->getCode() . ':  ' . $value->getNom() . '<br>');
+            echo('<tr>
+                  <td>'.$value->getCode() . ' :  ' . $value->getNom() . '</td>
+                  </tr>');
         }
         echo('
-
-                <br><br> Liste des cours concerné: <br>
-                 ');
+                <tr>
+                <th> Liste des cours concerné:</th>
+                 </tr>');
         foreach ($cour as $value) {
-            echo($value->getSigle() . ':  ' . $value->getNom() . '<br>');
+            echo('<tr>
+                  <td>'.$value->getSigle() . ':  ' . $value->getNom() . '</td>
+                  </tr>');
         }
-        echo('</div>');
+        echo('</table></center></div>');
     }
 
     public function afficherUnProjet($projet) {
-        echo('<div class="resolution">
-                Numéro du projet:    ' . $projet->getNum() . '<br>
-                Description :     ' . $projet->getDescription() . '<br>
-                État:    ' . $projet->getEtat() . '<br>
-                Notes:    ' . $projet->getNote() . '<br>
-                Lien dossier:     ' . $projet->getLien() . '<br><br><br>
+        echo('<div id="divconsult" class="resolution">
+        <center>
+          <table class="table3">
+            <tr>
+                <td>Numéro du projet :</td>
+                <td>' . $projet->getNum() . '</td>
+            </tr>
 
-        </div>');
+            <tr>
+                <td>Description :</td>
+                <td>' . $projet->getDescription() . '</td>
+            </tr>
+
+            <tr>
+                <td>État :</td>
+                <td>' . $projet->getEtat() . '</td>
+            </tr>
+
+            <tr>
+                <td>Notes :</td>
+                <td>' . $projet->getNote() . '</td>
+            </tr>
+
+            <tr>
+                <td>Lien dossier :</td>
+                <td>' . $projet->getLien() . '</td>
+            </tr>
+
+        </table></center></div>');
     }
 
     public function rechercheParType($cour, $prog, $ugp, $departement, $agent) {
@@ -365,8 +531,9 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
     }
 
     public function afficherProjet($projet) {
-        echo('<center> <h1>Liste de tout les projets </h1><br><br><br>
-            </center><table class="table2" >
+        echo('<div id="divconsult">
+        <h1>Liste des projets </h1><br>
+            <center><table class="table3" >
         <tr>
             <th>Id</th>
             <th>Description Projet</th>
@@ -387,8 +554,10 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
     }
 
     public function afficherCour($cour) {
-        echo('<center> <h1>Liste de tout les cours ordonnées par sigle </h1><br><br><br>
-            </center><table class="table2" >
+        echo('<div id="divconsult">
+         <h1>Liste des cours ordonnés par sigle </h1><br>
+         <center>
+            <table  class="table3" >
         <tr>
             <th>Sigle</th>
             <th>Nom</th>
@@ -403,8 +572,10 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
     }
 
      public function afficherProgramme($programme) {
-        echo('<center> <h1>Liste de tout les programmes ordonnées par code </h1><br><br><br>
-            </center><table class="table2" >
+        echo('<div id="divconsult">
+         <h1>Liste des programmes ordonnés par code </h1><br>
+            <center>
+            <table class="table2" >
         <tr>
             <th>Code</th>
             <th>Nom</th>

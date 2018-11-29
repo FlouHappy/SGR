@@ -11,16 +11,16 @@ namespace SGR\view;
 class VueAgent {
 
     function __construct() {
-        
+
     }
 
     public function afficherAccueil() {
         echo('
-<ul>
+<div id="divagent" class="bttagent">
 
-  <li><a href="index.php?action=voirResoSoumi">Consulter la liste des résolution soumises </a></li>
-  <li><a href="index.php?action=voirResoDecanat">Consulter la liste des résolutions Decanat</a></li>
-</ul>');
+  <a href="index.php?action=voirResoSoumi">Consulter la liste des résolutions reçues </a><br>
+  <a href="index.php?action=voirResoDecanat">Consulter la liste des résolutions du Décanat</a>
+</div>');
     }
 
     public function voirReso($reso, $titre) {
@@ -82,7 +82,7 @@ class VueAgent {
                 Ugp:    ' . $reso->getCodeUgp_id() . '<br>
                 agent:  ' . $reso->getAgent_id() . '<br><br>
                      Liste des cours concerné: <br>
-               
+
                 ');
 
 
@@ -117,9 +117,9 @@ class VueAgent {
 
                <center>
                <table class="table1">
-               
 
-       
+
+
             <tr>
             <td><label for="projet">Projet : </label></td>
          <td><select id="projet" name="projet">');
@@ -139,7 +139,7 @@ class VueAgent {
         echo('<tr> <td><label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label></td>
            <br>
                  <td><textarea name="noteReso" rows="3" cols="50"  ></textarea></td></tr>
-                 
+
 <tr>
                 <td><label for="departement">Departement concerné par la résolution: </label></td>
                 <td><select id="departement"  name="departement">');
@@ -151,8 +151,8 @@ class VueAgent {
         }
         echo('</select></td>
         </tr>
-                   <br> 
-                     
+                   <br>
+
 <tr>
         <td><label for="ugp">UGP : </label></td>
          <td><select id="ugp" name="ugp">');
@@ -192,12 +192,12 @@ class VueAgent {
         echo('<br><br></table>
 
           <tr><td><div id="divb"> <input type="submit" name="valider" value="Créer"></div></tr>
-          
+
            </center>
            </div>
            </form>
            </div>
-          
+
            ');
     }
 
@@ -220,27 +220,27 @@ class VueAgent {
                 Ugp:    ' . $reso->getCodeUgp_id() . '<br>
                 agent:  ' . $reso->getAgent_id() . '<br><br>
                      Liste des cours concerné: <br>
-               
+
                 ');
-      
-       
+
+
         foreach ($courReso as $value) {
             echo($value->getSigle() . ':  ' . $value->getNom() . '<br>');
             $nbCour++;
               $_SESSION["courReso".$nbCour]=$value->getSigle();
-             
+
         }
          echo('  <br> <br>Liste des programmes concerné :  <br>');
           foreach ($programmeReso as $value) {
             echo($value->getCode() . ':  ' . $value->getNom() . '<br>');
              $nbProgramme++;
             $_SESSION["programmeReso".$nbProgramme]=$value->getCode();
-            
+
         }
          echo('  <br> <br>Liste des résolutions Décanat associé :  <br>');
           foreach ($resoDeca as $value) {
             echo('<a href="index.php?action=resoDeca&id=' . $value . '"> ' . $value . '</a><br><br>');
-            
+
         }
         echo('</div>
             <div id="divhalf2">
@@ -269,16 +269,16 @@ class VueAgent {
         }
         echo('</select><br></td></tr>
 
-       
+
             <tr>
             <td> <label for="resumeReso">Résumé de la résolution Décanat:</label></td>
          <td><textarea name="resumeReso" rows="3" cols="50" ></textarea></td></tr><br>
            <tr>
             <td> <label for="descReso">Description de la résolution Décanat:</label></td>
-         <td><textarea name="descReso" rows="3" cols="50" ></textarea></td></tr> 
-        
+         <td><textarea name="descReso" rows="3" cols="50" ></textarea></td></tr>
 
-       
+
+
            <tr>
                 <td><label for="campus">Campus concerné par la résolution Décanat: </label></td>
                 <td><select id="campus"  name="campus">
@@ -286,8 +286,8 @@ class VueAgent {
                  <option value="Saint-Jérôme">Saint-Jérôme</option>
                  </select></td>
         </tr>
-        
-          
+
+
         <tr>
                 <td><label for="seance">Séance (trié par date): </label></td>
                 <td><select id="seance"  name="seance">');
@@ -298,24 +298,24 @@ class VueAgent {
         }
         echo('</select><a href="popUp.php?action=creerSeance"  target=_blank>Votre séance n'."'".'existe pas ? Créez la ici</a</td>
         </tr>
-         
-        
+
+
 
 
         <tr> <td><label for="noteReso">Note supplémentaire concernant la résolution décanat (facultatif):</label></td>
            <br>
                  <td><textarea name="noteReso" rows="3" cols="50"  ></textarea></td></tr>
-                 
+
 </table>
 
           <tr><td><div id="divb"> <input type="submit" name="valider" value="Créer"></div></tr>
-          
+
            </center>
            </div>
            </form>
            </div>
-          
-           ');   
+
+           ');
     }
 
 }

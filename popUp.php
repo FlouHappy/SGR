@@ -39,6 +39,12 @@ if (isset($_GET["action"])) {
         case "traitementProgramme":
             $controlPublic->traitementProgramme();
             break;
+        case "creerSeance":
+            $controlPublic->formulaireSeance();
+            break;
+         case "traitementSeance":
+             $controlPublic->traitementSeance();
+            break;
     }
 }
 include("template/template2.php") ?>

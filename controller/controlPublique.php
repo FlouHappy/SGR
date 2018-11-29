@@ -14,7 +14,9 @@ use SGR\model\Programme;
 use SGR\model\Ugp;
 use SGR\model\Agent;
 use SGR\model\Projet;
+use SGR\model\Seance;
 use SGR\model\ReceptionReso;
+use SGR\model\typeResolution;
 use SGR\model\Departement;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -29,6 +31,7 @@ class controlPublique {
     private $modelReceptionReso;
     private $modelDepartement;
     private $modelAgent;
+    private $modelSeance;
 
     function __construct() {
         $this->vue = new VuePublique();
@@ -39,6 +42,8 @@ class controlPublique {
         $this->modelProjet = new Projet();
         $this->modelReceptionReso = new ReceptionReso();
         $this->modelDepartement = new Departement();
+        $this->modelTypeReso = new typeResolution();
+        $this->modelSeance= new Seance();
     }
 
     public function accueil() {
@@ -54,7 +59,6 @@ class controlPublique {
         if ($_POST["projet"] == "non") {
             $_SESSION['projet'] = "oui";
             $this->vue->afficherFormulaireProjet();
-
         } else {
             $_SESSION['projet'] = "non";
         }
@@ -65,8 +69,9 @@ class controlPublique {
         $prog = $this->modelProg->allProgrammeTrie();
         $ugp = $this->modelUgp->allUgpTrie();
         $projet = $this->modelProjet->allProjetTrie();
+        $typeReso = $this->modelTypeReso->allTypeResoTrie();
         $departement = $this->modelDepartement->allDepartementTrie();
-        $this->vue->afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement);
+        $this->vue->afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement, $typeReso);
     }
 
     public function traitementReso() {
@@ -98,6 +103,7 @@ class controlPublique {
                 $this->modelReceptionReso->associationProgramme($id->getId(), $_POST["programme" . $i]);
             }
         }
+        $this->modelReceptionReso->associationTypeReso($id->getId(), $_POST["type"]);
     }
 
     public function rechercheReso() {
@@ -173,20 +179,36 @@ class controlPublique {
     }
 
     public function telechargerExcel($titre, $reso) {
-        $spreadsheet = new Spreadsheet();
+        function cellColor($cells, $color) {
+            global $objPHPExcel;
+             $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+            $objPHPExcel->getActiveSheet()->getStyle($cells)->getFill()->applyFromArray(array(
+                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                'startcolor' => array(
+                    'rgb' => $color
+                )
+            ));
+        }
+       
+         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Id');
-        $sheet->setCellValue('B1', 'Numéro réception');
-        $sheet->setCellValue('C1', 'Sujet');
-        $sheet->setCellValue('D1', 'codeUgp_id');
-        $sheet->setCellValue('E1', 'Departement_id');
-        $sheet->setCellValue('F1', 'Date Demande');
-        $sheet->setCellValue('G1', 'Date Reception');
-        $sheet->setCellValue('H1', 'Notes');
-        $sheet->setCellValue('I1', 'Numéro de projet');
-        $sheet->setCellValue('J1', 'État');
-        $sheet->setCellValue('K1', 'agent_id');
-        $y = 2;
+
+        
+        
+        $sheet->setCellValue('A1', $titre);
+        $sheet->setCellValue('A2', 'Numéro');
+        $sheet->setCellValue('B2', 'Résolutions reçue');
+        $sheet->setCellValue('C2', 'Sujet');
+        $sheet->setCellValue('D2', 'codeUgp_id');
+        $sheet->setCellValue('E2', 'Departement_id');
+        $sheet->setCellValue('F2', 'Date Demande');
+        $sheet->setCellValue('G2', 'Date Reception');
+        $sheet->setCellValue('H2', 'Notes');
+        $sheet->setCellValue('I2', 'Numéro de projet');
+        $sheet->setCellValue('J2', 'État');
+        $sheet->setCellValue('K2', 'agent_id');
+        $y = 3;
         foreach ($reso as $value) {
 
             $i = 1;
@@ -281,6 +303,19 @@ class controlPublique {
         $type = filter_var($_POST["type"], FILTER_SANITIZE_STRING);
         $this->modelProg->nouveauProgramme($code, $nom, $type, $_POST['ugp']);
         $this->vue->afficherResulatCreation('Programme');
+    }
+    
+    public function formulaireSeance(){
+        $this->vue->afficherFormulaireSeance();
+        
+    }
+    
+    public function traitementSeance() {
+
+        $date=filter_var($_POST["date"], FILTER_SANITIZE_STRING);
+        $instance=filter_var($_POST["instance"], FILTER_SANITIZE_STRING);
+        $this->modelSeance->nouvelleSeance($date, $instance);
+        echo('Votre Séance a été crée, vous pouvez fermer cet onglet');
     }
 
 }

@@ -51,20 +51,20 @@ if (!isset($_SESSION["user"])) {
                 break;
             case "traitementReso":
                 $controlPublic->traitementReso();
-                 header('Location: index.php?action=resoCreer');
+                header('Location: index.php?action=resoCreer');
                 break;
             case "resoCreer":
                 $controlPublic->accueil();
                 echo('Votre résolution a été enregistré');
                 break;
             case "voirReso":
-                 $controlPublic->rechercheReso();
+                $controlPublic->rechercheReso();
                 break;
             case "resolution":
-                 $controlPublic->resolutionComplete();
+                $controlPublic->resolutionComplete();
                 break;
             case "projet":
-                 $controlPublic->projetComplet();
+                $controlPublic->projetComplet();
                 break;
             case"rechercheResoPar":
                 $controlPublic->rechercheParType();
@@ -72,8 +72,6 @@ if (!isset($_SESSION["user"])) {
             case "resultatRecherchePar":
                 $controlPublic->resultatRechercheParType();
                 break;
-            
-                
         }
         //parti non connecté (page accueil )
     } else {
@@ -85,7 +83,7 @@ if (!isset($_SESSION["user"])) {
 } else {
     $controlAgent = new controlAgent();
     $controlAdmin = new controlAdmin();
-    $controlPublic= new controlPublique;
+    $controlPublic = new controlPublique;
     //parti  connecté commune
     if (isset($_GET["action"])) {
         switch ($_GET["action"]) {
@@ -113,18 +111,43 @@ if (!isset($_SESSION["user"])) {
                 case"voirResoSoumi":
                     $controlAgent->voirResoSoumi();
                     break;
-                
+
                 case"modifierResoSoumi":
                     $controlAgent->modifierResoSoumi();
                     break;
                 case "resolution":
-                 $controlPublic->resolutionComplete();
-                break;
-            
-               case"traitementModifReso":
-                   var_dump($_POST);
+                    $controlPublic->resolutionComplete();
+                    break;
+
+                case"traitementModifReso":
                     $controlAgent->traitementModifResoSoumi();
-                break;
+                    header('Location: index.php?action=resoModifier');
+                    break;
+                case "resoModifier":
+                    $controlAgent->accueil();
+                    echo('Votre résolution a été modifiée avec succes');
+                    break;
+                case "projet":
+                    $controlPublic->projetComplet();
+                    break;
+                case"resoNonTraiter":
+                    $controlAgent->afficherResoNontraiter();
+                    break;
+                case "resoPerso" :
+                    $controlAgent->afficherResoPerso();
+                    break;
+                case"rechercheResoPar":
+                    $controlPublic->rechercheParType();
+                    break;
+                case "resultatRecherchePar":
+                    $controlAgent->resultatRechercheParType();
+                    break;
+                case"traiterResoSoumi":
+                    $controlAgent->traiterReso();
+                    break;
+                case"enregistrementResoDeca":
+                    $controlAgent->enregistrementReso();
+                    break;
             }
         }
     } else {

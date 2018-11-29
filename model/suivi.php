@@ -19,12 +19,14 @@ class Suivi {
         
     }
 
-    function creerCour($s, $p) {
+    function creerSuivi($s, $p) {
         $cour = new Suivi();
         $cour->suivi = $s;
         $cour->processus = $p;
         return ($cour);
     }
+    
+    
     function getSuivi() {
         return $this->suivi;
     }

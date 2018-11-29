@@ -32,8 +32,8 @@ class DecanatReso {
     function creerDecanatReso($i, $n, $ni, $s, $np, $r, $dr, $desc, $de, $c, $not, $suiv) {
         $reso = new DecanatReso();
         $reso->id = $i;
-        $reso->campusnum = $n;
-        $reso->numInstance + $ni;
+        $reso->num = $n;
+        $reso->numInstance = $ni;
         $reso->numSeance_id = $s;
         $reso->numProjet_id = $np;
         $reso->resumeReso = $r;
@@ -46,7 +46,71 @@ class DecanatReso {
         return ($reso);
     }
     
+    function nouvelleResoDecanat( $n, $ni, $s, $np, $r, $desc, $c, $not) {
+        $bdd = new ConnexionBDD();
+        $date = date("Y-m-d");
+        $sql = "INSERT INTO decanatreso( NumReso, NumUniqueInstance,seance_id,projet_id,ResumeReso,DateReso,DescriptionReso,Campus,Note) VALUES ('$n','$ni',$s,$np,'$r','$date','$desc','$c','$not')";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Résolution créé";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        $bdd->fermerConnexion();
+        return $msg;
+    }
     
+    function assocDecanatRecu($idRecu,$idDecanat){
+        $bdd = new ConnexionBDD();
+        $sql = "INSERT INTO receptionreso_decanatreso(receptionReso_id, decanatReso_id) VALUES ($idRecu,$idDecanat)";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "association Résolution créé";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        $bdd->fermerConnexion();
+        return $msg;
+    }
+    
+    function associationTypeReso($id, $type) {
+        $bdd = new ConnexionBDD();
+        $sql = "INSERT INTO typeresolution_decanatreso (TypeReso_id, NumReso_id) VALUES ('$type',$id)";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Résolution créé";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        $bdd->fermerConnexion();
+        return $msg;
+    }
+    
+     function rechercheAssociationTypeReso($idRecu) {
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM  receptionreso_decanatreso WHERE receptionReso_id=$idRecu";
+       $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+       $allReso = array();
+        while ($row = mysqli_fetch_array($result)) {
+            
+            array_push($allReso, $row["decanatReso_id"]);
+        }
+        $bdd->fermerConnexion();
+        return($allReso);
+    }
+    
+    
+     function rechercheResoParNumReception($id) {
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM decanatReso WHERE NumReso='$id'";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $reso = new ReceptionReso();
+        while ($row = mysqli_fetch_array($result)) {
+            $reso = $this->creerDecanatReso($row["Id"], $row["NumReso"],$row["NumUniqueInstance"],$row["seance_id"], $row["projet_id"], $row["ResumeReso"], $row["DateReso"], $row["DescriptionReso"],$row["DateEffective"], $row["Campus"], $row["Note"], $row["VariaSuivi"]);
+        }
+        $bdd->fermerConnexion();
+        return($reso);
+    }
     
     
     function getId() {

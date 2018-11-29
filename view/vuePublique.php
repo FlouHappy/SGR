@@ -110,7 +110,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
           ');
     }
 
-    public function afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement) {
+    public function afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement,$typeReso) {
 
 
         echo('
@@ -132,6 +132,13 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
                 <td><input type="text" id="num" required placeholder="1234567890" name="num" >
                 </td>
               </tr>
+              <tr>
+                  <td><label for="type">Type de Résolution : </label></td>
+                  <td><select id="type" name="type">');
+        foreach ($typeReso as $value) {
+            echo('<option value="' . $value->getType() . '">' . $value->getType() . '</option>');
+        }
+        echo('</select><br></td></tr>
 
                <tr>
                   <td><label for="ugp">UGP : </label></td>
@@ -661,6 +668,32 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         <a href="index.php?action=soumettreReso">Retourner au formulaire</a>
          </div>');
+    }
+    
+    
+    public function afficherFormulaireSeance(){
+        echo('<form action="popUp.php?action=traitementSeance" class="formPreForm" method="POST">
+
+        <div id="divsoumettre" class="btt2">
+        <h1> Renseignement sur la Séance:</h1><br><br>
+        
+          <label for="date">Date: </label>
+        <input type="date"  required name="date" min="2000-12-31"><br><br>
+
+    <label for="instance">Instance: </label></td>
+                <td><select id="instance"  name="instance">
+         <option value="CA">CA</option>
+                 <option value="CE">CE</option>
+                  <option value="SCE">SCE</option>
+                 </select>
+                 <br>
+
+    <input type="submit" name="valider" value="Créer">
+        </div>
+
+                 </form>');
+        
+        
     }
 
 }

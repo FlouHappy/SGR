@@ -123,10 +123,72 @@ html, body{
 }
 
 /***Fin Style pour barre de gauche***/
-
+/*************************Vue Agent************************/
+#vide{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#divagent{
+  height: 35%;
+  margin-bottom: 50px;
+    border-radius: 18px;
+    background-color: #f2f2f2;
+    padding: 100px 450px;
+  text-align: center;
+}
+#divl2{
+  color: black;
+  width: 80%;
+  font-size: 25px;
+  text-align: left;
+  float: left;
+}
+#divr2{
+  color: black;
+  width: 19.6%;
+  text-align: right;
+  float: left;
+}
+#divr2 a:link {
+  background-color: #ff652d; /* Green background */
+  color: black; /* black text */
+  text-align: center;
+  text-decoration: none;
+  margin-left: 130px;
+  padding: 10px 40px;/*  Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 30%; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+}
+#divr2 a:hover {
+    background-color: #e43e01;
+}
+#divr2 a:visited, a:active {
+  color: black;
+  text-decoration: none;
+}
+.bttagent a:link {
+  background-color: #ff652d; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  text-align: center;
+  text-decoration: none;
+  padding: 20px 64px;/*  Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 90%; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+}
+.bttagent a:hover {
+    background-color: #e43e01;
+}
+.bttagent a:visited, a:active {
+  color: white;
+  text-decoration: none;
+}
+/********************Fin Vue Agent*************************/
 #container {
   width: 100%;
-  border: 2px solid red;
+
 }
 
 
@@ -234,7 +296,6 @@ float: left;
   border: 2px solid blue;
 }
 #divhalf2 {
-
 width: 50%;
   margin-top: 30px;
     border-radius: 8px;
@@ -242,8 +303,17 @@ width: 50%;
     padding-bottom:10px;
     text-align: center;
     float: left;
-border: 1px solid red;
   }
+  #divrens {
+  width: 100%;
+    margin-top: 50px;
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      margin-bottom: 50px;
+      padding-top: 30px;
+      padding-bottom:50px;
+      text-align: center;
+    }
   #divb{
     width: 100%;
     text-align: center;
@@ -260,7 +330,7 @@ border: 1px solid red;
     text-align: right;
     float: left;
   }
-/****************************************************************/
+/******************************consulter les resolutions********************/
 #divconsult{
   height: 70%;
   margin-top: 35px;

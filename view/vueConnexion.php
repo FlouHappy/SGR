@@ -33,11 +33,22 @@ class VueConnexion {
     }
 
     public function afficherAccueilConnexionAdmin() {
-        echo('Bonjour! Vous etes connecté en tant que Adminstrateur <h3><a href="index.php?action=deconnexion">se déconnecter</a></h3>');
+        echo('<div id="vide" class="row">
+        <div id="divl2">Bonjour! Vous êtes connecté en tant que Adminstrateur.</div>
+        <div id="divr2"><a href="index.php?action=deconnexion">Déconnexion</a></div>
+
+        </div>
+        ');
     }
 
     public function afficherAccueilConnexionAgent() {
-        echo('Bonjour ' . $_SESSION["prenom"] . ' ' . $_SESSION["nom"] . '! Vous etes connecté en tant qu'."'".'agent <h3><a href="index.php?action=deconnexion">se déconnecter</a></h3>');
+        echo('<div id="vide" class="row">
+        <div id="divl2" >Bonjour ' . $_SESSION["prenom"] . ' ' . $_SESSION["nom"] . '! Vous êtes connecté en tant qu'."'".'agent.</div>
+        <div id="divr2" ><a href="index.php?action=deconnexion">Déconnexion</a></div>
+
+        </div>
+
+        ');
     }
 
 }

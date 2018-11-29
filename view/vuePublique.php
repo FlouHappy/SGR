@@ -20,15 +20,15 @@ class VuePublique {
       <div id="divpublic" class="btt">
 
         <a href="index.php?action=soumettreReso" target="_self">
-          Saisir une resolution recue
+          Saisir une résolution reçue
         </a> <br>
 
         <a href="index.php?action=voirReso">
-          Consulter la liste des resolutions reçues</a>
+          Consulter la liste des résolutions reçues</a>
       <br>
 
         <a href="index.php?action=connexion">
-        Gerer les resolutions du decanat
+        Gérer les résolutions du décanat
         </a>
       </div>');
     }
@@ -43,14 +43,14 @@ class VuePublique {
           <a href="popUp.php?action=voirAllProgramme"  target=_blank>Voir les programmes existants</a><br><br><br><br>
 
         <h1> Renseignement sur la résolution reçue</h1><br>
-          Projet deja existant:
+          Projet déjà existant :
           <input type="radio" name="projet" value="oui" required> Oui
           <input type="radio" name="projet" value="non"> Non<br><br>
 
 <center>
   <table class="table1">
     <tr>
-        <td> Combien de cours sont concernés par la résolution: </td>
+        <td> Nombre de cours concernés par la résolution : </td>
           <td> <select id="cour" name="cour">
             <option value="none">Inderteminé</option>');
         for ($i = 1; $i <= $nbCour; $i++) {
@@ -62,13 +62,13 @@ class VuePublique {
   </table>
 </center>
 
-Nouveau cour non repertorié ? <a href="popUp.php?action=creerCour" >Créer le cour </a>  <br><br><br><br>
+Nouveau cours non repertorié ? <a href="popUp.php?action=creerCour" >Créer le cour </a>  <br><br><br><br>
 
 
 <center>
   <table class="table1">
     <tr>
-          <td>Combien de programmes sont concernés par la résolution: </td>
+          <td>Nombre de programmes concernés par la résolution : </td>
           <td><select id="programme" name="programme">
             <option value="none">Inderteminé</option>');
         for ($i = 1; $i <= $nbProgramme; $i++) {
@@ -88,13 +88,13 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
     public function afficherFormulaireProjet() {
 
-        echo('<div id="test" class="row">
+        echo('<div  class="row">
         <div id="divhalf1">
         <h1> Renseignement sur le projet :</h1><br>
                 <label for="description">Description du projet :</label><br>
                 <textarea name="description" rows="5" cols="50" required form="formReso"></textarea>
                 <br><br>
-          <label for="etat">Etat du projet:</label>
+          <label for="etat">État du projet:</label>
           <input type="radio" name="etat" value="ouvert" required> Ouvert
           <input type="radio" name="etat" value="attente"> En attente <br><br><br>
 
@@ -110,16 +110,16 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
           ');
     }
 
-    public function afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement) {
+    public function afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement,$typeReso) {
 
 
         echo('
 
         <div id="divhalf2">
-        <h1> Renseignement sur la résolution reçue:</h1><br>
+        <h1> Renseignement sur la résolution reçue</h1><br>
 
           <div class="sujet">
-            <label for="sujet">Sujet de la résolution:</label>
+            <label for="sujet">Sujet de la résolution :</label>
           <br>
                <textarea name="sujet" rows="3" cols="50" required form="formReso"></textarea>
                <br><br>
@@ -128,13 +128,20 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
              <center>
              <table class="table1">
              <tr>
-                <td><label for="num">Numéro résolution reçue: </label></td>
+                <td><label for="num">Numéro résolution reçue :</label></td>
                 <td><input type="text" id="num" required placeholder="1234567890" name="num" >
                 </td>
               </tr>
+              <tr>
+                  <td><label for="type">Type de Résolution : </label></td>
+                  <td><select id="type" name="type">');
+        foreach ($typeReso as $value) {
+            echo('<option value="' . $value->getType() . '">' . $value->getType() . '</option>');
+        }
+        echo('</select><br></td></tr>
 
                <tr>
-                  <td><label for="ugp">UGP : </label></td>
+                  <td><label for="ugp">UGP :</label></td>
                   <td><select id="ugp" name="ugp">');
         foreach ($ugp as $value) {
             echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
@@ -143,7 +150,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         if ($_POST["projet"] == "oui") {
             echo('<tr>
-            <td><label for="projet">Projet : </label></td>
+            <td><label for="projet">Projet :</label></td>
          <td><select id="projet" name="projet">');
             foreach ($projet as $value) {
                 echo('<option value="' . $value->getNum() . '">' . $value->getNum() . ': ' . $value->getDescription() . '</option>');
@@ -155,7 +162,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
             for ($i = 1; $i <= $_POST['cour']; $i++) {
                 echo('
                  <tr>
-                <td><label for="cour">Cours concernés par la résolution: </label></td>
+                <td><label for="cour">Cours concernés par la résolution :</label></td>
                 <td><select id="cour' . $i . '" name="cour' . $i . '">');
                 foreach ($cour as $value) {
                     echo('<option value="' . $value->getSigle() . '">' . $value->getSigle() . ': ' . $value->getNom() . '</option>');
@@ -169,7 +176,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
             for ($i = 1; $i <= $_POST['programme']; $i++) {
                 echo('
                  <tr">
-                <td><label for="programme">Programmes concernés par la résolution: </label></td>
+                <td><label for="programme">Programmes concernés par la résolution :</label></td>
                 <td><select id="programme' . $i . '" name="programme' . $i . '">');
                 foreach ($prog as $value) {
                     echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
@@ -180,7 +187,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
         }
 
         echo('<tr>
-                <td><label for="departement">Departement concerné par la résolution: </label></td>
+                <td><label for="departement">Département concerné par la résolution :</label></td>
                 <td><select id="departement"  name="departement">');
 
 
@@ -191,7 +198,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
         </tr>
                    </table><br>
 
-        <label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label>
+        <label for="noteReso">Note supplémentaire concernant la résolution (facultatif) :</label>
            <br>
                 <textarea name="noteReso" rows="3" cols="50"  form="formReso"></textarea>
                 <br><br>
@@ -292,7 +299,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
            </center>
            </div>
-           
+
 
            </form>');
     }
@@ -318,7 +325,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
             <th>Numéro</th>
             <th>Sujet</th>
             <th>Date de la demande</th>
-            <th>Date de reception</th>
+            <th>Date de réception</th>
             <th>Département</th>
             <th>UGP</th>
         </tr>');
@@ -364,7 +371,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
                 </tr>
 
                 <tr>
-                <td>Date de reception :</td>
+                <td>Date de réception :</td>
                 <td>' . $reso->getDateReception() . '</td>
                 </tr>
 
@@ -378,11 +385,11 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
                 </tr>
 
                 <tr>
-                <td>Departement :</td>    <td>' . $reso->getDepartement_id() . '</td>
+                <td>Département :</td>    <td>' . $reso->getDepartement_id() . '</td>
                 </tr>
 
                 <tr>
-                <td>Ugp :</td>    <td>' . $reso->getCodeUgp_id() . '</td>
+                <td>UGP :</td>    <td>' . $reso->getCodeUgp_id() . '</td>
                 </tr>
 
                 <tr>
@@ -394,7 +401,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 <center>
 <table class="table3">
                 <tr>
-                <th>Liste des programmes concerné :  </th>
+                <th>Liste des programmes concernés </th>
                 </tr>
                 ');
         foreach ($programme as $value) {
@@ -404,7 +411,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
         }
         echo('
                 <tr>
-                <th> Liste des cours concerné:</th>
+                <th> Liste des cours concernés </th>
                  </tr>');
         foreach ($cour as $value) {
             echo('<tr>
@@ -580,7 +587,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
             <th>Code</th>
             <th>Nom</th>
             <th>Type</th>
-            <th>Ugp associé</th>
+            <th>UGP associé</th>
         </tr>');
         foreach ($programme as $value) {
             echo('<tr><td>' . $value->getCode() . '</td>
@@ -596,20 +603,34 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         echo('<form action="popUp.php?action=traitementCour" class="formPreForm" method="POST">
 
-        <div id="divsoumettre" class="btt2">
-        <h1> Renseignement sur le Cour:</h1><br><br>
-          <label for="sigle">Sigle du cour: </label>
-        <input type="text" id="sigle" required  name="sigle" ><br><br>
+        <div id="divrens" class="btt2">
+        <h1> Renseignement sur le cours :</h1><br><br>
 
+        <center>
+        <table class="table1">
+        <tr>
+          <td><label for="sigle">Sigle du cours : </label></td>
+          <td><input type="text" id="sigle" required  name="sigle" ></td>
+        </tr>
 
-        <label for="nom">Nom du cour: </label>
-        <input type="text" id="nom" required  name="nom" ><br><br>
+        <tr>
+          <td><label for="nom">Nom du cours :</label></td>
+          <td><input type="text" id="nom" required  name="nom" ></td>
+        </tr>
 
+        <tr>
+          <td><label for="cycle">Cycle du cours : </label></td>
+          <td><select type="number" id="cycle" required  name="cycle" >
+          <option value="premier cycle">1</option>
+          <option value="deuxieme cycle">2</option>
+          <option value="troisieme cycle"> 3</option>
+        </tr>
 
-        <label for="cycle">Cycle du cour: </label>
-        <input type="number" id="cycle" required  name="cycle" ><br><br>
+            </select></td></tr>
+        </table>
+        </center>
 
-            </select><br>
+            <br>
                 <input type="submit" name="valider" value="Créer">
         </div>
 
@@ -621,34 +642,46 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         echo('<form action="popUp.php?action=traitementProgramme" class="formPreForm" method="POST">
 
-        <div id="divsoumettre" class="btt2">
-        <h1> Renseignement sur le Programme:</h1><br><br>
-          <label for="sigle">Code programme: </label>
-        <input type="text" id="code" required  name="code" ><br><br>
+        <div id="divrens" class="btt2">
+        <h1> Renseignement sur le Programme:</h1>
 
+        <center>
+        <table class="table1">
+        <tr>
+          <td><label for="sigle">Code du programme :</label></td>
+          <td><input type="text" id="code" required  name="code" ></td><br>
+        </tr>
 
-        <label for="nom">Nom du programme: </label>
-        <input type="text" id="nom" required  name="nom" ><br><br>
+        <tr>
+          <td><label for="nom">Nom du programme :</label></td>
+          <td><input type="text" id="nom" required  name="nom" ></td><br>
+        </tr>
 
-
-        <label for="type">Type programme (facultatif): </label>
-       <select id="type" name="type">
-            <option value="none">none</option>
+        <tr>
+          <td><label for="type">Type de programme (facultatif) :</label></td>
+          <td><select id="type" name="type">
+            <option value="none">aucun</option>
             <option value="court de premier cycle">court de premier cycle</option>
             <option value="court de deuxième cycle"> court de deuxième cycle</option>
-            <option value="court de deuxième cycle"> court de deuxième cycle</option>
+            <option value="court de deuxième cycle"> court de troisième cycle</option>
             <option value="sur mesure"> sur mesure</option>
-          </select><br>
+          </select></td><br>
+          </tr>
 
-        <label for="ugp">UGP associé (facultatif): </label>
-         <select id="ugp" name="ugp">
-         <option value="NULL">none</option>');
+          <tr>
+            <td><label for="ugp">UGP associé (facultatif) :</label></td>
+            <td><select id="ugp" name="ugp">
+                  <option value="NULL">aucun</option>
+         ');
 
         foreach ($ugp as $value) {
             echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
         }
-        echo('</select><br>
-                <input type="submit" name="valider" value="Créer">
+        echo('</select></td></tr><br>
+        </table>
+        </center>
+              <br><br>
+        <input type="submit" name="valider" value="Créer">
         </div>
 
                  </form>');
@@ -657,10 +690,36 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
     public function afficherResulatCreation($res){
         echo('
                 <div id="divsoumettre" class="btt2">
-                Votre '.$res.' a été creé <br><br><br>
+                Votre '.$res.' a été crée <br><br><br>
 
         <a href="index.php?action=soumettreReso">Retourner au formulaire</a>
          </div>');
+    }
+    
+    
+    public function afficherFormulaireSeance(){
+        echo('<form action="popUp.php?action=traitementSeance" class="formPreForm" method="POST">
+
+        <div id="divsoumettre" class="btt2">
+        <h1> Renseignement sur la Séance:</h1><br><br>
+        
+          <label for="date">Date: </label>
+        <input type="date"  required name="date" min="2000-12-31"><br><br>
+
+    <label for="instance">Instance: </label></td>
+                <td><select id="instance"  name="instance">
+         <option value="CA">CA</option>
+                 <option value="CE">CE</option>
+                  <option value="SCE">SCE</option>
+                 </select>
+                 <br>
+
+    <input type="submit" name="valider" value="Créer">
+        </div>
+
+                 </form>');
+        
+        
     }
 
 }

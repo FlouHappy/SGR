@@ -665,7 +665,6 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
             <td><label for="ugp">UGP associé (facultatif) :</label></td>
             <td><select id="ugp" name="ugp">
                   <option value="NULL">aucun</option>
-
          ');
 
         foreach ($ugp as $value) {

@@ -311,9 +311,9 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
         <br>Rechercher :
         <a href="index.php?action=rechercheResoPar">  Par élément  </a>
         <a href="index.php?action=rechercheAvancer">  Recherche avancée  </a>
-        <a href="index.php?action=voirReso">          Toutes les résolutions  </a>
+        <a href="index.php?action=voirReso">          Toutes les résolutions reçues  </a>
         <br> <br>
-        <h2>Liste de toutes les résolutions :</h2>
+        <h2>Liste de toutes les résolutions reçues :</h2>
         <br>
         Nombre trouvé: ' . $_SESSION['count'] . '<br><br>
         <a href="Excel/allResolution.xlsx" download="allResolution.xlsx">Télécharger la liste</a>

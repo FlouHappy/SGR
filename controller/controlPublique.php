@@ -110,8 +110,9 @@ class controlPublique {
         $_SESSION["count"] = 0;
         $reso = $this->modelReceptionReso->allResolutionTrie();
         $titre = 'allResolution';
+        $_SESSION['recherche']='Liste de toutes les résolutions reçues';
         $this->telechargerExcel($titre, $reso);
-        $this->vue->rechercheResolution($reso);
+        $this->vue->rechercheResolution($reso,$titre);
     }
 
     public function resolutionComplete() {
@@ -137,35 +138,35 @@ class controlPublique {
             $reso;
             switch ($_GET["type"]) {
                 case "ugp":
-                    $_SESSION['recherche'] = 'affiliées a l' . "'" . 'UGP ' . $_POST["element"];
+                    $_SESSION['recherche'] = 'Liste des résolutions reçues affiliées a l' . "'" . 'UGP ' . $_POST["element"];
                     $reso = $this->modelReceptionReso->rechercheParUgp($_POST["element"]);
 
                     break;
                 case "programme":
                     $programme = $this->modelProg->chercherUnProgramme($_POST["element"]);
-                    $_SESSION['recherche'] = 'affiliées au programme ' . $_POST["element"] . ' (' . $programme->getNom() . ') ';
+                    $_SESSION['recherche'] = 'Liste des résolutions reçues affiliées au programme ' . $_POST["element"] . ' (' . $programme->getNom() . ') ';
                     $reso = $this->modelReceptionReso->rechercheParProgramme($_POST["element"]);
 
                     break;
                 case "cour":
                     $cour = $this->modelCour->chercherUnCour($_POST["element"]);
-                    $_SESSION['recherche'] = 'affiliées au cour ' . $_POST["element"] . ' (' . $cour->getNom() . ') ';
+                    $_SESSION['recherche'] = 'Liste des résolutions reçues affiliées au cours ' . $_POST["element"] . ' (' . $cour->getNom() . ') ';
                     $reso = $this->modelReceptionReso->rechercheParCour($_POST["element"]);
 
                     break;
                 case "agent":
                     $agent = $this->modelAgent->rechercheParId($_POST["element"]);
-                    $_SESSION['recherche'] = 'Traitées par ' . $agent->getPrenom() . ' ' . $agent->getNom();
+                    $_SESSION['recherche'] = 'Liste des résolutions reçues traitées par ' . $agent->getPrenom() . ' ' . $agent->getNom();
                     $reso = $this->modelReceptionReso->rechercheParAgent($_POST["element"]);
 
                     break;
                 case "date":
-                    $_SESSION['recherche'] = " de l'année " . $_POST["element"];
+                    $_SESSION['recherche'] = " Liste des résolutions reçues de l'année " . $_POST["element"];
                     $reso = $this->modelReceptionReso->rechercheParDate($_POST["element"]);
 
                     break;
                 case "mot":
-                    $_SESSION['recherche'] = ' contenant le mot "' . $_POST["element"] . '"';
+                    $_SESSION['recherche'] = ' Liste des résolutions reçues contenant le mot "' . $_POST["element"] . '"';
                     $reso = $this->modelReceptionReso->rechercheParMot($_POST["element"]);
 
                     break;

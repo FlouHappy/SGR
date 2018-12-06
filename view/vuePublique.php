@@ -304,7 +304,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
            </form>');
     }
 
-    public function rechercheResolution($reso) {
+    public function rechercheResolution($reso,$titre) {
 
         echo('<div id="divconsult" class="">
         <div class="btt2">
@@ -313,10 +313,10 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
         <a href="index.php?action=rechercheAvancer">  Recherche avancée  </a>
         <a href="index.php?action=voirReso">          Toutes les résolutions reçues  </a>
         <br> <br>
-        <h2>Liste de toutes les résolutions reçues :</h2>
+        <h2>'.$_SESSION['recherche'].':</h2>
         <br>
         Nombre trouvé: ' . $_SESSION['count'] . '<br><br>
-        <a href="Excel/allResolution.xlsx" download="allResolution.xlsx">Télécharger la liste</a>
+        <a href="Excel/'.$titre.'" download="'.$titre.'">Télécharger la liste</a>
         </div><br><br>
         <center>
         <table class="table2" >
@@ -456,7 +456,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
     public function rechercheParType($cour, $prog, $ugp, $departement, $agent) {
         //par Ugp
         echo ('<form action="index.php?action=resultatRecherchePar&type=ugp" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche Par UGP:</h2>
+                 <h2>Recherche par UGP:</h2>
                  <div class="ugp">
         <label for="element">UGP: </label>
          <select id="element" name="element">');
@@ -469,7 +469,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         //Par programme
         echo ('<form action="index.php?action=resultatRecherchePar&type=programme" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche Par programme:</h2>
+                 <h2>Recherche par programme:</h2>
                  <div class="programme">
         <label for="element">Programme: </label>
          <select id="element" name="element">');
@@ -482,7 +482,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         //Par cour
         echo ('<form action="index.php?action=resultatRecherchePar&type=cour" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche Par cour:</h2>
+                 <h2>Recherche par cours:</h2>
                  <div class="cour">
         <label for="element">Cour: </label>
          <select id="element" name="element">');
@@ -496,7 +496,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         //Par Agent
         echo ('<form action="index.php?action=resultatRecherchePar&type=agent" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche Par agent:</h2>
+                 <h2>Recherche par agent:</h2>
                  <div class="agent">
         <label for="element">Agent: </label>
          <select id="element" name="element">');
@@ -510,7 +510,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         //Par date
         echo ('<form action="index.php?action=resultatRecherchePar&type=date" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche Par Date:</h2>
+                 <h2>Recherche par Date:</h2>
                  <div class="date">
         <label for="element">Date: </label>
          <select id="element" name="element">');

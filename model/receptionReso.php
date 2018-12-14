@@ -3,9 +3,7 @@
 namespace SGR\model;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *Représente la table receptionReso
  */
 
 use SGR\model\ConnexionBDD;
@@ -28,6 +26,23 @@ class ReceptionReso {
         
     }
 
+      /*
+     * Constructeur
+     * 
+     * 
+     * @param $i : Numéro du projet
+     * @param $n : agent responsable du projet
+     * @param $s : Description du projet
+     * @param $np : Etat du projet (ouvert/fermé)
+     * @param $dd: note(facultatif) du projet
+     * @param $dr : lien (repertoire/url) des annexes lié au projets
+       * @param $t : lien (repertoire/url) des annexes lié au projets
+       * @param $nt : lien (repertoire/url) des annexes lié au projets
+       * @param $d : lien (repertoire/url) des annexes lié au projets
+       * @param $c : lien (repertoire/url) des annexes lié au projets
+       * @param $a
+       *  : lien (repertoire/url) des annexes lié au projets
+     */
     function creerReceptionReso($i, $n, $s, $np, $dd, $dr, $t, $nt, $d, $c, $a) {
         $reso = new ReceptionReso();
         $reso->id = $i;

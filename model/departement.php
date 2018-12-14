@@ -3,9 +3,7 @@
 namespace SGR\model;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Représente la table Departement
  */
 
 use SGR\model\ConnexionBDD;
@@ -20,6 +18,15 @@ class Departement {
         
     }
 
+    /*
+     * Conmstructeur
+     * 
+     * 
+     * @param $num : Numéro du departement
+     * @param $nom : Nom du departement
+     * @param $secteur : Secteur associé au Departement
+     */
+
     function creerDepartement($num, $nom, $secteur) {
         $projet = new Departement();
         $projet->num = $num;
@@ -28,6 +35,10 @@ class Departement {
         return ($projet);
     }
 
+    /*
+     * Liste de tout les departements trié par leur code
+     */
+
     function allDepartementTrie() {
         $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM departement ORDER BY NumDepartement ASC";
@@ -35,11 +46,14 @@ class Departement {
         $allDepartement = array();
         while ($row = mysqli_fetch_array($result)) {
             $dep = $this->creerDepartement($row["NumDepartement"], $row["NomDepartement"], $row["NomSecteur_id"]);
-            array_push($allDepartement , $dep);
+            array_push($allDepartement, $dep);
         }
         $bdd->fermerConnexion();
         return($allDepartement );
     }
+
+    //getter
+
     function getNum() {
         return $this->num;
     }
@@ -51,7 +65,5 @@ class Departement {
     function getSecteur() {
         return $this->secteur;
     }
-    
-
 
 }

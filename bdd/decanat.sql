@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 29 nov. 2018 à 17:18
+-- Généré le :  ven. 14 déc. 2018 à 11:38
 -- Version du serveur :  5.7.21
 -- Version de PHP :  5.6.35
 
@@ -140,24 +140,7 @@ CREATE TABLE IF NOT EXISTS `decanatreso` (
   `Note` varchar(3000) DEFAULT NULL,
   `VariaSuivi` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `decanatreso`
---
-
-INSERT INTO `decanatreso` (`Id`, `NumReso`, `NumUniqueInstance`, `seance_id`, `projet_id`, `ResumeReso`, `DateReso`, `DescriptionReso`, `DateEffective`, `Campus`, `Note`, `VariaSuivi`) VALUES
-(1, 'D54FG', 'SCE-14-SF', 2, 1, 'TEST', '2018-11-29', 'TEST', NULL, 'Alexandre-Taché', 'TEST', NULL),
-(2, 'D54FG', 'SCE-14-SF', 2, 1, 'TEST', '2018-11-29', 'TEST', NULL, 'Alexandre-Taché', 'TEST', NULL),
-(3, '', '', 2, 15, '', '2018-11-29', '', NULL, 'Alexandre-Taché', '', NULL),
-(4, '', '', 2, 15, '', '2018-11-29', '', NULL, 'Alexandre-Taché', '', NULL),
-(5, '', '', 2, 15, '', '2018-11-29', '', NULL, 'Alexandre-Taché', '', NULL),
-(6, '', '', 2, 15, '', '2018-11-29', '', NULL, 'Alexandre-Taché', '', NULL),
-(7, '', '', 2, 15, '', '2018-11-29', '', NULL, 'Alexandre-Taché', '', NULL),
-(8, '', '', 2, 15, '', '2018-11-29', '', NULL, 'Alexandre-Taché', '', NULL),
-(9, '', '', 2, 15, '', '2018-11-29', '', NULL, 'Alexandre-Taché', '', NULL),
-(10, '', '', 2, 15, '', '2018-11-29', '', NULL, 'Alexandre-Taché', '', NULL),
-(11, '', '', 2, 15, '', '2018-11-29', '', NULL, 'Alexandre-Taché', '', NULL);
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -265,37 +248,8 @@ CREATE TABLE IF NOT EXISTS `projet` (
 
 INSERT INTO `projet` (`NumProjet`, `agent_id`, `DescriptionProjet`, `EtatProjet`, `Notes`, `LienDossier`) VALUES
 (1, '', 'Suppression programme court', 'ouvert', 'voir monsieur x', NULL),
-(2, '', 'dsds', 'fermé', 'dsds', 'ds'),
-(3, '', 'gsds', 'ouvert', 'dsfs', ''),
-(4, '', 'dsa', 'fermé', 'sa', ''),
-(5, '', 'dss', 'ouvert', 'ds', 'dfsf'),
-(6, '', 'dss', 'ouvert', 'ds', 'dfsf'),
-(7, '', 'dssa', 'fermé', 'sasa', 'sa'),
-(8, '', 'sasa', 'fermé', 'sfd', ''),
-(9, '', 'ds', 'fermé', 'sa', 'sa'),
-(10, '', 'ds', 'fermé', 'sa', 'sa'),
-(11, '', 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
-(12, '', 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
-(13, '', 'Fermeture', 'ouvert', 'test numero 1', 'ada'),
-(14, '', 'f', 'ouvert', 'sasa', 'sasa'),
 (15, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(16, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(17, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(18, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(19, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(20, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(21, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(22, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(23, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(24, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(25, '', 'f', 'ouvert', 'sasa', 'sasa'),
-(26, '', 'Changement de pré requis', 'ouvert', 'Liée a l gup 1CTB', ''),
-(32, NULL, 'testTypeReso', 'ouvert', 'test', ''),
-(31, NULL, 'Ajout requis', 'ouvert', 'note', 'htpps/l;o'),
-(33, NULL, 'testTypeReso', 'ouvert', 'test', ''),
-(34, NULL, 'saa', 'ouvert', 'dasa', ''),
-(35, NULL, 'saa', 'ouvert', 'dasa', ''),
-(36, NULL, 'saa', 'ouvert', 'dasa', '');
+(31, NULL, 'Ajout requis', 'ouvert', 'note', 'htpps/l;o');
 
 -- --------------------------------------------------------
 
@@ -318,18 +272,16 @@ CREATE TABLE IF NOT EXISTS `receptionreso` (
   `agent_id` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `NumReception` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `receptionreso`
 --
 
 INSERT INTO `receptionreso` (`id`, `NumReception`, `Sujet`, `NumProjet_id`, `DateDemande`, `DateReception`, `Traitement`, `Notes`, `Departement_id`, `codeUgp_id`, `agent_id`) VALUES
-(11, 'adafg', 'Modification programme', 15, NULL, '2018-11-22', 'Enregistré', 'signature requise', 'DII', '1CTB', NULL),
+(11, 'adafg', 'adas', 15, NULL, '2018-11-22', 'rerg', 'sad', 'DII', '1CTB', NULL),
 (12, 'X145SF', 'annulation', 1, NULL, '2018-11-22', 'Enregistré', 'changement', 'DCTB', '1INF', NULL),
-(13, '0157', 'Traitement requis', 31, NULL, '2018-11-29', 'Enregistré', 'dsa', 'DCTB', '1CTB', NULL),
-(14, '12585XC45', 'TestTypeReso', 32, NULL, '2018-11-29', 'Enregistré', 'test', 'DCTB', '1CTB', NULL),
-(15, '12585XC45', 'TestTypeReso', 33, NULL, '2018-11-29', 'Enregistré', 'test', 'DCTB', '1CTB', NULL);
+(13, '0157', 'Traitement requis', 31, NULL, '2018-11-29', 'Enregistré', 'dsa', 'DCTB', '1CTB', NULL);
 
 -- --------------------------------------------------------
 
@@ -342,24 +294,6 @@ CREATE TABLE IF NOT EXISTS `receptionreso_decanatreso` (
   `receptionReso_id` int(5) NOT NULL,
   `decanatReso_id` int(5) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `receptionreso_decanatreso`
---
-
-INSERT INTO `receptionreso_decanatreso` (`receptionReso_id`, `decanatReso_id`) VALUES
-(11, 10),
-(11, 10),
-(11, 10),
-(11, 10),
-(11, 10),
-(11, 10),
-(11, 10),
-(11, 11),
-(11, 11),
-(11, 11),
-(11, 11),
-(11, 11);
 
 -- --------------------------------------------------------
 
@@ -479,7 +413,9 @@ INSERT INTO `typeresolution_decanatreso` (`TypeReso_id`, `NumReso_id`) VALUES
 ('', 11),
 ('', 11),
 ('', 11),
-('', 11);
+('', 11),
+('Administration, Politique, Reglement', 12),
+('Administration, Politique, Reglement', 13);
 
 -- --------------------------------------------------------
 
@@ -498,7 +434,9 @@ CREATE TABLE IF NOT EXISTS `typeresolution_receptionreso` (
 --
 
 INSERT INTO `typeresolution_receptionreso` (`TypeReso_id`, `NumReception_id`) VALUES
-('Creation de cours', 23);
+('Creation de cours', 23),
+('Administration, Politique, Reglement', 24),
+('Administration, Politique, Reglement', 25);
 
 -- --------------------------------------------------------
 

@@ -107,25 +107,11 @@ class ReceptionReso {
         }
         $bdd->fermerConnexion();
         return $msg;
-        
     }
-    
-    function updateAssociationCour($idReso,$codeCour,$codeOldCour){
-         $bdd = new ConnexionBDD();
-          $sql = "UPDATE cour_receptionreso SET cour_id='$codeCour' WHERE cour_id='$codeOldCour' AND receptionReso_id=$idReso";
-        $msg = '';
-        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
-            $msg = "Résolution modifiée";
-        } else {
-            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
-        }
-        $bdd->fermerConnexion();
-        return $msg;
-    }
-    
-     function updateAssociationProgramme($idReso,$codeProgramme,$codeOldProgramme){
-         $bdd = new ConnexionBDD();
-          $sql = "UPDATE programme_receptionreso SET programme_id='$codeProgramme' WHERE programme_id='$codeOldProgramme' AND receptionReso_id=$idReso";
+
+    function updateAssociationCour($idReso, $codeCour, $codeOldCour) {
+        $bdd = new ConnexionBDD();
+        $sql = "UPDATE cour_receptionreso SET cour_id='$codeCour' WHERE cour_id='$codeOldCour' AND receptionReso_id=$idReso";
         $msg = '';
         if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
             $msg = "Résolution modifiée";
@@ -136,6 +122,31 @@ class ReceptionReso {
         return $msg;
     }
 
+    function updateAssociationProgramme($idReso, $codeProgramme, $codeOldProgramme) {
+        $bdd = new ConnexionBDD();
+        $sql = "UPDATE programme_receptionreso SET programme_id='$codeProgramme' WHERE programme_id='$codeOldProgramme' AND receptionReso_id=$idReso";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Résolution modifiée";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        $bdd->fermerConnexion();
+        return $msg;
+    }
+
+    function updateAssociationResoDecanat($id, $traitement, $dateReception,$agent) {
+         $bdd = new ConnexionBDD();
+        $sql = "UPDATE receptionreso SET Traitement='$traitement', DateDemande='$dateReception',agent_id='$agent' WHERE id=$id";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Résolution modifiée";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        $bdd->fermerConnexion();
+        return $msg;
+    }
 
     function rechercheResoParId($id) {
         $bdd = new ConnexionBDD();
@@ -174,23 +185,20 @@ class ReceptionReso {
         $bdd->fermerConnexion();
         return($allReso);
     }
-    
-    function ResolutionParTraitement($traitement){
-          $bdd = new ConnexionBDD();
+
+    function ResolutionParTraitement($traitement) {
+        $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM receptionreso WHERE Traitement='$traitement'";
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $reso = new ReceptionReso();
         $allReso = array();
         while ($row = mysqli_fetch_array($result)) {
-             $_SESSION["count"] ++;
+            $_SESSION["count"] ++;
             $reso = $this->creerReceptionReso($row["id"], $row["NumReception"], $row["Sujet"], $row["NumProjet_id"], $row["DateDemande"], $row["DateReception"], $row["Traitement"], $row["Notes"], $row["Departement_id"], $row["codeUgp_id"], $row["agent_id"]);
-             array_push($allReso, $reso);
-            
+            array_push($allReso, $reso);
         }
         $bdd->fermerConnexion();
         return($allReso);
-        
-        
     }
 
     function rechercheParUgp($ugp) {
@@ -275,6 +283,20 @@ class ReceptionReso {
         }
         $bdd->fermerConnexion();
         return($allReso);
+    }
+    
+    function rechercheParSql($sql){
+         $bdd = new ConnexionBDD();
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $allReso = array();
+        while ($row = mysqli_fetch_array($result)) {
+            $_SESSION["count"] ++;
+            $reso =  $this->creerReceptionReso($row["id"], $row["NumReception"], $row["Sujet"], $row["NumProjet_id"], $row["DateDemande"], $row["DateReception"], $row["Traitement"], $row["Notes"], $row["Departement_id"], $row["codeUgp_id"], $row["agent_id"]);
+            array_push($allReso, $reso);
+        }
+        $bdd->fermerConnexion();
+        return($allReso);
+        
     }
 
     function getId() {

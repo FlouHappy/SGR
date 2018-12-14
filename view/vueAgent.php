@@ -11,7 +11,7 @@ namespace SGR\view;
 class VueAgent {
 
     function __construct() {
-
+        
     }
 
     public function afficherAccueil() {
@@ -19,7 +19,19 @@ class VueAgent {
 <div id="divagent" class="bttagent">
 
   <a href="index.php?action=voirResoSoumi">Consulter la liste des résolutions reçues </a><br>
-  <a href="index.php?action=voirResoDecanat">Consulter la liste des résolutions du Décanat</a>
+  
+  <a href="index.php?action=voirResoDecanat">Consulter la liste des résolutions du Décanat</a><br>
+   <a href="popUp.php?action=voirAllProjet" target="_self">
+          Consulter la liste des projets
+        </a> <br>
+    
+  <a href="index.php?action=soumettreReso" target="_self">
+          Saisir une résolution reçue
+        </a> <br>
+        
+        
+
+
 </div>');
     }
 
@@ -31,6 +43,7 @@ class VueAgent {
         <a href="index.php?action=resoNonTraiter">  Résolution non traité  </a>
         <a href="index.php?action=resoPerso">  Mes résolutions </a>
           <a href="index.php?action=rechercheResoPar">  Par élément  </a>
+           <a href="index.php?action=rechercheAvancer"> recherche avancée  </a>
         <br> <br>
         <h2>' . $titre . ' :</h2>
         <br>
@@ -43,7 +56,7 @@ class VueAgent {
             <th>Id</th>
             <th>Numéro</th>
             <th>Sujet</th>
-            <th>Date de reception</th>
+            <th>Date de demande</th>
             <th>État</th>
             <th>UGP</th>
             <th>Action</th>
@@ -63,7 +76,7 @@ class VueAgent {
         echo('</tr></table></center></div>');
     }
 
-    public function afficherFormulaireModif($reso, $programmeReso, $courReso, $cour, $programme, $ugp, $projet, $departement,$type) {
+    public function afficherFormulaireModif($reso, $programmeReso, $courReso, $cour, $programme, $ugp, $projet, $departement, $type) {
         $nbCour = 0;
         $nbProgramme = 0;
         echo('<div id="" class="row">
@@ -136,7 +149,11 @@ class VueAgent {
 
 
 
-        echo('<tr> <td><label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label></td>
+        echo('<tr> <td><label for="traitement">Traitement :</label></td>
+           <br>
+                 <td><textarea name="traitement" rows="3" cols="50"  ></textarea></td></tr>
+            
+<tr> <td><label for="noteReso">Note supplémentaire concernant la résolution (facultatif):</label></td>
            <br>
                  <td><textarea name="noteReso" rows="3" cols="50"  ></textarea></td></tr>
 
@@ -201,10 +218,10 @@ class VueAgent {
            ');
     }
 
-    public function traiterReso($reso,$programmeReso,$courReso,$type,$seance,$allType,$resoDeca) {
-      $nbCour=0;
-        $nbProgramme=0;
-         echo('<div id="" class="row">
+    public function traiterReso($reso, $programmeReso, $courReso, $type, $seance, $allType, $resoDeca) {
+        $nbCour = 0;
+        $nbProgramme = 0;
+        echo('<div id="" class="row">
         <div id="divhalf1">
         <h1> Information de la résolution reçue en cours de traitement</h1>
         Id de la résolution:    ' . $reso->getId() . '<br>
@@ -227,24 +244,21 @@ class VueAgent {
         foreach ($courReso as $value) {
             echo($value->getSigle() . ':  ' . $value->getNom() . '<br>');
             $nbCour++;
-              $_SESSION["courReso".$nbCour]=$value->getSigle();
-
+            $_SESSION["courReso" . $nbCour] = $value->getSigle();
         }
-         echo('  <br> <br>Liste des programmes concerné :  <br>');
-          foreach ($programmeReso as $value) {
+        echo('  <br> <br>Liste des programmes concerné :  <br>');
+        foreach ($programmeReso as $value) {
             echo($value->getCode() . ':  ' . $value->getNom() . '<br>');
-             $nbProgramme++;
-            $_SESSION["programmeReso".$nbProgramme]=$value->getCode();
-
+            $nbProgramme++;
+            $_SESSION["programmeReso" . $nbProgramme] = $value->getCode();
         }
-         echo('  <br> <br>Liste des résolutions Décanat associé :  <br>');
-          foreach ($resoDeca as $value) {
+        echo('  <br> <br>Liste des résolutions Décanat associé :  <br>');
+        foreach ($resoDeca as $value) {
             echo('<a href="index.php?action=resoDeca&id=' . $value . '"> ' . $value . '</a><br><br>');
-
         }
         echo('</div>
             <div id="divhalf2">
-              <form action="index.php?action=enregistrementResoDeca&id='.$reso->getId().'&nbCour='.$nbCour.'&nbProg='.$nbProgramme.'&id_projet='.$reso->getNumProjet_id().'" class="formModifReso" method="POST">
+              <form action="index.php?action=enregistrementResoDeca&id=' . $reso->getId() . '&nbCour=' . $nbCour . '&nbProg=' . $nbProgramme . '&id_projet=' . $reso->getNumProjet_id() . '" class="formModifReso" method="POST">
         <h1> Création de la résolution Décanat:</h1><br>
              <center>
              <table class="table1">
@@ -253,7 +267,7 @@ class VueAgent {
         <td><input type="text" id="num"  name="num" ><br><br>
         </td></tr>
          <div class="numInstance">
-        <label for="numInstance">Numéro unique d '."'".'instance:</label>
+        <label for="numInstance">Numéro unique d ' . "'" . 'instance:</label>
            <br>
                 <textarea name="numInstance" rows="3" cols="50" ></textarea>
                 <br><br>
@@ -296,7 +310,7 @@ class VueAgent {
         foreach ($seance as $value) {
             echo('<option value="' . $value->getNumSeance() . '">' . $value->getDate() . ': ' . $value->getInstance() . '</option>');
         }
-        echo('</select><a href="popUp.php?action=creerSeance"  target=_blank>Votre séance n'."'".'existe pas ? Créez la ici</a</td>
+        echo('</select><a href="popUp.php?action=creerSeance"  target=_blank>Votre séance n' . "'" . 'existe pas ? Créez la ici</a</td>
         </tr>
 
 
@@ -316,6 +330,103 @@ class VueAgent {
            </div>
 
            ');
+    }
+
+    public function voirResoDecanat($reso, $titre) {
+        echo('<div id="divconsult" class="">
+        <div class="btt2">
+        <br>Rechercher :
+        <a href="index.php?action=voirResoDecanat">  Toutes les résolutions Décanat </a>
+        <br> <br>
+        <h2>' . $titre . ' :</h2>
+        <br>
+        Nombre trouvé: ' . $_SESSION['count'] . '<br><br>
+        <a href="Excel/allResolutionDecanat.xlsx" download="allResolutionDecanat    .xlsx">Télécharger la liste</a>
+        </div><br><br>
+        <center>
+        <table class="table2" >
+        <tr>
+            <th>Id</th>
+            <th>Numéro</th>
+            <th>Numéro instance unique</th>
+            <th>Résumé</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Campus</th>
+            <th>Action</th>
+        </tr>');
+        foreach ($reso as $value) {
+            echo('<tr><td><a href="index.php?action=resolutionDecanat&id=' . $value->getId() . '"> ' . $value->getId() . '</a></td>
+                    <td>' . $value->getNum() . '</td>
+                    <td>' . $value->getNumInstance() . '</td>
+                    <td>' . $value->getResumeReso() . '</td>
+                    <td>' . $value->getDescription() . '</td>
+                    <td>' . $value->getDateReso() . '</td>
+                   <td>' . $value->getCampus() . '</td>
+                    <td> entériner </td></tr>');
+             }
+        echo('</tr></table></center></div>');
+   
+    }
+    
+    public function afficherUneResolutionDecanat($reso){
+         echo('<div id="divconsult" class="resolution">
+        <center>
+        <table class="table3">
+                <tr>
+                  <td>Id de la résolution :</td>
+                   <td>' . $reso->getId() . '</td>
+                  </tr>
+
+                <tr>
+                <td>Numéro de la résolution :</td>
+                <td>' . $reso->getNum() . '</td>
+                </tr>
+                 <tr>
+                <td>Numéro instance unique :</td>  <td>' . $reso->getNumInstance() . '</td>
+                </tr>
+
+                <tr>
+                <td>Séance associé :</td>
+                <td>' . $reso->getNumSeance_id() . '</td>
+                </tr>
+
+                <tr>
+                <td>Projet associé :</td>
+                <td> <a href="index.php?action=projet&id=' . $reso->getNumProjet_id() . '"> ' . $reso->getNumProjet_id() . '</a></td>
+                </tr>
+
+                <tr>
+                <td>Date de demande :</td>
+                <td>' . $reso->getDateReso() . '</td>
+                </tr>
+
+                <tr>
+                <td>Date effective:</td>
+                <td>' . $reso->getDateEffective() . '</td>
+                </tr>
+
+                <tr>
+                <td>Résumé :</td>
+                <td>' . $reso->getResumeReso() . '</td>
+                </tr>
+
+                <tr>
+                <td>Description :</td>  <td>' . $reso->getDescription() . '</td>
+                </tr>
+
+                <tr>
+                <td>Campus :</td>    <td>' . $reso->getCampus() . '</td>
+                </tr>
+
+                <tr>
+                <td>Note :</td>    <td>' . $reso->getNote() . '</td>
+                </tr>
+
+               
+</table>
+</center>');
+        
     }
 
 }

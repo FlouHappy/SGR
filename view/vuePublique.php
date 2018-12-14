@@ -11,7 +11,7 @@ namespace SGR\view;
 class VuePublique {
 
     function __construct() {
-
+        
     }
 
     public function afficherAccueil() {
@@ -110,7 +110,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
           ');
     }
 
-    public function afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement,$typeReso) {
+    public function afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement, $typeReso) {
 
 
         echo('
@@ -211,6 +211,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
            </form>');
     }
+
     public function afficherFormulaireResolution2($cour, $prog, $ugp, $projet, $departement) {
 
 
@@ -304,7 +305,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
            </form>');
     }
 
-    public function rechercheResolution($reso,$titre) {
+    public function rechercheResolution($reso, $titre) {
 
         echo('<div id="divconsult" class="">
         <div class="btt2">
@@ -313,10 +314,10 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
         <a href="index.php?action=rechercheAvancer">  Recherche avancée  </a>
         <a href="index.php?action=voirReso">          Toutes les résolutions reçues  </a>
         <br> <br>
-        <h2>'.$_SESSION['recherche'].':</h2>
+        <h2>' . $_SESSION['recherche'] . '</h2>
         <br>
         Nombre trouvé: ' . $_SESSION['count'] . '<br><br>
-        <a href="Excel/'.$titre.'" download="'.$titre.'">Télécharger la liste</a>
+        <a href="Excel/' . $titre . '" download="' . $titre . '">Télécharger la liste</a>
         </div><br><br>
         <center>
         <table class="table2" >
@@ -406,7 +407,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
                 ');
         foreach ($programme as $value) {
             echo('<tr>
-                  <td>'.$value->getCode() . ' :  ' . $value->getNom() . '</td>
+                  <td>' . $value->getCode() . ' :  ' . $value->getNom() . '</td>
                   </tr>');
         }
         echo('
@@ -415,7 +416,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
                  </tr>');
         foreach ($cour as $value) {
             echo('<tr>
-                  <td>'.$value->getSigle() . ':  ' . $value->getNom() . '</td>
+                  <td>' . $value->getSigle() . ':  ' . $value->getNom() . '</td>
                   </tr>');
         }
         echo('</table></center></div>');
@@ -537,9 +538,18 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
                  </form>');
     }
 
-    public function afficherProjet($projet) {
+    public function afficherProjet($projet,$titre) {
         echo('<div id="divconsult">
-        <h1>Liste des projets </h1><br>
+             
+          <form action="popUp.php?action=traitementRechercheProjet" class="formPreForm" method="POST">
+          <label for="sigle">mot clé :</label></td>
+          <input type="mot" id="mot" required  name="mot" >
+                <input type="submit"  name="valider" value="Rechercher">
+
+
+                 </form>
+                  <a href="popUp.php?action=voirAllProjet">  tout les projets </a>
+        <h1>'.$titre.'</h1><br>
             <center><table class="table3" >
         <tr>
             <th>Id</th>
@@ -578,7 +588,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
         echo('</table></center></div>');
     }
 
-     public function afficherProgramme($programme) {
+    public function afficherProgramme($programme) {
         echo('<div id="divconsult">
          <h1>Liste des programmes ordonnés par code </h1><br>
             <center>
@@ -687,17 +697,16 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
                  </form>');
     }
 
-    public function afficherResulatCreation($res){
+    public function afficherResulatCreation($res) {
         echo('
                 <div id="divsoumettre" class="btt2">
-                Votre '.$res.' a été crée <br><br><br>
+                Votre ' . $res . ' a été crée <br><br><br>
 
         <a href="index.php?action=soumettreReso">Retourner au formulaire</a>
          </div>');
     }
-    
-    
-    public function afficherFormulaireSeance(){
+
+    public function afficherFormulaireSeance() {
         echo('<form action="popUp.php?action=traitementSeance" class="formPreForm" method="POST">
 
         <div id="divsoumettre" class="btt2">
@@ -718,8 +727,99 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
         </div>
 
                  </form>');
-        
-        
     }
 
+    public function afficherPreFormulaireRecherche() {
+        echo('<form action="index.php?action=formulaireRechercheAvancer" class="formPreForm" method="POST">
+
+        <div id="divrens" class="btt2">
+        <h1>Selectionnez le nombre d' . "'" . 'élément pour votre recherche :</h1><br><br>
+
+        <center>
+        <table class="table1">
+        
+            
+<tr>
+          <td><label for="departement">Département: </label></td>
+          <td><select  id="departement" required  name="departement" >
+          <option value="non">non</option>
+          <option value="oui">oui</option>
+        </tr>
+
+            </select></td></tr>
+
+         <tr>
+          <td><label for="ugp">UGP: </label></td>
+          <td><select  id="ugp" required  name="ugp" >
+          <option value="non">non</option>
+          <option value="oui">oui</option>
+        </tr>
+
+            </select></td></tr>
+
+        <tr>
+          <td><label for="cycle">Date: </label></td>
+          <td><select type="number" id="date" required  name="date" >
+          <option value=0>0</option>
+          <option value=1>1</option>
+          <option value=2> 2 </option>
+        </tr>
+
+            </select></td></tr>
+        </table>
+        </center>
+
+            <br>
+                <input type="submit" name="valider" value="Valider">
+        </div>
+
+                 </form>');
+    }
+
+    public function afficherFormulaireRechercheAvancer( $departement, $ugp) {
+
+
+        echo('<form action="index.php?action=traitementRechercheAvancer" class="formPreForm" method="POST">');
+
+        if ($_POST['ugp'] == "oui") {
+            echo('<label for="ugp">UGP: </label>
+         <select id="ugp" name="ugp">');
+            foreach ($ugp as $value) {
+                echo('<option value="' . $value->getCode() . '">' . $value->getcode() . ': ' . $value->getNom() . '</option>');
+            }
+        }
+        echo('<br>');
+       
+
+        if ($_POST['departement'] == "oui") {
+            echo('</select><br> <label for="element">Département: </label>
+         <select id="departement" name="departement">');
+            foreach ($departement as $value) {
+                echo('<option value="' . $value->getNum() . '">' . $value->getNum() . ': ' . $value->getNom() . '</option>');
+            }
+            echo('</select><br>');
+        }
+         echo('<br>');
+        if ($_POST['date'] == 1) {
+            $_SESSION['nbDateRecherche']=1;
+             echo('<label for="date">Date: </label>
+        <input type="date"  required name="date1" min="2000-12-31"><br><br>');
+        }else if ($_POST['date'] == 2) {
+            $_SESSION['nbDateRecherche']=2;
+             echo('<label for="date">Date début: </label>
+        <input type="date"  required name="date1" min="2000-12-31"><br><br>');
+             
+              echo('<label for="date">Date fin: </label>
+        <input type="date"  required name="date2" min="2000-12-31"><br><br>');
+            
+        }else{
+            $_SESSION['nbDateRecherche']=0;
+        }
+        
+        
+        
+         echo('<input type="submit" name="valider" value="Valider">');
+    }
+    
+   
 }

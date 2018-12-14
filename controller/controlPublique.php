@@ -3,9 +3,7 @@
 namespace SGR\controller;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Gere toutes les actions lié a l user public
  */
 
 use SGR\view\VuePublique;
@@ -22,6 +20,9 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class controlPublique {
+    /*
+     * Charge tout les modeles neccessaires aux actions de l user public.
+     */
 
     private $vue;
     private $modelCour;
@@ -43,16 +44,28 @@ class controlPublique {
         $this->modelReceptionReso = new ReceptionReso();
         $this->modelDepartement = new Departement();
         $this->modelTypeReso = new typeResolution();
-        $this->modelSeance= new Seance();
+        $this->modelSeance = new Seance();
     }
+
+    /*
+     * page d accueil public
+     */
 
     public function accueil() {
         $this->vue->afficherAccueil();
     }
 
+    /*
+     * demande a la vue d afficher le pré-formulaire des résolutions reçues
+     */
+
     public function preFormulaireReso() {
         $this->vue->afficherPreFormulaireRésolution(10, 10);
     }
+
+    /*
+     * demande a la vue d afficher le formulaire adapté selon les choix fait dans le pré-formulaire
+     */
 
     public function formulaireReso() {
         echo ('<form action="index.php?action=traitementReso" class="formReso" id="formReso" method="POST">');
@@ -73,6 +86,10 @@ class controlPublique {
         $departement = $this->modelDepartement->allDepartementTrie();
         $this->vue->afficherFormulaireResolution($cour, $prog, $ugp, $projet, $departement, $typeReso);
     }
+
+    /*
+     * Traitement des informations du formulaire de cration de résolutions reçues et cré la résolution
+     */
 
     public function traitementReso() {
         $idProjet = null;
@@ -106,14 +123,22 @@ class controlPublique {
         $this->modelReceptionReso->associationTypeReso($id->getId(), $_POST["type"]);
     }
 
+    /*
+     * transmet la liste de toutes les résolutions reçues trié par id a la vue
+     */
+
     public function rechercheReso() {
         $_SESSION["count"] = 0;
         $reso = $this->modelReceptionReso->allResolutionTrie();
         $titre = 'allResolution';
-        $_SESSION['recherche']='Liste de toutes les résolutions reçues';
+        $_SESSION['recherche'] = 'Liste de toutes les résolutions reçues';
         $this->telechargerExcel($titre, $reso);
-        $this->vue->rechercheResolution($reso,$titre);
+        $this->vue->rechercheResolution($reso, $titre);
     }
+
+    /*
+     * demande a la vue d afficher UNE résolution reçue en détail
+     */
 
     public function resolutionComplete() {
         $id = filter_var($_GET["id"], FILTER_SANITIZE_NUMBER_INT);
@@ -123,6 +148,10 @@ class controlPublique {
         $this->vue->afficherUneResolution($reso, $programme, $cour);
     }
 
+    /*
+     * demande a la vue d afficher le formulaire de recherche des résolutions reçues par élément 
+     */
+
     function rechercheParType() {
         $cour = $this->modelCour->allCourTrie();
         $prog = $this->modelProg->allProgrammeTrie();
@@ -131,6 +160,10 @@ class controlPublique {
         $departement = $this->modelDepartement->allDepartementTrie();
         $this->vue->rechercheParType($cour, $prog, $ugp, $departement, $agent);
     }
+
+    /*
+     * transmet la liste des résolution reçues selon les choix fait par l user
+     */
 
     function resultatRechercheParType() {
         $_SESSION["count"] = 0;
@@ -179,10 +212,15 @@ class controlPublique {
         }
     }
 
+    /*
+     * Création du fichier Excel pour les utilisateur public de la liste des résolutions reçues affichée
+     */
+
     public function telechargerExcel($titre, $reso) {
+
         function cellColor($cells, $color) {
             global $objPHPExcel;
-             $spreadsheet = new Spreadsheet();
+            $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
             $objPHPExcel->getActiveSheet()->getStyle($cells)->getFill()->applyFromArray(array(
                 'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -191,12 +229,12 @@ class controlPublique {
                 )
             ));
         }
-       
-         $spreadsheet = new Spreadsheet();
+
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        
-        
+
+
         $sheet->setCellValue('A1', $titre);
         $sheet->setCellValue('A2', 'Numéro');
         $sheet->setCellValue('B2', 'Résolutions reçue');
@@ -258,6 +296,10 @@ class controlPublique {
         $writer->save('Excel/' . $titre . '.xlsx');
     }
 
+    /*
+     * Transmet UN projet a la vue selon l id choisi
+     */
+
     public function projetComplet() {
         $id = filter_var($_GET["id"], FILTER_SANITIZE_STRING);
         $projet = $this->modelProjet->rechercheProjetParId($id);
@@ -265,24 +307,44 @@ class controlPublique {
         $this->vue->afficherUnProjet($projet);
     }
 
+    /*
+     * Transmet la liste des projets trié par id a la vue
+     */
+
     public function allProjet() {
         $allProjet = $this->modelProjet->allProjetTrie();
-        $this->vue->afficherProjet($allProjet);
+        $this->vue->afficherProjet($allProjet, 'Liste de tout les projets');
     }
+
+    /*
+     * Transmet la liste des cours trié par Sigle a la vue
+     */
 
     public function allCour() {
         $allCour = $this->modelCour->allCourTrie();
         $this->vue->afficherCour($allCour);
     }
 
+    /*
+     * Transmet la liste des programmes triéés par Code a la vue
+     */
+
     public function allProgramme() {
         $allProg = $this->modelProg->allProgrammeTrie();
         $this->vue->afficherProgramme($allProg);
     }
 
+    /*
+     * Demande a la vue d afficher le formulaire de craétion de cours
+     */
+
     public function formulaireCour() {
         $this->vue->afficherFormulaireCour();
     }
+
+    /*
+     * Création d un nouveau cours apres filtrage des valeurs du formulaire
+     */
 
     public function traitementCour() {
         $sigle = filter_var($_POST["sigle"], FILTER_SANITIZE_STRING);
@@ -292,10 +354,18 @@ class controlPublique {
         $this->vue->afficherResulatCreation('Cour');
     }
 
+    /*
+     * Demande a la vue d afficher le formulaire de création de Programme
+     */
+
     public function formulaireProgramme() {
         $ugp = $this->modelUgp->allUgpTrie();
         $this->vue->afficherFormulaireProgramme($ugp);
     }
+
+    /*
+     * Création d un nouveau programme apres filtrage des valeurs
+     */
 
     public function traitementProgramme() {
 
@@ -305,18 +375,96 @@ class controlPublique {
         $this->modelProg->nouveauProgramme($code, $nom, $type, $_POST['ugp']);
         $this->vue->afficherResulatCreation('Programme');
     }
-    
-    public function formulaireSeance(){
+
+    /*
+     * Demande a la vue d afficher le formulaire de création de séance
+     */
+
+    public function formulaireSeance() {
         $this->vue->afficherFormulaireSeance();
-        
     }
-    
+
+    /*
+     * Création d une nouvelle séance apres filtrage des valeurs
+     */
+
     public function traitementSeance() {
 
-        $date=filter_var($_POST["date"], FILTER_SANITIZE_STRING);
-        $instance=filter_var($_POST["instance"], FILTER_SANITIZE_STRING);
+        $date = filter_var($_POST["date"], FILTER_SANITIZE_STRING);
+        $instance = filter_var($_POST["instance"], FILTER_SANITIZE_STRING);
         $this->modelSeance->nouvelleSeance($date, $instance);
         echo('Votre Séance a été crée, vous pouvez fermer cet onglet');
+    }
+
+    /*
+     * Transmet  a la vue les informations néccessaires aux formulaire de rehcerche avancée
+     */
+
+    public function rechercheAvancerForm() {
+
+        $departement = $this->modelDepartement->allDepartementTrie();
+        $ugp = $this->modelUgp->allUgpTrie();
+        $this->vue->afficherFormulaireRechercheAvancer($departement, $ugp);
+    }
+
+    /*
+     * Demande a la vue d afficher le pré formulaire de rehcerche d avancée
+     */
+
+    public function rechercheAvancerPreForm() {
+
+        $this->vue->afficherPreFormulaireRecherche();
+    }
+
+    /*
+     * Transmet la liste des résolutions reçues selon concerné par la recherche avancée et création de la requete SQL modulable
+     */
+
+    public function traitementRecherche() {
+        $_SESSION["count"] = 0;
+        $sql = "SELECT * FROM receptionreso WHERE";
+        $_SESSION['recherche'] = "Liste des résolutions reçues avec les caractéristiques suivante:<br>";
+        $titreFichier = "recherchePar";
+        if (isset($_POST['departement'])) {
+            $departement = $_POST['departement'];
+            $sql = $sql . " Departement_id='$departement' AND";
+            $_SESSION['recherche'] = $_SESSION['recherche'] . 'Département:' . $departement . '<br> ';
+            $titreFichier = $titreFichier . 'Departement_' . $departement;
+        }
+        if (isset($_POST['ugp'])) {
+            $ugp = $_POST['ugp'];
+            $sql = $sql . " CodeUgp_id='$ugp' AND";
+            $_SESSION['recherche'] = $_SESSION['recherche'] . 'Ugp:' . $ugp . '<br> ';
+            $titreFichier = $titreFichier . 'Ugp_' . $ugp;
+        }
+
+
+        if ($_SESSION['nbDateRecherche'] == 2) {
+            $d1 = $_POST['date1'];
+            $d2 = $_POST['date2'];
+            $_SESSION['recherche'] = $_SESSION['recherche'] . 'Date: entre ' . $d1 . ' et ' . $d2 . '<br> ';
+            $sql = $sql . " DateReception BETWEEN '$d1' AND '$d2'";
+            $titreFichier = $titreFichier . 'Date_Entre_' . $d1 . '_Et_' . $d2;
+        } else if ($_SESSION['nbDateRecherche'] == 1) {
+            $d1 = $_POST['date1'];
+            $sql = $sql . " DateReception='$d1'";
+            $_SESSION['recherche'] = $_SESSION['recherche'] . 'Date:' . $d1 . '<br> ';
+            $titreFichier = $titreFichier . 'Date_' . $d1;
+        }
+
+        $reso = $this->modelReceptionReso->rechercheParSql($sql);
+        $this->telechargerExcel($titreFichier, $reso);
+        $this->vue->rechercheResolution($reso, $titreFichier);
+    }
+
+    /*
+     * Transmet la liste des projets concerné par la recherche par Mot clé
+     */
+
+    public function traitementRechercheProjet() {
+        $projet = $this->modelProjet->rechercheParMot($_POST["mot"]);
+        $titre = "Liste de tout les projets contenant le mot clé: " . $_POST["mot"];
+        $this->vue->afficherProjet($projet, $titre);
     }
 
 }

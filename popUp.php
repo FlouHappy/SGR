@@ -15,6 +15,7 @@ use SGR\controller\controlAdmin;
 
 
 <?php
+
 $controlPublic = new controlPublique();
 if (isset($_GET["action"])) {
     switch ($_GET["action"]) {
@@ -42,9 +43,14 @@ if (isset($_GET["action"])) {
         case "creerSeance":
             $controlPublic->formulaireSeance();
             break;
-         case "traitementSeance":
-             $controlPublic->traitementSeance();
+        case "traitementSeance":
+            $controlPublic->traitementSeance();
+            break;
+
+        case"traitementRechercheProjet":
+            $controlPublic->traitementRechercheProjet();
             break;
     }
 }
-include("template/template2.php") ?>
+include("template/template2.php")
+?>

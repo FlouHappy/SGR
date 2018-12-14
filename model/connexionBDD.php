@@ -1,8 +1,8 @@
 <?php
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Grere la connexion avec la base de donnée
+ * 
+ * !!!!!Servira aussi avec gerer la connexion avec Gestat!!!!!!!!!
  */
 namespace SGR\model;
 class  ConnexionBDD

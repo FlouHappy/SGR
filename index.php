@@ -72,6 +72,15 @@ if (!isset($_SESSION["user"])) {
             case "resultatRecherchePar":
                 $controlPublic->resultatRechercheParType();
                 break;
+            case"rechercheAvancer":
+                $controlPublic->rechercheAvancerPreForm();
+                break;
+            case"formulaireRechercheAvancer":
+                $controlPublic->rechercheAvancerForm();
+                break;
+            case"traitementRechercheAvancer":
+                $controlPublic->traitementRecherche();
+                break;
         }
         //parti non connecté (page accueil )
     } else {
@@ -147,6 +156,42 @@ if (!isset($_SESSION["user"])) {
                     break;
                 case"enregistrementResoDeca":
                     $controlAgent->enregistrementReso();
+                    header('Location: index.php?action=resoAssocier');
+                    break;
+                case "resoAssocier":
+                    $controlAgent->accueil();
+                    echo('Votre résolution a été associé a une résolution Decanat');
+
+                    break;
+                case "soumettreReso":
+                    $controlPublic->preFormulaireReso();
+                    break;
+                case "formulaireReso":
+                    $controlPublic->formulaireReso();
+                    break;
+                case "traitementReso":
+                    $controlPublic->traitementReso();
+                    header('Location: index.php?action=resoCreer');
+                    break;
+                case "resoCreer":
+                    $controlPublic->accueil();
+                    echo('Votre résolution a été enregistré');
+                    break;
+
+                case"voirResoDecanat":
+                    $controlAgent->afficherResoDecanat();
+                    break;
+                case"resolutionDecanat":
+                    $controlAgent->resolutionDecanatComplete();
+                    break;
+                case"rechercheAvancer":
+                    $controlPublic->rechercheAvancerPreForm();
+                    break;
+                case"formulaireRechercheAvancer":
+                    $controlPublic->rechercheAvancerForm();
+                    break;
+                case"traitementRechercheAvancer":
+                    $controlAgent->traitementRecherche();
                     break;
             }
         }

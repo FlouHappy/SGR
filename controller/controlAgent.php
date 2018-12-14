@@ -3,9 +3,7 @@
 namespace SGR\controller;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Gere toute les actions lié a l'agent
  */
 
 use SGR\view\VueAgent;
@@ -23,6 +21,9 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class controlAgent {
+    /*
+     * Charge tout les modeles neccessaires aux actions de l agent.
+     */
 
     private $vue;
     private $modelCour;
@@ -55,6 +56,10 @@ class controlAgent {
         $this->vue->afficherAccueil();
     }
 
+    /*
+     * Charge la liste des résolution reçues dans le navigateur et fichier excel et le trasnmet a la vue
+     */
+
     public function voirResoSoumi() {
         $_SESSION["count"] = 0;
         $reso = $this->modelReceptionReso->allResolutionTrie();
@@ -62,6 +67,12 @@ class controlAgent {
         $this->telechargerExcel($titre, $reso);
         $this->vue->voirReso($reso, 'Liste de toutes les résolutions reçues');
     }
+
+    /*
+     * Création du fichier Excel pour les résolutions reçues
+     * @param $titre : titre du fichier
+     * @param $reso  : liste des résolutions reçues a copié dans le fichier Excel
+     */
 
     public function telechargerExcel($titre, $reso) {
         $spreadsheet = new Spreadsheet();
@@ -122,6 +133,71 @@ class controlAgent {
         $writer->save('Excel/' . $titre . '.xlsx');
     }
 
+    /*
+     * Création du fichier Excel pour les résolutions Décanat
+     * @param $titre : titre du fichier
+     * @param $reso  : liste des résolutions décanat a copié dans le fichier Excel
+     */
+
+    public function telechargerExcelDecanat($titre, $reso) {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Id');
+        $sheet->setCellValue('B1', 'Numéro résolution');
+        $sheet->setCellValue('C1', 'Séance');
+        $sheet->setCellValue('D1', 'Projet');
+        $sheet->setCellValue('E1', 'Résumé');
+        $sheet->setCellValue('F1', 'Description');
+        $sheet->setCellValue('G1', 'Campus');
+        $sheet->setCellValue('H1', 'Note');
+        $sheet->setCellValue('I1', 'Date');
+        $y = 2;
+        foreach ($reso as $value) {
+
+            $i = 1;
+            while ($i <= 10) {
+
+                switch ($i) {
+                    case 1:
+                        $sheet->setCellValue('A' . $y, $value->getId());
+                        break;
+                    case 2:
+                        $sheet->setCellValue('B' . $y, $value->getNum());
+                        break;
+                    case 3:
+                        $sheet->setCellValue('C' . $y, $value->getNumSeance_id());
+                        break;
+                    case 4:
+                        $sheet->setCellValue('D' . $y, $value->getNumProjet_id());
+                        break;
+                    case 5:
+                        $sheet->setCellValue('E' . $y, $value->getResumeReso());
+                        break;
+                    case 6:
+                        $sheet->setCellValue('F' . $y, $value->getDescription());
+                        break;
+                    case 7:
+                        $sheet->setCellValue('G' . $y, $value->getCampus());
+                        break;
+                    case 8:
+                        $sheet->setCellValue('H' . $y, $value->getNote());
+                        break;
+                    case 9:
+                        $sheet->setCellValue('I' . $y, $value->getDateReso());
+                        break;
+                }
+                $i++;
+            }
+            $y++;
+        }
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('Excel/' . $titre . '.xlsx');
+    }
+
+    /*
+     * Modifie la résolutions reçues a travers les données reĉues depuis le formulaire de modification
+     */
+
     public function modifierResoSoumi() {
         $id = filter_var($_GET["num"], FILTER_SANITIZE_NUMBER_INT);
         $reso = $this->modelReceptionReso->rechercheResoParId($id);
@@ -137,6 +213,10 @@ class controlAgent {
         $this->vue->afficherFormulaireModif($reso, $programmeReso, $courReso, $cour, $prog, $ugp, $projet, $departement, $type);
     }
 
+    /*
+     * transmet uniquement les résolution non traité a la vue
+     */
+
     public function afficherResoNontraiter() {
         $_SESSION["count"] = 0;
         $reso = $this->modelReceptionReso->ResolutionParTraitement("Enregistré");
@@ -144,6 +224,10 @@ class controlAgent {
         $this->telechargerExcel($titre, $reso);
         $this->vue->voirReso($reso, "Liste de toutes les résolutions non traitées");
     }
+
+    /*
+     * Transmet les résolutions selon la recherche par élément éffectué
+     */
 
     function resultatRechercheParType() {
         $_SESSION["count"] = 0;
@@ -192,6 +276,10 @@ class controlAgent {
         }
     }
 
+    /*
+     * Transmet la liste des résolutiuons reçues non traité pour un agent donné a la vue
+     */
+
     public function afficherResoPerso() {
         $_SESSION["count"] = 0;
         $reso = $this->modelReceptionReso->rechercheParAgent($_SESSION["user"]);
@@ -200,6 +288,23 @@ class controlAgent {
         $this->vue->voirReso($reso, "Liste des résolutions affecté a l'agent " . $_SESSION["user"]);
     }
 
+    /*
+     * tranmet la liste des résolutions Décanat trié par id a la vue
+     */
+
+    public function afficherResoDecanat() {
+        $_SESSION["count"] = 0;
+        $reso = $this->modelDecanatReso->allResolutionTrie();
+        $titreFichier = 'allResolutionDecanat';
+        $this->telechargerExcelDecanat($titreFichier, $reso);
+        $this->vue->voirResoDecanat($reso, "Liste de toutes les résolutions Décanat:");
+        ;
+    }
+
+    /*
+     * Transmet toute les informations neccéssaire a la vue pour le traitement d une résolutions Décanat
+     */
+
     public function traiterReso() {
         $id = filter_var($_GET["id"], FILTER_SANITIZE_NUMBER_INT);
         $reso = $this->modelReceptionReso->rechercheResoParId($id);
@@ -207,11 +312,15 @@ class controlAgent {
         $courReso = $this->modelCour->courAssocier($id);
         $departement = $this->modelDepartement->allDepartementTrie();
         $typeRecu = $this->modelTypeResolution->rechercheTypeParReso($id);
-        $type= $this->modelTypeResolution->allTypeResoTrie();
+        $type = $this->modelTypeResolution->allTypeResoTrie();
         $seance = $this->modelSeance->allSeanceTrie();
-        $resoDeca= $this->modelDecanatReso->rechercheAssociationTypeReso($id);
-        $this->vue->traiterReso($reso, $programmeReso, $courReso, $typeRecu, $seance,$type,$resoDeca);
+        $resoDeca = $this->modelDecanatReso->rechercheAssociationTypeReso($id);
+        $this->vue->traiterReso($reso, $programmeReso, $courReso, $typeRecu, $seance, $type, $resoDeca);
     }
+
+    /*
+     * Création de la requete SQL selon les modifications par l user souhaité sur la résolutions reçues  
+     */
 
     public function traitementModifResoSoumi() {
         $reso = $this->modelReceptionReso->rechercheResoParId($_GET["id"]);
@@ -238,6 +347,10 @@ class controlAgent {
         if ($_POST['departement'] != '') {
             $departement = $_POST['departement'];
             $sqlPart1 = $sqlPart1 . "Departement_id='$departement',";
+        }
+        if ($_POST['traitement'] != '') {
+            $traitement = $_POST['traitement'];
+            $sqlPart1 = $sqlPart1 . "Traitement='$traitement',";
         }
 
 
@@ -266,15 +379,71 @@ class controlAgent {
         }
     }
 
+    /*
+     * Création d'une nouvelle résolution Décanat et mise a jour des tables en relation avec la ésolutions Décanat
+     */
+
     public function enregistrementReso() {
         $this->modelDecanatReso->nouvelleResoDecanat($_POST["num"], $_POST["numInstance"], $_POST["seance"], $_GET["id_projet"], $_POST["resumeReso"], $_POST["descReso"], $_POST["campus"], $_POST["noteReso"]);
-        $deca=$this->modelDecanatReso->rechercheResoParNumReception($_POST["num"]);
-        $id=$deca->getId();
-        $this->modelDecanatReso->assocDecanatRecu($_GET['id'],$id);
+        $deca = $this->modelDecanatReso->rechercheResoParNumReception($_POST["num"]);
+        $id = $deca->getId();
+        $resoRecu = $this->modelReceptionReso->rechercheResoParId($_GET['id']);
+        $this->modelDecanatReso->assocDecanatRecu($_GET['id'], $id);
         $this->modelDecanatReso->associationTypeReso($id, $_POST['type']);
-        
-        
-        
+        $this->modelDecanatReso->associationUgp($id, $resoRecu->getCodeUgp_id());
+        $date = date("Y-m-d");
+        $traitement = 'Enregistré et associé à la résolution Décanat id: ' . $id;
+        $this->modelReceptionReso->updateAssociationResoDecanat($_GET['id'], $traitement, $date, $_SESSION['user']);
+    }
+
+    /*
+     * Transmet la résolution Décanat avec l id souhaité a la vue 
+     */
+
+    public function resolutionDecanatComplete() {
+        $id = filter_var($_GET["id"], FILTER_SANITIZE_NUMBER_INT);
+        $reso = $this->modelDecanatReso->rechercheResoParId($id);
+        $this->vue->afficherUneResolutionDecanat($reso);
+    }
+
+    /*
+     * Construction de la requete sql selon la recherche faite et transmision de la liste des résolutions a la vue 
+     */
+
+    public function traitementRecherche() {
+        $_SESSION["count"] = 0;
+        $sql = "SELECT * FROM receptionreso WHERE";
+        $_SESSION['recherche'] = "Liste des résolutions reçues avec les caractéristiques suivante:<br>";
+        $titreFichier = "recherchePar";
+        if (isset($_POST['departement'])) {
+            $departement = $_POST['departement'];
+            $sql = $sql . " Departement_id='$departement' AND";
+            $_SESSION['recherche'] = $_SESSION['recherche'] . 'Département:' . $departement . '<br> ';
+            $titreFichier = $titreFichier . 'Departement_' . $departement;
+        }
+        if (isset($_POST['ugp'])) {
+            $ugp = $_POST['ugp'];
+            $sql = $sql . " CodeUgp_id='$ugp' AND";
+            $_SESSION['recherche'] = $_SESSION['recherche'] . 'Ugp:' . $ugp . '<br> ';
+            $titreFichier = $titreFichier . 'Ugp_' . $ugp;
+        }
+
+
+        if ($_SESSION['nbDateRecherche'] == 2) {
+            $d1 = $_POST['date1'];
+            $d2 = $_POST['date2'];
+            $_SESSION['recherche'] = $_SESSION['recherche'] . 'Date: entre ' . $d1 . ' et ' . $d2 . '<br> ';
+            $sql = $sql . " DateReception BETWEEN '$d1' AND '$d2'";
+            $titreFichier = $titreFichier . 'Date_Entre_' . $d1 . '_Et_' . $d2;
+        } else if ($_SESSION['nbDateRecherche'] == 1) {
+            $d1 = $_POST['date1'];
+            $sql = $sql . " DateReception='$d1'";
+            $_SESSION['recherche'] = $_SESSION['recherche'] . 'Date:' . $d1 . '<br> ';
+            $titreFichier = $titreFichier . 'Date_' . $d1;
+        }
+
+        $reso = $this->modelReceptionReso->rechercheParSql($sql);
+        $this->vue->voirReso($reso, $_SESSION['recherche']);
     }
 
 }

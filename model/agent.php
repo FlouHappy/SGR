@@ -1,11 +1,13 @@
 <?php
+
 namespace SGR\model;
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Représente la table Agent
  */
+
 use SGR\model\ConnexionBDD;
+
 class Agent {
 
     private $id;
@@ -18,6 +20,17 @@ class Agent {
         
     }
 
+    /*
+     * Constructeur
+     * 
+     * @param $i : identifiant de l agent
+     * @param $m : mot de passe (crypté) de l agent
+     * @param $n : Nom de l agent
+     * @param $p : Prénom de l agent
+     * @param $e : email de l agent
+     * @param $a : actif (1: agent actif, 0:agent inactif)
+     */
+
     private function creerAgent($i, $m, $n, $p, $e, $a) {
         $this->id = $i;
         $this->mdp = $m;
@@ -27,12 +40,28 @@ class Agent {
         $this->actif = $a;
     }
 
+    /*
+     * Constructeur alternatif
+     * 
+     * @param $i : identifiant de l agent
+     * @param $m : mot de passe (crypté) de l agent
+     * @param $n : Nom de l agent
+     * @param $p : Prénom de l agent
+     * @param $e : email de l agent
+     * @param $a : actif (1: agent actif, 0:agent inactif)
+     */
+
     public function creerUnAgent($i, $m, $n, $p, $e, $a) {
         $agent = new Agent();
         $agent->creerAgent($i, $m, $n, $p, $e, $a);
         return $agent;
     }
-     function allAgentTrie() {
+
+    /*
+     *  Liste des agents trié par nom
+     */
+
+    function allAgentTrie() {
         $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM agent ORDER BY Nom ASC";
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
@@ -45,6 +74,12 @@ class Agent {
         return($allAgent);
     }
 
+    /*
+     * Recherche les agents par leur Id
+     * 
+     * @param $user : identifiant de l agent
+     */
+
     public function rechercheParId($user) {
         $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM agent WHERE Id='$user'";
@@ -55,6 +90,12 @@ class Agent {
         $bdd->fermerConnexion();
         return($this);
     }
+
+    /*
+     * Vérifie l existence d un agent
+     * 
+     * @param $user : identifiant de l agent
+     */
 
     public function rechercheExistenceUser($user) {
         $bdd = new ConnexionBDD();
@@ -68,6 +109,9 @@ class Agent {
         $bdd->fermerConnexion();
         return($verif);
     }
+
+    //getter
+
 
     function getId() {
         return $this->id;

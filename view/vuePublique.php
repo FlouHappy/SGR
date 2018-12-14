@@ -11,7 +11,7 @@ namespace SGR\view;
 class VuePublique {
 
     function __construct() {
-        
+
     }
 
     public function afficherAccueil() {
@@ -457,7 +457,8 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
     public function rechercheParType($cour, $prog, $ugp, $departement, $agent) {
         //par Ugp
         echo ('<form action="index.php?action=resultatRecherchePar&type=ugp" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche par UGP:</h2>
+        <div id="divconsult">
+                 <h2>Recherche par UGP :</h2>
                  <div class="ugp">
         <label for="element">UGP: </label>
          <select id="element" name="element">');
@@ -470,7 +471,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         //Par programme
         echo ('<form action="index.php?action=resultatRecherchePar&type=programme" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche par programme:</h2>
+                 <h2>Recherche par programme :</h2>
                  <div class="programme">
         <label for="element">Programme: </label>
          <select id="element" name="element">');
@@ -483,7 +484,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         //Par cour
         echo ('<form action="index.php?action=resultatRecherchePar&type=cour" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche par cours:</h2>
+                 <h2>Recherche par cours :</h2>
                  <div class="cour">
         <label for="element">Cour: </label>
          <select id="element" name="element">');
@@ -497,7 +498,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         //Par Agent
         echo ('<form action="index.php?action=resultatRecherchePar&type=agent" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche par agent:</h2>
+                 <h2>Recherche par agent :</h2>
                  <div class="agent">
         <label for="element">Agent: </label>
          <select id="element" name="element">');
@@ -511,7 +512,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         //Par date
         echo ('<form action="index.php?action=resultatRecherchePar&type=date" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche par Date:</h2>
+                 <h2>Recherche par date :</h2>
                  <div class="date">
         <label for="element">Date: </label>
          <select id="element" name="element">');
@@ -528,19 +529,20 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         //Par Mot clé
         echo ('<form action="index.php?action=resultatRecherchePar&type=mot" class="formReso" id="formReso" method="POST">
-                 <h2>Recherche Par Mot clé:</h2>
+                 <h2>Recherche par mot clé :</h2>
                  <div class="Mot">
         <label for="element">Mot clé: </label>
         <input type="text" id="element" name="element" required >
 
         <br>
                 <input type="submit" name="valider" value="Rechercher">
+                </div>
                  </form>');
     }
 
     public function afficherProjet($projet,$titre) {
         echo('<div id="divconsult">
-             
+
           <form action="popUp.php?action=traitementRechercheProjet" class="formPreForm" method="POST">
           <label for="sigle">mot clé :</label></td>
           <input type="mot" id="mot" required  name="mot" >
@@ -711,7 +713,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         <div id="divsoumettre" class="btt2">
         <h1> Renseignement sur la Séance:</h1><br><br>
-        
+
           <label for="date">Date: </label>
         <input type="date"  required name="date" min="2000-12-31"><br><br>
 
@@ -737,8 +739,8 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
 
         <center>
         <table class="table1">
-        
-            
+
+
 <tr>
           <td><label for="departement">Département: </label></td>
           <td><select  id="departement" required  name="departement" >
@@ -789,7 +791,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
             }
         }
         echo('<br>');
-       
+
 
         if ($_POST['departement'] == "oui") {
             echo('</select><br> <label for="element">Département: </label>
@@ -808,18 +810,18 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
             $_SESSION['nbDateRecherche']=2;
              echo('<label for="date">Date début: </label>
         <input type="date"  required name="date1" min="2000-12-31"><br><br>');
-             
+
               echo('<label for="date">Date fin: </label>
         <input type="date"  required name="date2" min="2000-12-31"><br><br>');
-            
+
         }else{
             $_SESSION['nbDateRecherche']=0;
         }
-        
-        
-        
+
+
+
          echo('<input type="submit" name="valider" value="Valider">');
     }
-    
-   
+
+
 }

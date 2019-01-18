@@ -516,7 +516,7 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
                  <div class="date">
         <label for="element">Date: </label>
          <select id="element" name="element">');
-        $i = 2015;
+        $i = 1980;
         $date = date("Y");
         $fin = intval($date);
         while ($i <= $fin) {

@@ -57,7 +57,7 @@ class controlAgent {
     }
 
     /*
-     * Charge la liste des résolution reçues dans le navigateur et fichier excel et le trasnmet a la vue
+     * Charge la liste des résolution reçues dans le navigateur avec le fichier excel et le transmet a la vue
      */
 
     public function voirResoSoumi() {
@@ -444,6 +444,54 @@ class controlAgent {
 
         $reso = $this->modelReceptionReso->rechercheParSql($sql);
         $this->vue->voirReso($reso, $_SESSION['recherche']);
+    }
+
+    public function traiterResoDecanat() {
+        $id = $_GET['id'];
+        $idResoRecu = $this->modelDecanatReso->rechercheAssociationResoRecu($id);
+        $resoRecu = $this->modelReceptionReso->rechercheResoParId($idResoRecu[0]);
+        $resoDecanat = $this->modelDecanatReso->rechercheResoParId($id);
+        $this->vue->cloturerResolutionDecanat($resoRecu, $resoDecanat);
+    }
+
+    public function enterinerReso() {
+        $traitementReso = "entériné";
+        $traitementDecanat = "entériné";
+        $noteRecu = null;
+        $noteDecanat = null;
+        $idRecu=$_GET['idRecu'];
+        $idDeca=$_GET['idDeca'];
+
+
+        if ($_POST['traitementRecu'] != '') {
+            $traitementReso = $_POST['traitementRecu'];
+        }
+        if ($_POST['traitementDecanat'] != '') {
+            $traitementDecanat = $_POST['traitementDecanat'];
+        }
+        if ($_POST['noteRecu'] != '') {
+            $noteRecu = $_POST['noteRecu'];
+        }
+        if ($_POST['noteDecanat'] != '') {
+            $noteDecanat = $_POST['noteDecanat'];
+        }
+        
+        if($noteRecu==null){
+            $this->modelReceptionReso->enterinerResoSansNote($idRecu, $traitementReso);
+        }else{
+             $this->modelReceptionReso->enterinerResoAvecNote($idRecu, $traitementReso, $noteRecu);
+        }
+        
+        
+         if($noteDecanat==null){
+            $this->modelDecanatReso->enterinerResoSansNote($idDeca, $traitementDecanat);
+        }else{
+            $this->modelDecanatReso->enterinerResoAvecNote($idDeca, $traitementDecanat, $noteDecanat);
+        }
+        
+        
+        
+        
     }
 
 }

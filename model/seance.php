@@ -3,9 +3,7 @@
 namespace SGR\model;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Gere la table seance
  */
 
 use SGR\model\ConnexionBDD;
@@ -16,9 +14,23 @@ class Seance {
     private $date;
     private $instance;
 
+    /*
+     * Constructeur par défaut
+     * 
+     * 
+     */
+
     function __construct() {
         
     }
+
+    /*
+     * Constructeur alternatif
+     * 
+     * @param $n : Numéro de seance
+     * @param $d : Date de la seance
+     * @param $i : instance présente a la séance
+     */
 
     function creerSeance($n, $d, $i) {
         $seance = new Seance();
@@ -27,9 +39,17 @@ class Seance {
         $seance->instance = $i;
         return ($seance);
     }
-    
-     function nouvelleSeance($date,$instance) {
-        $bdd = new ConnexionBDD();  
+
+    /*
+     * Ajoute une nouvelle Seance dans la table
+     * 
+     * 
+     * @param $date : Date de la seance
+     * @param $ni : Instance prsente a la seance
+     */
+
+    function nouvelleSeance($date, $instance) {
+        $bdd = new ConnexionBDD();
         $sql = "INSERT INTO seance (DateSeance, Instance) VALUES ('$date','$instance')";
         $msg = '';
         if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
@@ -40,8 +60,14 @@ class Seance {
         $bdd->fermerConnexion();
         return $msg;
     }
-    
-    function allSeanceTrie(){
+
+    /*
+     * Liste de toute les seances de la table trié par date en decroissant
+     * 
+     * 
+     */
+
+    function allSeanceTrie() {
         $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM seance ORDER BY DateSeance DESC";
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
@@ -53,10 +79,9 @@ class Seance {
         }
         $bdd->fermerConnexion();
         return($allSeance);
-        
     }
-    
-    
+
+    //getter
     function getNumSeance() {
         return $this->numSeance;
     }
@@ -68,6 +93,5 @@ class Seance {
     function getInstance() {
         return $this->instance;
     }
-
 
 }

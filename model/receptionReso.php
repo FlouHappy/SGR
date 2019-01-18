@@ -3,7 +3,7 @@
 namespace SGR\model;
 
 /*
- *Représente la table receptionReso
+ * Représente la table receptionReso (résolution décanat)
  */
 
 use SGR\model\ConnexionBDD;
@@ -26,23 +26,23 @@ class ReceptionReso {
         
     }
 
-      /*
+    /*
      * Constructeur
      * 
      * 
-     * @param $i : Numéro du projet
-     * @param $n : agent responsable du projet
-     * @param $s : Description du projet
-     * @param $np : Etat du projet (ouvert/fermé)
-     * @param $dd: note(facultatif) du projet
-     * @param $dr : lien (repertoire/url) des annexes lié au projets
-       * @param $t : lien (repertoire/url) des annexes lié au projets
-       * @param $nt : lien (repertoire/url) des annexes lié au projets
-       * @param $d : lien (repertoire/url) des annexes lié au projets
-       * @param $c : lien (repertoire/url) des annexes lié au projets
-       * @param $a
-       *  : lien (repertoire/url) des annexes lié au projets
+     * @param $i : id de la résolution
+     * @param $n : Numero de la résolution
+     * @param $s : sujet de la résolution
+     * @param $np :Numéro du projet associé (id)
+     * @param $dd: Date de la demande
+     * @param $dr : Date de reception par la décanat
+     * @param $t : etat du traitement de la résolution
+     * @param $nt : Note facultatif de la résolution
+     * @param $d : departement associé a la résolution (numéro departement)
+     * @param $c : ugp associé a la résolution (code)
+     * @param $a: agent associé a la résolution (id)
      */
+
     function creerReceptionReso($i, $n, $s, $np, $dd, $dr, $t, $nt, $d, $c, $a) {
         $reso = new ReceptionReso();
         $reso->id = $i;
@@ -59,6 +59,18 @@ class ReceptionReso {
         return ($reso);
     }
 
+    /*
+     * Ajoute une nouvelle résolution Décanat
+     * 
+     * 
+     *
+     * @param $num : Numero de la résolution
+     * @param $note : Note facultatif de la résolution
+     * @param $departement : departement associé a la résolution (numéro departement)
+     * @param $ugp : ugp associé a la résolution (code)
+     * @param $traitement: agent associé a la résolution (id)
+     */
+
     function nouvelleReso($num, $sujet, $projet, $note, $departement, $ugp, $traitement) {
         $bdd = new ConnexionBDD();
         $date = date("Y-m-d");
@@ -73,6 +85,15 @@ class ReceptionReso {
         return $msg;
     }
 
+    /*
+     * Ajoute une association entre un programe et une résolution décanat dans la table programme_receptionreso
+     * 
+     * 
+     *
+     * @param $idReso : Id de la résolution Décanat
+     * @param $idProgramme : id du programme 
+     */
+
     function associationProgramme($idReso, $idProg) {
         $bdd = new ConnexionBDD();
         $sql = "INSERT INTO programme_receptionreso (programme_id, receptionReso_id) VALUES ('$idProg',$idReso)";
@@ -85,6 +106,15 @@ class ReceptionReso {
         $bdd->fermerConnexion();
         return $msg;
     }
+
+    /*
+     * Ajoute une association entre un cours et une résolution décanat dans la table cour_receptionreso
+     * 
+     * 
+     *
+     * @param $idReso : Id de la résolution Décanat
+     * @param $idCour : id du cours (sigle) 
+     */
 
     function associationCour($idReso, $idCour) {
         $bdd = new ConnexionBDD();
@@ -99,6 +129,15 @@ class ReceptionReso {
         return $msg;
     }
 
+    /*
+     * Ajoute une association entre un type de résolution et une résolution décanat dans la table typeResolution_receptionreso
+     * 
+     * 
+     *
+     * @param $idReso : Id de la résolution Décanat
+     * @param $type : Type de la résolution
+     */
+
     function associationTypeReso($id, $type) {
         $bdd = new ConnexionBDD();
         $sql = "INSERT INTO typeresolution_receptionreso (TypeReso_id, NumReception_id) VALUES ('$type',$id)";
@@ -112,6 +151,14 @@ class ReceptionReso {
         return $msg;
     }
 
+    /*
+     * Met a jour une résolution décanat
+     * 
+     * 
+     *
+     * @param $sql : requete UPDATE souhaité
+     */
+
     function updateReso($sql) {
         $bdd = new ConnexionBDD();
         $msg = '';
@@ -123,6 +170,16 @@ class ReceptionReso {
         $bdd->fermerConnexion();
         return $msg;
     }
+
+    /*
+     * Met a jour une association cours a résolution Décanat
+     * 
+     * 
+     *
+     * @param $idReso : Id de la résolution Décanat
+     * @param $codeCour : id(sigle) du  nouveau cours a associé
+     * @param $codeOldCour : id (sigle) du cours a modifié
+     */
 
     function updateAssociationCour($idReso, $codeCour, $codeOldCour) {
         $bdd = new ConnexionBDD();
@@ -137,6 +194,16 @@ class ReceptionReso {
         return $msg;
     }
 
+    /*
+     * Met a jour une association programme a résolution Décanat
+     * 
+     * 
+     *
+     * @param $idReso : Id de la résolution Décanat
+     * @param $codeProgramme : id(code) du  nouveau programme a associé
+     * @param $codeOldProgramme : id (code) du programme a modifié
+     */
+
     function updateAssociationProgramme($idReso, $codeProgramme, $codeOldProgramme) {
         $bdd = new ConnexionBDD();
         $sql = "UPDATE programme_receptionreso SET programme_id='$codeProgramme' WHERE programme_id='$codeOldProgramme' AND receptionReso_id=$idReso";
@@ -150,8 +217,19 @@ class ReceptionReso {
         return $msg;
     }
 
-    function updateAssociationResoDecanat($id, $traitement, $dateReception,$agent) {
-         $bdd = new ConnexionBDD();
+    /*
+     * Met a jour une résolution Décanat lors lors de la 1er actions prise par un agent
+     * 
+     * 
+     *
+     * @param $id : Id de la résolution Décanat
+     * @param $traitement : nouvelle etat du traitement de la résolution
+     * @param $DateReception : Date du jour
+     *  @param $agent : id de l'agent
+     */
+
+    function updateAssociationResoDecanat($id, $traitement, $dateReception, $agent) {
+        $bdd = new ConnexionBDD();
         $sql = "UPDATE receptionreso SET Traitement='$traitement', DateDemande='$dateReception',agent_id='$agent' WHERE id=$id";
         $msg = '';
         if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
@@ -162,6 +240,14 @@ class ReceptionReso {
         $bdd->fermerConnexion();
         return $msg;
     }
+
+    /*
+     * Recherche une résolution par son id
+     * 
+     * 
+     *
+     * @param $id : Id de la résolution Décanat
+     */
 
     function rechercheResoParId($id) {
         $bdd = new ConnexionBDD();
@@ -175,6 +261,14 @@ class ReceptionReso {
         return($reso);
     }
 
+    /*
+     * Recherche une résolution par son numéro de reception
+     * 
+     * 
+     *
+     * @param $id : Numéro de reception de la résolution Décanat
+     */
+
     function rechercheResoParNumReception($id) {
         $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM receptionreso WHERE NumReception='$id'";
@@ -186,6 +280,13 @@ class ReceptionReso {
         $bdd->fermerConnexion();
         return($reso);
     }
+
+    /*
+     * Regroupe toute les résolution de la table trié en ordre croissant par id
+     * 
+     * 
+     *
+     */
 
     function allResolutionTrie() {
         $bdd = new ConnexionBDD();
@@ -200,6 +301,14 @@ class ReceptionReso {
         $bdd->fermerConnexion();
         return($allReso);
     }
+
+    /*
+     * Recherche la liste des résolutions pour un etat de traitement donné
+     * 
+     * 
+     *
+     * @param $traitement : etat de traitement de la résolution
+     */
 
     function ResolutionParTraitement($traitement) {
         $bdd = new ConnexionBDD();
@@ -216,6 +325,14 @@ class ReceptionReso {
         return($allReso);
     }
 
+    /*
+     * Recherche une liste de résolution par leur ugp
+     * 
+     * 
+     *
+     * @param $ugp : UGP de la résolution Décanat
+     */
+
     function rechercheParUgp($ugp) {
         $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM receptionreso WHERE CodeUgp_id= '$ugp'ORDER BY Id ASC";
@@ -229,6 +346,14 @@ class ReceptionReso {
         $bdd->fermerConnexion();
         return($allReso);
     }
+
+    /*
+     * Recherche la liste des résolution par rapport a l'agent associé
+     * 
+     * 
+     *
+     * @param $agent : Id de l'agent
+     */
 
     function rechercheParAgent($agent) {
         $bdd = new ConnexionBDD();
@@ -244,6 +369,14 @@ class ReceptionReso {
         return($allReso);
     }
 
+    /*
+     * Recherche la liste des résolution par leur date de reception
+     * 
+     * 
+     *
+     * @param $date : Date de reception
+     */
+
     function rechercheParDate($date) {
         $bdd = new ConnexionBDD();
         $sql = "SELECT * FROM receptionreso WHERE  DATE_format(DateReception,'%Y')='$date'";
@@ -257,6 +390,14 @@ class ReceptionReso {
         $bdd->fermerConnexion();
         return($allReso);
     }
+
+    /*
+     * Recherche la liste des résolution qui contiennent un mot dans leur descrption
+     * 
+     * 
+     *
+     * @param $mot: Mot a rechercher
+     */
 
     function rechercheParMot($mot) {
         $bdd = new ConnexionBDD();
@@ -272,6 +413,14 @@ class ReceptionReso {
         return($allReso);
     }
 
+    /*
+     * Recherche la liste des résolution par leur code de programme associé
+     * 
+     * 
+     *
+     * @param $prog : Code programme recherché
+     */
+
     function rechercheParProgramme($prog) {
         $bdd = new ConnexionBDD();
         $sql = "SELECT DISTINCT receptionReso_id FROM programme_receptionreso WHERE programme_id= '$prog'";
@@ -286,6 +435,14 @@ class ReceptionReso {
         return($allReso);
     }
 
+    /*
+     * Recherche la liste des résolutions par leur cours associé
+     * 
+     * 
+     *
+     * @param $cour : Sigle du cours recherché
+     */
+
     function rechercheParCour($cour) {
         $bdd = new ConnexionBDD();
         $sql = "SELECT DISTINCT receptionReso_id FROM cour_receptionreso WHERE cour_id= '$cour'";
@@ -299,21 +456,59 @@ class ReceptionReso {
         $bdd->fermerConnexion();
         return($allReso);
     }
-    
-    function rechercheParSql($sql){
-         $bdd = new ConnexionBDD();
+
+    /*
+     * Recherche la liste des résolutions par une requete sql donné
+     * 
+     * 
+     *
+     * @param $sql : requete SELECT voulu
+     */
+
+    function rechercheParSql($sql) {
+        $bdd = new ConnexionBDD();
         $result = mysqli_query($bdd->getConnexionBDD(), $sql);
         $allReso = array();
         while ($row = mysqli_fetch_array($result)) {
             $_SESSION["count"] ++;
-            $reso =  $this->creerReceptionReso($row["id"], $row["NumReception"], $row["Sujet"], $row["NumProjet_id"], $row["DateDemande"], $row["DateReception"], $row["Traitement"], $row["Notes"], $row["Departement_id"], $row["codeUgp_id"], $row["agent_id"]);
+            $reso = $this->creerReceptionReso($row["id"], $row["NumReception"], $row["Sujet"], $row["NumProjet_id"], $row["DateDemande"], $row["DateReception"], $row["Traitement"], $row["Notes"], $row["Departement_id"], $row["codeUgp_id"], $row["agent_id"]);
             array_push($allReso, $reso);
         }
         $bdd->fermerConnexion();
         return($allReso);
+    }
+    
+    
+    function enterinerResoSansNote($id,$traitement){
+         $bdd = new ConnexionBDD();
+        $sql = "UPDATE receptionreso SET Traitement='$traitement'  WHERE id=$id";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Résolution modifiée";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        $bdd->fermerConnexion();
+        return $msg;
+        
+    }
+    
+     function enterinerResoAvecNote($id,$traitement,$note){
+         $bdd = new ConnexionBDD();
+        $sql = "UPDATE receptionreso SET Traitement='$traitement',  Notes='$note'  WHERE id=$id";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Résolution modifiée";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        $bdd->fermerConnexion();
+        return $msg;
         
     }
 
+
+    //getter
     function getId() {
         return $this->id;
     }

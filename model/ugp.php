@@ -3,9 +3,7 @@
 namespace SGR\model;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Gere la table Ugp
  */
 
 use SGR\model\ConnexionBDD;
@@ -17,9 +15,25 @@ class Ugp {
     private $cycle;
     private $numDepart;
 
+    /*
+     * Constructeur par défaut
+     * 
+     */
+
     function __construct() {
         
     }
+
+    /*
+     * Constructeur alternatif
+     * 
+     * @param $c : Code de l'UGP
+     * @param $n : Nom de l'UGP
+     * @param $cy : cycle de l'ugp
+     * @param num : numéro de departement associé a l ugp
+     * 
+     * 
+     */
 
     private function creerUgp($c, $n, $cy, $num) {
         $ugp = new Ugp();
@@ -29,6 +43,13 @@ class Ugp {
         $ugp->numDepart = $num;
         return ($ugp);
     }
+
+    /*
+     * Liste de tout les ugp de la table ugp trié par ordre alphabetique selon leur code
+     * 
+
+     * 
+     */
 
     function allUgpTrie() {
         $bdd = new ConnexionBDD();
@@ -43,6 +64,7 @@ class Ugp {
         return($allUgp);
     }
 
+    //getter
     function getCode() {
         return $this->code;
     }

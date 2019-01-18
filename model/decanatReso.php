@@ -62,7 +62,7 @@ class DecanatReso {
     }
 
     /*
-     * Ajout d unen nouvelle résolution Décanat dans la table
+     * Ajoute une nouvelle résolution Décanat dans la table
      * 
      * 
      * @param $n : Numero de résolution
@@ -186,6 +186,19 @@ class DecanatReso {
         $bdd->fermerConnexion();
         return($allReso);
     }
+    
+     function rechercheAssociationResoRecu($idDecanat) {
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM  receptionreso_decanatreso WHERE decanatReso_id=$idDecanat";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $allReso = array();
+        while ($row = mysqli_fetch_array($result)) {
+
+            array_push($allReso, $row["receptionReso_id"]);
+        }
+        $bdd->fermerConnexion();
+        return($allReso);
+    }
 
     /*
      * Recherche une résolution Décanat par son identifiant
@@ -224,7 +237,35 @@ class DecanatReso {
         $bdd->fermerConnexion();
         return($reso);
     }
-
+    
+     function enterinerResoSansNote($id,$traitement){
+         $bdd = new ConnexionBDD();
+          $date = date("Y-m-d");
+        $sql = "UPDATE decanatreso SET VariaSuivi='$traitement', DateEffective='$date'  WHERE id=$id";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Résolution modifiée";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        $bdd->fermerConnexion();
+        return $msg;
+        
+    }
+     function enterinerResoAvecNote($id,$traitement,$note){
+         $bdd = new ConnexionBDD();
+          $date = date("Y-m-d");
+        $sql = "UPDATE decanatreso SET VariaSuivi='$traitement', DateEffective='$date', Note='$note'  WHERE id=$id";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Résolution modifiée";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+        $bdd->fermerConnexion();
+        return $msg;
+        
+    }
     //getter
     function getId() {
         return $this->id;

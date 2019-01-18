@@ -11,7 +11,7 @@ namespace SGR\view;
 class VueAgent {
 
     function __construct() {
-
+        
     }
 
     public function afficherAccueil() {
@@ -363,14 +363,18 @@ class VueAgent {
                     <td>' . $value->getDescription() . '</td>
                     <td>' . $value->getDateReso() . '</td>
                    <td>' . $value->getCampus() . '</td>
-                    <td> entériner </td></tr>');
-             }
-        echo('</tr></table></center></div>');
-
+                    <td>');
+            if ($value->getSuivi() == NULL) {
+                echo(' <a href="index.php?action=traiterResoDecanat&id=' . $value->getId() . '"><img src="image/valider" width="30" title= "Entériner la résolution"></a> </td>');
+            } else {
+                echo( $value->getSuivi() . ' </td>');
+            }
+            echo('</tr></table></center></div>');
+        }
     }
 
-    public function afficherUneResolutionDecanat($reso){
-         echo('<div id="divconsult" class="resolution">
+    public function afficherUneResolutionDecanat($reso) {
+        echo('<div id="divconsult" class="resolution">
         <center>
         <table class="table3">
                 <tr>
@@ -426,7 +430,71 @@ class VueAgent {
 
 </table>
 </center>');
+    }
 
+    public function cloturerResolutionDecanat($resoRecu, $resoDecanat) {
+        echo('<div id="divconsult" class="resolution">
+        <center>
+        <h3>Entérinement de la résolution Décanat :</h3>
+        <table class="table3">
+         <tr>
+                <td>Résolution:</td>
+                  <td>Résolution Reçue:</td>
+                   <td>Résolution Décanat:</td>
+                  </tr>
+                <tr>
+                  <td>Id de la résolution :</td>
+                   <td>' . $resoRecu->getId() . '</td>
+                       <td>' . $resoDecanat->getId() . '</td>
+                  </tr>
+
+                <tr>
+                <td>Numéro de la résolution :</td>
+                <td>' . $resoRecu->getNum() . '</td>
+                    <td>' . $resoDecanat->getNum() . '</td>
+                </tr>
+                <tr>
+                <td>Projet associé :</td>
+                <td><a href="index.php?action=projet&id=' . $resoRecu->getNumProjet_id() . '"> ' . $resoRecu->getNumProjet_id() . '</a></td>
+                    <td><a href="index.php?action=projet&id=' . $resoDecanat->getNumProjet_id() . '"> ' . $resoDecanat->getNumProjet_id() . '</a></td>
+                </tr>
+                <td>Date création :</td>
+                <td>' . $resoRecu->getDateReception() . '</td>
+                   <td>' . $resoDecanat->getDateReso() . '</td>
+                </tr>
+                <td>Traitement:</td>
+                <td>' . $resoRecu->getTraitement() . '</td>
+                   <td>En cours</td>
+                </tr>
+</table>
+
+
+
+<h2>Veuillez renseigner les champs suivants si des informations supplémentaires sont néccéssaires : (laissez vide dans le cas contraire)</h2>
+  <form action="index.php?action=terminerResolution&idRecu='.$resoRecu->getId().'&idDeca=' . $resoDecanat->getId() . '" id="formReso" class="formReso" method="POST">
+ <table class="table3">
+ 
+ <tr>
+                <td>Résolution:</td>
+                  <td>Résolution Reçue:</td>
+                   <td>Résolution Décanat:</td>
+                  </tr>
+                  
+                   <tr>
+                <td>Traitement:</td>
+                  <td> <textarea name="traitementRecu" rows="3" cols="50"  form="formReso"></textarea></td>
+                   <td><textarea name="traitementDecanat" rows="3" cols="50"  form="formReso"></textarea></td>
+                  </tr>
+                  <td>Note supplémentaire:</td>
+                  <td> <textarea name="noteRecu" rows="3" cols="50"  form="formReso"></textarea></td>
+                   <td><textarea name="noteDecanat" rows="3" cols="50"  form="formReso"></textarea></td>
+                  </tr>
+
+
+</table>
+ <input type="submit" name="enteriner" value="Entériner">
+ </form>
+       </center></div> ');
     }
 
 }

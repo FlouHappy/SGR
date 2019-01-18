@@ -193,6 +193,14 @@ if (!isset($_SESSION["user"])) {
                 case"traitementRechercheAvancer":
                     $controlAgent->traitementRecherche();
                     break;
+                case "traiterResoDecanat":
+                    $controlAgent->traiterResoDecanat();
+                    break;
+                case "terminerResolution":
+                    $controlAgent->enterinerReso();
+                     $controlPublic->accueil();
+                      echo('Votre résolution a été entérinée');
+                    break;
             }
         }
     } else {

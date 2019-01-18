@@ -34,6 +34,20 @@ class Departement {
         $projet->secteur = $secteur;
         return ($projet);
     }
+    
+    function nouveauDepartement($num, $nom, $secteur) {
+        $bdd = new ConnexionBDD();
+        $sql = "INSERT INTO departement (NumDepartement, NomDepartement, NomSecteur_id) VALUES ('$num','$nom','$secteur')";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Cour créé";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+
+        $bdd->fermerConnexion();
+        return $msg;
+    }
 
     /*
      * Liste de tout les departements trié par leur code

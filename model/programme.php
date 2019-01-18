@@ -50,7 +50,7 @@ class Programme {
 
     function nouveauProgramme($c, $n, $t, $u) {
         $bdd = new ConnexionBDD();
-        $sql = "INSERT INTO programmes (CodeProgramme, NomProgramme,TypeProgramme,codeUgp_id) VALUES ('$c','$n','$t',$u)";
+        $sql = "INSERT INTO programmes (CodeProgramme, NomProgramme,TypeProgramme,codeUgp_id) VALUES ('$c','$n','$t','$u')";
         $msg = '';
         if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
             $msg = "programme créé";

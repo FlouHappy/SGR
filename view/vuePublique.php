@@ -805,14 +805,14 @@ Nouveau programme non repertorié ? <a href="popUp.php?action=creerProgramme" >C
         if ($_POST['date'] == 1) {
             $_SESSION['nbDateRecherche']=1;
              echo('<label for="date">Date: </label>
-        <input type="date"  required name="date1" min="2000-12-31"><br><br>');
+        <input type="date"  required name="date1" min="1950-01-01"><br><br>');
         }else if ($_POST['date'] == 2) {
             $_SESSION['nbDateRecherche']=2;
              echo('<label for="date">Date début: </label>
-        <input type="date"  required name="date1" min="2000-12-31"><br><br>');
+        <input type="date"  required name="date1" min="1950-01-01"><br><br>');
 
               echo('<label for="date">Date fin: </label>
-        <input type="date"  required name="date2" min="2000-12-31"><br><br>');
+        <input type="date"  required name="date2" min="1950-01-01"><br><br>');
 
         }else{
             $_SESSION['nbDateRecherche']=0;

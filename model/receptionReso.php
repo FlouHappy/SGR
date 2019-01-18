@@ -280,6 +280,21 @@ class ReceptionReso {
         $bdd->fermerConnexion();
         return($reso);
     }
+    
+    
+    function verifierResoParNumReception($id) {
+        $bdd = new ConnexionBDD();
+        $sql = "SELECT * FROM receptionreso WHERE NumReception='$id'";
+        $result = mysqli_query($bdd->getConnexionBDD(), $sql);
+        $verif=false;
+        $reso = new ReceptionReso();
+        while ($row = mysqli_fetch_array($result)) {
+             $verif=true;
+            $reso = $this->creerReceptionReso($row["id"], $row["NumReception"], $row["Sujet"], $row["NumProjet_id"], $row["DateDemande"], $row["DateReception"], $row["Traitement"], $row["Notes"], $row["Departement_id"], $row["codeUgp_id"], $row["agent_id"]);
+        }
+        $bdd->fermerConnexion();
+        return($verif);
+    }
 
     /*
      * Regroupe toute les résolution de la table trié en ordre croissant par id

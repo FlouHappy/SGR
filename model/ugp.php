@@ -43,6 +43,22 @@ class Ugp {
         $ugp->numDepart = $num;
         return ($ugp);
     }
+    
+    
+    
+     function nouveauUGP($code, $nom, $cycle,$depart ) {
+        $bdd = new ConnexionBDD();
+        $sql = "INSERT INTO ugp (CodeUGP, NomUGP, cycle,NumDepartement_id) VALUES ('$code','$nom',$cycle,'$depart')";
+        $msg = '';
+        if (mysqli_query($bdd->getConnexionBDD(), $sql)) {
+            $msg = "Cour créé";
+        } else {
+            $msg = "Error: " . $sql . "<br>" . mysqli_error($bdd->getConnexionBDD());
+        }
+
+        $bdd->fermerConnexion();
+        return $msg;
+    }
 
     /*
      * Liste de tout les ugp de la table ugp trié par ordre alphabetique selon leur code
